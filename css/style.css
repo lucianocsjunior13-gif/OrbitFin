@@ -1,0 +1,199 @@
+:root {
+    --primaria: #E05638;      /* Terracota */
+    --secundaria: #1A2238;    /* Azul Marinho */
+    --fundo: #F4F6F8;         /* Cinza Claro */
+    --branco: #FFFFFF;
+    --cinza-claro: #A0AEC0;   /* Cinza claro para links inativos */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background-color: var(--fundo);
+    color: var(--secundaria);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Sidebar - CORREÇÃO DA SOBREPOSICAO */
+.sidebar {
+    background-color: var(--secundaria);
+    color: var(--branco);
+    width: 260px; /* LARGURA FIXA */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem;
+}
+
+.sidebar .logo h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--branco);
+    font-size: 1.5rem;
+}
+
+/* Perfil */
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+.profile .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: var(--branco);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primaria);
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.profile .info {
+    display: flex;
+    flex-direction: column;
+}
+.profile .info .name {
+    font-weight: 600;
+    color: var(--branco);
+}
+.profile .info .tag {
+    font-size: 0.75rem;
+    color: var(--branco);
+    opacity: 0.8;
+}
+
+/* Menu de Navegação - EFEITO DE RECORTE */
+.sidebar nav {
+    width: 100%;
+}
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    /* NAO TEM PADDING-RIGHT PARA ENCOTAR NA BORDA */
+}
+.sidebar nav li {
+    margin-bottom: 1.5rem;
+}
+.sidebar nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--cinza-claro);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.2s, opacity 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+.sidebar nav a:hover {
+    /* EFEITE HOVER: ARREDONDAR SOMENTE A ESQUERDA */
+    background-color: rgba(255,255,255,0.1);
+    border-radius: 30px 0 0 30px;
+}
+
+/* ITEM ATIVO - EFEITE DE RECORTE EDGE-TO-EDGE */
+.sidebar nav a.ativo {
+    background-color: var(--fundo); /* MESMA COR DO BODY */
+    color: var(--secundaria);       /* TEXTO E ICONE AZUL MARINHO */
+    border-radius: 30px 0 0 30px;  /* ARREDONDADO ESQUERDA, RETO DIREITA */
+    margin-left: 20px;              /* MARGEM PARA NAO COLAR NA BORDA ESQUERDA */
+    padding: 12px 20px;             /* PADDING INTERNO */
+    width: calc(100% - 20px);       /* LARGURA AJUSTADA PARA COMPENSAR MARGEM */
+    display: block;
+}
+
+/* ICONE DO ITEM ATIVO */
+.sidebar nav a.ativo::before {
+    color: var(--secundaria);
+}
+
+/* Conteúdo Principal - CORREÇÃO DA SOBREPOSICAO */
+.content {
+    flex: 1;
+    margin-left: 260px; /* MARGEM IGUAL A LARGURA DA SIDEBAR */
+    padding: 2rem;
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+}
+
+/* Cabeçalho de boas-vindas */
+.welcome {
+    margin-bottom: 2rem;
+}
+.welcome h1 {
+    font-size: 2rem;
+    color: var(--secundaria);
+    margin-bottom: 0.5rem;
+}
+.welcome p {
+    color: #64748b; /* cinza médio para subtítulo */
+    font-size: 1.1rem;
+}
+
+/* Cards genéricos */
+.card {
+    background: var(--branco);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+.card h2 {
+    color: var(--secundaria);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+/* Botão Primário */
+.btn-primary {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background-color: var(--primaria);
+    color: var(--branco);
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.1s;
+}
+.btn-primary:hover {
+    background-color: #d0482e;
+    transform: translateY(-2px);
+}
+
+/* Responsividade básica */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 200px;
+    }
+    .content {
+        margin-left: 200px;
+        width: calc(100% - 200px);
+        padding: 1.5rem;
+    }
+    .sidebar nav a.ativo {
+        margin-left: 15px;
+        padding: 10px 15px;
+        width: calc(100% - 15px);
+    }
+    .sidebar nav a:hover {
+        border-radius: 30px 0 0 30px;
+    }
+}
