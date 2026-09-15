@@ -20,36 +20,35 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Sidebar - CORREÇÃO DA SOBREPOSICAO */
+/* Sidebar - CORREÇÃO DO LAYOUT */
 .sidebar {
-    background-color: var(--secundaria);
-    color: var(--branco);
-    width: 260px; /* LARGURA FIXA */
+    width: 260px;
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    overflow-y: auto;
-    padding: 2rem 1.5rem;
+    background-color: var(--secundaria);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px 0;
 }
 
-.sidebar .logo h2 {
-    text-align: center;
-    margin-bottom: 2rem;
-    color: var(--branco);
-    font-size: 1.5rem;
+/* Sidebar Top - Logo, Perfil e Menu Principal */
+.sidebar-top {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-/* Perfil */
-.profile {
+/* Perfil do Usuário */
+.sidebar-top .user-profile {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    margin-bottom: 2rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid rgba(255,255,255,0.2);
+    margin-bottom: 1.5rem;
 }
-.profile .avatar {
+.sidebar-top .user-profile .avatar {
     width: 48px;
     height: 48px;
     border-radius: 50%;
@@ -61,55 +60,62 @@ body {
     font-weight: bold;
     font-size: 1.5rem;
 }
-.profile .info {
+.sidebar-top .user-profile .user-info {
     display: flex;
     flex-direction: column;
 }
-.profile .info .name {
+.sidebar-top .user-profile .user-info .name {
     font-weight: 600;
     color: var(--branco);
+    font-size: 0.95rem;
 }
-.profile .info .tag {
+.sidebar-top .user-profile .user-info .role {
     font-size: 0.75rem;
     color: var(--branco);
     opacity: 0.8;
 }
 
-/* Menu de Navegação - EFEITO DE RECORTE */
-.sidebar nav {
+/* Divisor da Sidebar */
+.sidebar-divider {
+    border: none;
+    height: 1px;
+    background-color: rgba(255,255,255,0.1);
+    margin: 20px 15px;
+}
+
+/* Menu Principal */
+.sidebar-top .main-nav {
     width: 100%;
 }
-.sidebar nav ul {
+.sidebar-top .main-nav ul {
     list-style: none;
     padding: 0;
     margin: 0;
     width: 100%;
-    /* NAO TEM PADDING-RIGHT PARA ENCOTAR NA BORDA */
 }
-.sidebar nav li {
-    margin-bottom: 1.5rem;
+.sidebar-top .main-nav li {
+    margin-bottom: 0;
 }
-.sidebar nav a {
+.sidebar-top .main-nav a {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    color: var(--cinza-claro);
+    gap: 12px;
+    color: var(--branco);
     text-decoration: none;
     font-weight: 500;
-    padding: 0.5rem;
-    border-radius: 6px;
+    font-size: 1rem;
+    padding: 12px 20px;
     transition: background-color 0.2s, opacity 0.2s;
     width: 100%;
     box-sizing: border-box;
 }
-.sidebar nav a:hover {
-    /* EFEITE HOVER: ARREDONDAR SOMENTE A ESQUERDA */
+.sidebar-top .main-nav a:hover {
     background-color: rgba(255,255,255,0.1);
     border-radius: 30px 0 0 30px;
 }
 
 /* ITEM ATIVO - EFEITE DE RECORTE EDGE-TO-EDGE */
-.sidebar nav a.ativo {
+.sidebar-top .main-nav a.ativo {
     background-color: var(--fundo); /* MESMA COR DO BODY */
     color: var(--secundaria);       /* TEXTO E ICONE AZUL MARINHO */
     border-radius: 30px 0 0 30px;  /* ARREDONDADO ESQUERDA, RETO DIREITA */
@@ -120,8 +126,44 @@ body {
 }
 
 /* ICONE DO ITEM ATIVO */
-.sidebar nav a.ativo::before {
+.sidebar-top .main-nav a.ativo::before {
     color: var(--secundaria);
+}
+
+/* Sidebar Bottom - Configurações Isolada */
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+.sidebar-bottom .footer-nav {
+    width: 100%;
+}
+.sidebar-bottom .footer-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.sidebar-bottom .footer-nav li {
+    margin-bottom: 0;
+}
+.sidebar-bottom .footer-nav a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--branco);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 12px 20px;
+    border-radius: 30px 0 0 30px;
+    transition: background-color 0.2s, opacity 0.2s;
+    width: 100%;
+    box-sizing: border-box;
+}
+.sidebar-bottom .footer-nav a:hover {
+    background-color: rgba(255,255,255,0.1);
 }
 
 /* Conteúdo Principal - CORREÇÃO DA SOBREPOSICAO */
@@ -188,12 +230,18 @@ body {
         width: calc(100% - 200px);
         padding: 1.5rem;
     }
-    .sidebar nav a.ativo {
+    .sidebar-top,
+    .sidebar-bottom {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .sidebar-top .main-nav a.ativo {
         margin-left: 15px;
         padding: 10px 15px;
         width: calc(100% - 15px);
     }
-    .sidebar nav a:hover {
+    .sidebar-top .main-nav a:hover,
+    .sidebar-bottom .footer-nav a:hover {
         border-radius: 30px 0 0 30px;
     }
 }

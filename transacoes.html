@@ -10,26 +10,40 @@
 <body>
     <!-- Sidebar -->
     <aside class="sidebar">
-        <div class="logo">
-            <h2>OrbitFin</h2>
-        </div>
-        <div class="profile">
-            <div class="avatar">LJ</div>
-            <div class="info">
-                <div class="name">Luciano Junior</div>
-                <div class="tag">Usuário</div>
+        <div class="sidebar-top">
+            <div class="logo-container">
+                <h2>OrbitFin</h2>
             </div>
+            <div class="user-profile">
+                <div class="avatar">LJ</div>
+                <div class="user-info">
+                    <span class="name">Luciano Junior</span>
+                    <span class="role">Usuário</span>
+                </div>
+            </div>
+            <hr class="sidebar-divider">
+            
+            <!-- Menu Principal -->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html"><i class="fi fi-br-home"></i> Visão Geral</a></li>
+                    <li><a href="transacoes.html" class="ativo"><i class="fi fi-br-wallet"></i> Transações</a></li>
+                    <li><a href="categorias.html"><i class="fi fi-br-apps"></i> Categorias</a></li>
+                    <li><a href="metas.html"><i class="fi fi-br-target"></i> Metas</a></li>
+                    <li><a href="relatorios.html"><i class="fi fi-br-chart-line-up"></i> Relatórios</a></li>
+                </ul>
+            </nav>
         </div>
-        <nav>
-            <ul>
-                <li><a href="index.html"><i class="fi fi-br-home"></i> Visão Geral</a></li>
-                <li><a href="transacoes.html" class="ativo"><i class="fi fi-br-wallet"></i> Transações</a></li>
-                <li><a href="categorias.html"><i class="fi fi-br-apps"></i> Categorias</a></li>
-                <li><a href="metas.html"><i class="fi fi-br-target"></i> Metas</a></li>
-                <li><a href="relatorios.html"><i class="fi fi-br-chart-line-up"></i> Relatórios</a></li>
-                <li><a href="configuracoes.html"><i class="fi fi-br-settings"></i> Configurações</a></li>
-            </ul>
-        </nav>
+
+        <!-- Menu Inferior (Configurações isoladas) -->
+        <div class="sidebar-bottom">
+            <hr class="sidebar-divider">
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="configuracoes.html"><i class="fi fi-br-settings"></i> Configurações</a></li>
+                </ul>
+            </nav>
+        </div>
     </aside>
 
     <!-- Main Content -->
