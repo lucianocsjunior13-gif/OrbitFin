@@ -48,10 +48,87 @@
 
     <!-- Main Content -->
     <main class="content">
-        <header class="welcome">
-            <h1>Tela de Transações</h1>
-            <p>Gerencie suas transações financeiras</p>
+    <main class="content">
+        <header class="page-header">
+            <h1>Gerenciamento de Transações</h1>
+            <p>Visualize, filtre e adicione suas movimentações financeiras</p>
         </header>
+
+        <div class="actions-filters">
+            <div class="actions-left">
+                <a href="#" class="action-btn nova-receita"><i class="fi fi-br-plus"></i> Nova Receita</a>
+                <a href="#" class="action-btn nova-despesa"><i class="fi fi-br-minus"></i> Nova Despesa</a>
+            </div>
+            <div class="filters-right">
+                <div class="filter-input">
+                    <label for="search">Buscar:</label>
+                    <input type="text" id="search" placeholder="Descrição, estabelecimento...">
+                </div>
+                <div class="filter-input">
+                    <label for="category">Categoria:</label>
+                    <select id="category">
+                        <option value="">Todas</option>
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="transporte">Transporte</option>
+                        <option value="lazer">Lazer</option>
+                        <option value="assinatura">Assinaturas</option>
+                    </select>
+                </div>
+                <div class="filter-input">
+                    <label for="date">Data:</label>
+                    <input type="date" id="date">
+                </div>
+            </div>
+        </div>
+
+        <table class="transactions-table">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Descrição / Estabelecimento</th>
+                    <th>Categoria</th>
+                    <th>Conta</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>15/09</td>
+                    <td>Uber Corridas</td>
+                    <td><span class="category-tag transporte">Transporte</span></td>
+                    <td>Nubank</td>
+                    <td class="valor-negativo">- R$ 27,50</td>
+                    <td>
+                        <a href="#" class="action-btn small" style="background:#f3f4f6;color:var(--cinza-escuro);padding:2px 6px;font-size:0.75rem;">Editar</a>
+                        <a href="#" class="action-btn small" style="background:#fef2f2;color:var(--vermelho);padding:2px 6px;font-size:0.75rem;">Excluir</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>14/09</td>
+                    <td>Salário Empresa XYZ</td>
+                    <td><span class="category-tag salario">Salário</span></td>
+                    <td>Itaú Conta Corrente</td>
+                    <td class="valor-positivo">+ R$ 3.200,00</td>
+                    <td>
+                        <a href="#" class="action-btn small" style="background:#f3f4f6;color:var(--cinza-escuro);padding:2px 6px;font-size:0.75rem;">Editar</a>
+                        <a href="#" class="action-btn small" style="background:#fef2f2;color:var(--vermelho);padding:2px 6px;font-size:0.75rem;">Excluir</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>13/09</td>
+                    <td>Supermercado Zé da Roça</td>
+                    <td><span class="category-tag alimentacao">Alimentação</span></td>
+                    <td>Nubank</td>
+                    <td class="valor-negativo">- R$ 189,90</td>
+                    <td>
+                        <a href="#" class="action-btn small" style="background:#f3f4f6;color:var(--cinza-escuro);padding:2px 6px;font-size:0.75rem;">Editar</a>
+                        <a href="#" class="action-btn small" style="background:#fef2f2;color:var(--vermelho);padding:2px 6px;font-size:0.75rem;">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </main>
+
 </body>
 </html>

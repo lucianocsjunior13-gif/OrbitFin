@@ -578,3 +578,118 @@ body {
 #chartPath {
     transition: d 0.4s ease-in-out;
 }
+
+/* Transaction Table Styles */
+.transactions-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 1.5rem;
+    background: var(--branco);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.transactions-table th {
+    background-color: var(--cinza-claro);
+    color: var(--secundaria);
+    font-weight: 600;
+    text-align: left;
+    padding: 14px 16px;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+.transactions-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+    color: var(--cinza-escuro);
+}
+.transactions-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.transactions-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+.category-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.category-tag.transporte { background: #e0f2fe; color: #0284c7; }
+.category-tag.alimentacao { background: #fef3c7; color: #b45309; }
+.category-tag.lazer { background: #fce7f3; color: #be185d; }
+.category-tag.assinatura { background: #e0e7ff; color: #4338ca; }
+.category-tag.salario { background: #dcfce7; color: #166534; }
+/* Action buttons in table */
+.transactions-table .action-btn {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    margin: 0 2px;
+}
+.transactions-table .action-btn.small { padding: 1px 4px; font-size: 0.7rem; }
+/* Filters and actions bar */
+.actions-filters {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.actions-left .action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    margin-right: 0.5rem;
+    transition: background-color 0.2s;
+}
+.actions-left .nova-receita {
+    background: var(--primaria);
+    color: var(--branco);
+}
+.actions-left .nova-receita:hover { background: #c4452e; }
+.actions-left .nova-despesa {
+    background: var(--secundaria);
+    color: var(--branco);
+}
+.actions-left .nova-despesa:hover { background: #151c2e; }
+.filters-right {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.filter-input {
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+}
+.filter-input label {
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    font-size: 0.85rem;
+}
+.filter-input input,
+.filter-input select {
+    padding: 8px 10px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    background: var(--branco);
+    color: var(--secundaria);
+    font-size: 0.9rem;
+}
+.filter-input input:focus,
+.filter-input select:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+}
