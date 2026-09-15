@@ -6,6 +6,296 @@
     <title>OrbitFin - Categorias</title>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: var(--branco);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: var(--secundaria);
+        }
+        
+        .modal-close {
+            color: var(--cinza-escuro);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .modal-close:hover {
+            color: var(--vermelho);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--cinza-escuro);
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            background: var(--branco);
+            color: var(--secundaria);
+            font-size: 0.9rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primaria);
+            box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+        }
+        
+        .btn-submit {
+            background: var(--primaria);
+            color: var(--branco);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .btn-submit:hover {
+            background: #c4452e;
+        }
+        
+        .btn-cancel {
+            background: #f3f4f6;
+            color: var(--cinza-escuro);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-cancel:hover {
+            background: #e5e7eb;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+            }
+        }
+        
+        /* Category card styles */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .category-card {
+            background: var(--branco);
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .category-card.despesa {
+            border-left: 4px solid var(--vermelho);
+        }
+        
+        .category-card.receita {
+            border-left: 4px solid var(--verde);
+        }
+        
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--cinza-claro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin: 20px;
+            flex-shrink: 0;
+        }
+        
+        .category-icon i {
+            color: var(--secundaria);
+        }
+        
+        .category-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0 20px 20px;
+        }
+        
+        .category-info h3 {
+            margin: 0 0 10px;
+            color: var(--secundaria);
+            font-size: 1.25rem;
+        }
+        
+        .category-type {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: capitalize;
+            margin-bottom: 15px;
+        }
+        
+        .category-type.despesa {
+            background: #fef2f2;
+            color: var(--vermelho);
+        }
+        
+        .category-type.receita {
+            background: #f0f9ff;
+            color: var(--verde);
+        }
+        
+        .category-budget {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .budget-label {
+            font-size: 0.875rem;
+            color: var(--cinza-escuro);
+            margin-bottom: 5px;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f3f4f6;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primaria);
+            width: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .budget-value {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--secundaria);
+        }
+        
+        .category-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .action-btn.small {
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 0.875rem;
+            border-radius: 4px;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .action-btn.small:hover {
+            opacity: 0.9;
+        }
+        
+        .action-btn.small.edit {
+            background: #f0f9ff;
+            color: var(--azul);
+        }
+        
+        .action-btn.small.delete {
+            background: #fef2f2;
+            color: var(--vermelho);
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--cinza-escuro);
+            font-style: italic;
+            grid-column: 1 / -1;
+        }
+        
+        /* Nova Categoria button */
+        .nova-categoria {
+            background: var(--primaria);
+            color: var(--branco);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .nova-categoria:hover {
+            background: #c4452e;
+        }
+    </style>
 </head>
 <body>
     <!-- Sidebar -->
@@ -28,13 +318,13 @@
                 <ul>
                     <li><a href="index.html"><i class="fi fi-br-home"></i> Visão Geral</a></li>
                     <li><a href="transacoes.html"><i class="fi fi-br-wallet"></i> Transações</a></li>
-                    <li><a href="categorias.html" class="ativo"><i class="fi fi-br-apps"></i> Categorias</a></li>
+                    <li><a href="categorias.html" class="active"><i class="fi fi-br-apps"></i> Categorias</a></li>
                     <li><a href="metas.html"><i class="fi fi-br-target"></i> Metas</a></li>
                     <li><a href="relatorios.html"><i class="fi fi-br-chart-line-up"></i> Relatórios</a></li>
                 </ul>
             </nav>
         </div>
-
+        
         <!-- Menu Inferior (Configurações isoladas) -->
         <div class="sidebar-bottom">
             <hr class="sidebar-divider">
@@ -45,23 +335,23 @@
             </nav>
         </div>
     </aside>
-
+    
     <!-- Main Content -->
     <main class="content">
         <header class="page-header">
             <h1>Gerenciamento de Categorias</h1>
         </header>
-
+        
         <div class="card">
             <div class="actions-header">
-                <a href="#" class="action-btn nova-categoria"><i class="fi fi-br-plus"></i> Nova Categoria</a>
+                <a href="#" class="action-btn nova-categoria" id="btnNovaCategoria"><i class="fi fi-br-plus"></i> Nova Categoria</a>
                 <div class="filter-input">
                     <label for="catSearch">Buscar:</label>
                     <input type="text" id="catSearch" placeholder="Nome da categoria...">
                 </div>
             </div>
         </div>
-
+        
         <div class="card tabs-card">
             <div class="tabs">
                 <button class="tab-btn active" data-tab="despesas">Despesas</button>
@@ -69,124 +359,69 @@
             </div>
             <div class="tab-content">
                 <div id="despesas" class="tab-pane active">
-                    <div class="categories-grid">
-                        <div class="category-card despesa">
-                            <div class="category-icon">
-                                <i class="fi fi-br-utensils"></i>
-                            </div>
-                            <div class="category-info">
-                                <h3>Alimentação</h3>
-                                <span class="category-type">Despesa</span>
-                            </div>
-                            <div class="category-budget">
-                                <span class="budget-label">Orçamento mensal</span>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 65%;"></div>
-                                </div>
-                                <span class="budget-value">R$ 800,00</span>
-                            </div>
-                            <div class="category-actions">
-                                <a href="#" class="action-btn small">Editar</a>
-                                <a href="#" class="action-btn small">Excluir</a>
-                            </div>
-                        </div>
-
-                        <div class="category-card despesa">
-                            <div class="category-icon">
-                                <i class="fi fi-br-car"></i>
-                            </div>
-                            <div class="category-info">
-                                <h3>Transporte</h3>
-                                <span class="category-type">Despesa</span>
-                            </div>
-                            <div class="category-budget">
-                                <span class="budget-label">Orçamento mensal</span>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 45%;"></div>
-                                </div>
-                                <span class="budget-value">R$ 400,00</span>
-                            </div>
-                            <div class="category-actions">
-                                <a href="#" class="action-btn small">Editar</a>
-                                <a href="#" class="action-btn small">Excluir</a>
-                            </div>
-                        </div>
-
-                        <div class="category-card despesa">
-                            <div class="category-icon">
-                                <i class="fi fi-br-ticket"></i>
-                            </div>
-                            <div class="category-info">
-                                <h3>Lazer</h3>
-                                <span class="category-type">Despesa</span>
-                            </div>
-                            <div class="category-budget">
-                                <span class="budget-label">Orçamento mensal</span>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 30%;"></div>
-                                </div>
-                                <span class="budget-value">R$ 250,00</span>
-                            </div>
-                            <div class="category-actions">
-                                <a href="#" class="action-btn small">Editar</a>
-                                <a href="#" class="action-btn small">Excluir</a>
-                            </div>
-                        </div>
-
-                        <div class="category-card despesa">
-                            <div class="category-icon">
-                                <i class="fi fi-br-credit-card"></i>
-                            </div>
-                            <div class="category-info">
-                                <h3>Assinaturas</h3>
-                                <span class="category-type">Despesa</span>
-                            </div>
-                            <div class="category-budget">
-                                <span class="budget-label">Orçamento mensal</span>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 80%;"></div>
-                                </div>
-                                <span class="budget-value">R$ 150,00</span>
-                            </div>
-                            <div class="category-actions">
-                                <a href="#" class="action-btn small">Editar</a>
-                                <a href="#" class="action-btn small">Excluir</a>
-                            </div>
-                        </div>
+                    <div class="categories-grid" id="despesasList">
+                        <!-- Cards will be inserted here -->
                     </div>
                 </div>
                 <div id="receitas" class="tab-pane">
-                    <div class="categories-grid">
-                        <div class="category-card receita">
-                            <div class="category-icon">
-                                <i class="fi fi-br-wallet"></i>
-                            </div>
-                            <div class="category-info">
-                                <h3>Salário</h3>
-                                <span class="category-type">Receita</span>
-                            </div>
-                            <div class="category-budget">
-                                <span class="budget-label">Total recebido</span>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 90%;"></div>
-                                </div>
-                                <span class="budget-value">R$ 3.200,00</span>
-                            </div>
-                            <div class="category-actions">
-                                <a href="#" class="action-btn small">Editar</a>
-                                <a href="#" class="action-btn small">Excluir</a>
-                            </div>
-                        </div>
+                    <div class="categories-grid" id="receitasList">
+                        <!-- Cards will be inserted here -->
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
-
-
+    
+    <!-- Modal for Nova Categoria -->
+    <div id="modalCategoria" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nova Categoria</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <form id="formCategoria">
+                <div class="form-group">
+                    <label for="nomeCategoria">Nome</label>
+                    <input type="text" id="nomeCategoria" placeholder="Ex: Alimentação, Salário" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="tipoCategoria">Tipo</label>
+                        <select id="tipoCategoria" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="despesa">Despesa</option>
+                            <option value="receita">Receita</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="iconeCategoria">Ícone (classe CSS)</label>
+                        <input type="text" id="iconeCategoria" placeholder="Ex: fi fi-br-utensils" value="fi fi-br-question">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="orcamentoCategoria">Orçamento mensal (R$)</label>
+                    <input type="number" id="orcamentoCategoria" step="0.01" min="0" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-submit">Salvar Categoria</button>
+                    <button type="button" class="btn-cancel" id="btnCancelCategoria">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
+            const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
+            const token = localStorage.getItem('orbitfin_token');
+            
+            // Redirect to login if no token
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Tab switching functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -206,10 +441,250 @@
                         activePane.classList.add('active');
                         activePane.style.display = 'block';
                     }
+                    // Re-render categories for the active tab with current search filter
+                    renderCategories();
                 });
             });
+            
+            // Modal elements
+            const modalCategoria = document.getElementById('modalCategoria');
+            const btnNovaCategoria = document.getElementById('btnNovaCategoria');
+            const btnCancelCategoria = document.getElementById('btnCancelCategoria');
+            const closeModalSpans = document.getElementsByClassName('modal-close');
+            
+            // Open modal
+            btnNovaCategoria.onclick = () => {
+                modalCategoria.style.display = 'block';
+                // Reset form
+                document.getElementById('formCategoria').reset();
+                document.getElementById('iconeCategoria').value = 'fi fi-br-question';
+            };
+            
+            // Close modals when clicking on (x)
+            for (let span of closeModalSpans) {
+                span.onclick = function() {
+                    modalCategoria.style.display = 'none';
+                    document.getElementById('formCategoria').reset();
+                };
+            }
+            
+            // Close modals when clicking outside
+            window.onclick = function(event) {
+                if (event.target === modalCategoria) {
+                    modalCategoria.style.display = 'none';
+                    document.getElementById('formCategoria').reset();
+                }
+            };
+            
+            // Handle form submission for new category
+            document.getElementById('formCategoria').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const categoryData = {
+                    name: document.getElementById('nomeCategoria').value.trim(),
+                    type: document.getElementById('tipoCategoria').value,
+                    icon: document.getElementById('iconeCategoria).value.trim() || 'fi fi-br-question',
+                    budget: parseFloat(document.getElementById('orcamentoCategoria').value) || 0
+                };
+                
+                // Validate required fields
+                if (!categoryData.name || !categoryData.type) {
+                    alert('Por favor, preencha todos os campos obrigatórios');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/category`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(categoryData)
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Close modal and refresh categories
+                        modalCategoria.style.display = 'none';
+                        document.getElementById('formCategoria').reset();
+                        loadAndRenderCategories(); // Reload the list
+                        alert('Categoria adicionada com sucesso!');
+                    } else {
+                        throw new Error(data.message || 'Erro ao salvar categoria');
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar categoria:', error);
+                    alert(error.message || 'Erro de conexão com o servidor');
+                }
+            });
+            
+            // Search input functionality
+            document.getElementById('catSearch').addEventListener('input', () => {
+                renderCategories(); // Re-render with current filter
+            });
+            
+            // Function to load categories from Xano
+            async function loadCategories() {
+                try {
+                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/category`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch categories');
+                    }
+                    
+                    const categories = await response.json();
+                    return categories;
+                } catch (error) {
+                    console.error('Erro ao carregar categorias:', error);
+                    throw error;
+                }
+            }
+            
+            // Function to render categories in the grids
+            function renderCategories() {
+                // Get active tab
+                const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+                const isDespesasTab = activeTab === 'despesa';
+                
+                // Get search term
+                const searchTerm = document.getElementById('catSearch').value.toLowerCase().trim();
+                
+                // We'll load categories and then filter/render
+                loadCategories().then(categories => {
+                    // Filter by type and search term
+                    const filteredCategories = categories.filter(cat => {
+                        const typeMatch = isDespesasTab ? cat.type === 'despesa' : cat.type === 'receita';
+                        const searchMatch = cat.name.toLowerCase().includes(searchTerm);
+                        return typeMatch && searchMatch;
+                    });
+                    
+                    // Get the container for active tab
+                    const container = isDespesasTab ? 
+                        document.getElementById('despesasList') : 
+                        document.getElementById('receitasList');
+                    
+                    // Clear container
+                    container.innerHTML = '';
+                    
+                    if (filteredCategories.length === 0) {
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                Nenhuma ${isDespesasTab ? 'despesa' : 'receita'} encontrada
+                            </div>
+                        `;
+                        return;
+                    }
+                    
+                    // Create and append cards
+                    filteredCategories.forEach(category => {
+                        const card = document.createElement('div');
+                        card.className = `category-card ${category.type}`;
+                        
+                        // Format budget as Brazilian currency
+                        const budgetValue = new Intl.NumberFormat('pt-BR', {
+                            style: 'currency',
+                            currency: 'BRL'
+                        }).format(category.budget);
+                        
+                        card.innerHTML = `
+                            <div class="category-icon">
+                                <i class="${category.icon || 'fi fi-br-question'}"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3>${escapeHtml(category.name)}</h3>
+                                <span class="category-type ${category.type}">${category.type === 'despesa' ? 'Despesa' : 'Receita'}</span>
+                            </div>
+                            <div class="category-budget">
+                                <span class="budget-label">Orçamento mensal</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: ${Math.min(Math.max(category.budget / 10000 * 100, 0), 100)}%;"></div>
+                                </div>
+                                <span class="budget-value">${budgetValue}</span>
+                            </div>
+                            <div class="category-actions">
+                                <a href="#" class="action-btn small edit" data-id="${category.id}">Editar</a>
+                                <a href="#" class="action-btn small delete" data-id="${category.id}">Excluir</a>
+                            </div>
+                        `;
+                        
+                        // Add event listeners for edit/delete buttons (placeholder for now)
+                        card.querySelector('.edit').addEventListener('click', (e) => {
+                            e.preventDefault();
+                            alert('Funcionalidade de edição em desenvolvimento');
+                        });
+                        
+                        card.querySelector('.delete').addEventListener('click', (e) => {
+                            e.preventDefault();
+                            if (confirm(`Tem certeza que deseja excluir a categoria "${category.name}"?`)) {
+                                deleteCategory(category.id);
+                            }
+                        });
+                        
+                        container.appendChild(card);
+                    });
+                }).catch(error => {
+                    console.error('Erro ao renderizar categorias:', error);
+                    const container = isDespesasTab ? 
+                        document.getElementById('despesasList') : 
+                        document.getElementById('receitasList');
+                    container.innerHTML = `
+                        <div class="empty-state" style="color: var(--vermelho);">
+                            Erro ao carregar categorias: ${error.message}
+                        </div>
+                    `;
+                });
+            }
+            
+            // Function to delete a category
+            async function deleteCategory(categoryId) {
+                try {
+                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/category/${categoryId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to delete category');
+                    }
+                    
+                    // Reload categories after deletion
+                    loadAndRenderCategories();
+                    alert('Categoria excluída com sucesso!');
+                } catch (error) {
+                    console.error('Erro ao excluir categoria:', error);
+                    alert(error.message || 'Erro ao excluir categoria');
+                }
+            }
+            
+            // Function to load and render categories (used after add/delete)
+            function loadAndRenderCategories() {
+                renderCategories();
+            }
+            
+            // Helper function to escape HTML to prevent XSS
+            function escapeHtml(text) {
+                const map = {
+                    '&': '&',
+                    '<': '<',
+                    '>': '>',
+                    '"': '"',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, m => map[m]);
+            }
+            
+            // Initial load
+            loadAndRenderCategories();
         });
     </script>
-
 </body>
 </html>

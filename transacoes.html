@@ -6,6 +6,196 @@
     <title>OrbitFin - Transações</title>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: var(--branco);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: var(--secundaria);
+        }
+        
+        .modal-close {
+            color: var(--cinza-escuro);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .modal-close:hover {
+            color: var(--vermelho);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--cinza-escuro);
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            background: var(--branco);
+            color: var(--secundaria);
+            font-size: 0.9rem;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primaria);
+            box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+        }
+        
+        .btn-submit {
+            background: var(--primaria);
+            color: var(--branco);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .btn-submit:hover {
+            background: #c4452e;
+        }
+        
+        .btn-cancel {
+            background: #f3f4f6;
+            color: var(--cinza-escuro);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .btn-cancel:hover {
+            background: #e5e7eb;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+            }
+        }
+        
+        /* Transaction table styles */
+        .transactions-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .transactions-table th,
+        .transactions-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .transactions-table th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--cinza-escuro);
+        }
+        
+        .valor-positivo {
+            color: var(--verde);
+            font-weight: 500;
+        }
+        
+        .valor-negativo {
+            color: var(--vermelho);
+            font-weight: 500;
+        }
+        
+        .category-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+        
+        .category-tag.salario { background: #e3f2fd; color: #1976d2; }
+        .category-tag.alimentacao { background: #e8f5e9; color: #388e3c; }
+        .category-tag.transporte { background: #fff3e0; color: #f57c00; }
+        .category-tag.lazer { background: #f3e5f5; color: #8e24aa; }
+        .category-tag.moradia { background: #eceff1; color: #607d8b; }
+        .category-tag.saude { background: #ffebee; color: #c62828; }
+        .category-tag.educacao { background: #e8faf6; color: #00695c; }
+        .category-tag.assinatura { background: #fce4ec; color: #c2185b; }
+        .category-tag.investimentos { background: #fff8e1; color: #ff8f00; }
+        .category-tag.outros { background: #f5f5f5; color: #616161; }
+        
+        .action-btn.small {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 0.75rem;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--cinza-escuro);
+            font-style: italic;
+        }
+    </style>
 </head>
 <body>
     <!-- Sidebar -->
@@ -26,37 +216,37 @@
             <!-- Menu Principal -->
             <nav class="main-nav">
                 <ul>
-                    <li><a href="index.html"><i class="fi fi-br-home"></i> Visão Geral</a></li>
-                    <li><a href="transacoes.html" class="ativo"><i class="fi fi-br-wallet"></i> Transações</a></li>
-                    <li><a href="categorias.html"><i class="fi fi-br-apps"></i> Categorias</a></li>
-                    <li><a href="metas.html"><i class="fi fi-br-target"></i> Metas</a></li>
-                    <li><a href="relatorios.html"><i class="fi fi-br-chart-line-up"></i> Relatórios</a></li>
+                    <li><a href=\"index.html\"><i class=\"fi fi-br-home\"></i> Visão Geral</a></li>
+                    <li><a href="transacoes.html" class="active"><i class="fi fi-br-wallet\"></i> Transações</a></li>
+                    <li><a href="categorias.html"><i class="fi fi-br-apps\"></i> Categorias</a></li>
+                    <li><a href="metas.html"><i class="fi fi-br-target\"></i> Metas</a></li>
+                    <li><a href="relatorios.html"><i class="fi fi-br-chart-line-up\"></i> Relatórios</a></li>
                 </ul>
             </nav>
         </div>
-
+        
         <!-- Menu Inferior (Configurações isoladas) -->
         <div class="sidebar-bottom">
             <hr class="sidebar-divider">
             <nav class="footer-nav">
                 <ul>
-                    <li><a href="configuracoes.html"><i class="fi fi-br-settings"></i> Configurações</a></li>
+                    <li><a href="configuracoes.html"><i class="fi fi-br-settings\"></i> Configurações</a></li>
                 </ul>
             </nav>
         </div>
     </aside>
-
+    
     <!-- Main Content -->
     <main class="content">
         <header class="page-header">
             <h1>Gerenciamento de Transações</h1>
         </header>
-
+        
         <div class="card">
             <div class="actions-filters">
                 <div class="actions-left">
-                    <a href="#" class="action-btn nova-receita"><i class="fi fi-br-plus"></i> Nova Receita</a>
-                    <a href="#" class="action-btn nova-despesa"><i class="fi fi-br-minus"></i> Nova Despesa</a>
+                    <button id="btnNovaReceita" class="action-btn nova-receita"><i class="fi fi-br-plus\"></i> Nova Receita</button>
+                    <button id="btnNovaDespesa" class="action-btn nova-despesa"><i class="fi fi-br-minus\"></i> Nova Despesa</button>
                 </div>
                 <div class="filters-right">
                     <div class="filter-input">
@@ -80,7 +270,7 @@
                 </div>
             </div>
         </div>
-
+        
         <div class="card tabs-card">
             <div class="tabs">
                 <button class="tab-btn active" data-tab="receitas">Receitas</button>
@@ -99,18 +289,8 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>14/09</td>
-                                <td>Salário Empresa XYZ</td>
-                                <td><span class="category-tag salario">Salário</span></td>
-                                <td>Itaú Conta Corrente</td>
-                                <td class="valor-positivo">+ R$ 3.200,00</td>
-                                <td>
-                                    <a href="#" class="action-btn small" style="background:#f3f4f6;color:var(--cinza-escuro);padding:2px 6px;font-size:0.75rem;">Editar</a>
-                                    <a href="#" class="action-btn small" style="background:#fef2f2;color:var(--vermelho);padding:2px 6px;font-size:0.75rem;">Excluir</a>
-                                </td>
-                            </tr>
+                        <tbody id="tbodyReceitas">
+                            <!-- Linhas serão inseridas dinamicamente -->
                         </tbody>
                     </table>
                 </div>
@@ -126,40 +306,134 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>15/09</td>
-                                <td>Uber Corridas</td>
-                                <td><span class="category-tag transporte">Transporte</span></td>
-                                <td>Nubank</td>
-                                <td class="valor-negativo">- R$ 27,50</td>
-                                <td>
-                                    <a href="#" class="action-btn small" style="background:#f3f4f6;color:var(--cinza-escuro);padding:2px 6px;font-size:0.75rem;">Editar</a>
-                                    <a href="#" class="action-btn small" style="background:#fef2f2;color:var(--vermelho);padding:2px 6px;font-size:0.75rem;">Excluir</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>13/09</td>
-                                <td>Supermercado Zé da Roça</td>
-                                <td><span class="category-tag alimentacao">Alimentação</span></td>
-                                <td>Nubank</td>
-                                <td class="valor-negativo">- R$ 189,90</td>
-                                <td>
-                                    <a href="#" class="action-btn small" style="background:#f3f4f6;color:var(--cinza-escuro);padding:2px 6px;font-size:0.75rem;">Editar</a>
-                                    <a href="#" class="action-btn small" style="background:#fef2f2;color:var(--vermelho);padding:2px 6px;font-size:0.75rem;">Excluir</a>
-                                </td>
-                            </tr>
+                        <tbody id="tbodyDespesas">
+                            <!-- Linhas serão inseridas dinamicamente -->
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
     </main>
-
-
-
+    
+    <!-- Modal for Nova Receita -->
+    <div id="modalReceita" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nova Receita</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <form id="formReceita">
+                <div class="form-group">
+                    <label for="descricaoReceita">Descrição</label>
+                    <input type="text" id="descricaoReceita" placeholder="Ex: Salário, Freelance" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valorReceita">Valor (R$)</label>
+                        <input type="number" id="valorReceita" step="0.01" min="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataReceita">Data</label>
+                        <input type="date" id="dataReceita" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="categoriaReceita">Categoria</label>
+                        <select id="categoriaReceita" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="salario">Salário</option>
+                            <option value="freelance">Freelance</option>
+                            <option value="investimentos">Investimentos</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contaReceita">Conta</label>
+                        <select id="contaReceita" required>
+                            <option value="">Selecione a conta</option>
+                            <option value="itau">Itaú Conta Corrente</option>
+                            <option value="nubank">Nubank</option>
+                            <option value="dinheiro">Dinheiro</option>
+                            <option value="poupanca">Poupança</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-submit">Salvar Receita</button>
+                    <button type="button" class="btn-cancel" id="btnCancelReceita">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal for Nova Despesa -->
+    <div id="modalDespesa" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Nova Despesa</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <form id="formDespesa">
+                <div class="form-group">
+                    <label for="descricaoDespesa">Descrição</label>
+                    <input type="text" id="descricaoDespesa" placeholder="Ex: Supermercado, Transporte" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="valorDespesa">Valor (R$)</label>
+                        <input type="number" id="valorDespesa" step="0.01" min="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataDespesa">Data</label>
+                        <input type="date" id="dataDespesa" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="categoriaDespesa">Categoria</label>
+                        <select id="categoriaDespesa" required>
+                            <option value="">Selecione uma categoria</option>
+                            <option value="alimentacao">Alimentação</option>
+                            <option value="transporte">Transporte</option>
+                            <option value="lazer">Lazer</option>
+                            <option value="moradia">Moradia</option>
+                            <option value="saude">Saúde</option>
+                            <option value="educacao">Educação</option>
+                            <option value="outros">Outros</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contaDespesa">Conta</label>
+                        <select id="contaDespesa" required>
+                            <option value="">Selecione a conta</option>
+                            <option value="itau">Itaú Conta Corrente</option>
+                            <option value="nubank">Nubank</option>
+                            <option value="dinheiro">Dinheiro</option>
+                            <option value="poupanca">Poupança</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-submit">Salvar Despesa</button>
+                    <button type="button" class="btn-cancel" id="btnCancelDespesa">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', () => {
+            const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
+            const token = localStorage.getItem('orbitfin_token');
+            
+            // Redirect to login if no token
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Tab switching functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', function() {
@@ -181,8 +455,320 @@
                     }
                 });
             });
+            
+            // Modal elements
+            const modalReceita = document.getElementById('modalReceita');
+            const modalDespesa = document.getElementById('modalDespesa');
+            const btnNovaReceita = document.getElementById('btnNovaReceita');
+            const btnNovaDespesa = document.getElementById('btnNovaDespesa');
+            const spans = document.getElementsByClassName('modal-close');
+            
+            // Open modals
+            btnNovaReceita.onclick = () => {
+                modalReceita.style.display = 'block';
+                // Set today's date as default
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('dataReceita').value = today;
+            };
+            
+            btnNovaDespesa.onclick = () => {
+                modalDespesa.style.display = 'block';
+                // Set today's date as default
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('dataDespesa').value = today;
+            };
+            
+            // Close modals when clicking on (x)
+            for (let span of spans) {
+                span.onclick = function() {
+                    modalReceita.style.display = 'none';
+                    modalDespesa.style.display = 'none';
+                    // Clear form inputs
+                    document.getElementById('formReceita').reset();
+                    document.getElementById('formDespesa').reset();
+                }
+            }
+            
+            // Close modals when clicking outside
+            window.onclick = function(event) {
+                if (event.target === modalReceita) {
+                    modalReceita.style.display = 'none';
+                    document.getElementById('formReceita').reset();
+                }
+                if (event.target === modalDespesa) {
+                    modalDespesa.style.display = 'none';
+                    document.getElementById('formDespesa').reset();
+                }
+            }
+            
+            // Handle form submissions
+            document.getElementById('formReceita').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const transactionData = {
+                    descricao: document.getElementById('descricaoReceita').value,
+                    amount: parseFloat(document.getElementById('valorReceita').value),
+                    date: document.getElementById('dataReceita').value,
+                    category_id: document.getElementById('categoriaReceita').value,
+                    account_id: document.getElementById('contaReceita').value,
+                    type: 'receita'
+                };
+                
+                // Validate required fields
+                if (!transactionData.category_id || !transactionData.account_id) {
+                    alert('Por favor, selecione categoria e conta');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/transaction`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(transactionData)
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Close modal and refresh transactions
+                        modalReceita.style.display = 'none';
+                        document.getElementById('formReceita').reset();
+                        loadTransactions(); // Refresh the list
+                        alert('Receita adicionada com sucesso!');
+                    } else {
+                        throw new Error(data.message || 'Erro ao salvar receita');
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar receita:', error);
+                    alert(error.message || 'Erro de conexão com o servidor');
+                }
+            });
+            
+            document.getElementById('formDespesa').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const transactionData = {
+                    descricao: document.getElementById('descricaoDespesa').value,
+                    amount: parseFloat(document.getElementById('valorDespesa').value),
+                    date: document.getElementById('dataDespesa').value,
+                    category_id: document.getElementById('categoriaDespesa').value,
+                    account_id: document.getElementById('contaDespesa').value,
+                    type: 'despesa'
+                };
+                
+                // Validate required fields
+                if (!transactionData.category_id || !transactionData.account_id) {
+                    alert('Por favor, selecione categoria e conta');
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/transaction`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(transactionData)
+                    });
+                    
+                    const data = await response.json();
+                    
+                    if (response.ok) {
+                        // Close modal and refresh transactions
+                        modalDespesa.style.display = 'none';
+                        document.getElementById('formDespesa').reset();
+                        loadTransactions(); // Refresh the list
+                        alert('Despesa adicionada com sucesso!');
+                    } else {
+                        throw new Error(data.message || 'Erro ao salvar despesa');
+                    }
+                } catch (error) {
+                    console.error('Erro ao salvar despesa:', error);
+                    alert(error.message || 'Erro de conexão com o servidor');
+                }
+            });
+            
+            // Function to load transactions from Xano
+            async function loadTransactions() {
+                try {
+                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/transaction`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch transactions');
+                    }
+                    
+                    const transactions = await response.json();
+                    
+                    // Update UI based on tabs
+                    const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+                    const isReceitasTab = activeTab === 'receitas';
+                    
+                    // Filter transactions based on active tab
+                    const filteredTransactions = transactions.filter(t => 
+                        isReceitasTab ? t.type === 'receita' : t.type === 'despesa'
+                    );
+                    
+                    // Update receitas table
+                    const tbodyReceitas = document.getElementById('tbodyReceitas');
+                    if (filteredTransactions.length === 0 && isReceitasTab) {
+                        tbodyReceitas.innerHTML = `
+                            <tr><td colspan="6" class="empty-state">Nenhuma receita encontrada</td></tr>
+                        `;
+                    } else if (!isReceitasTab) {
+                        tbodyReceitas.innerHTML = ''; // Clear if not active tab
+                    } else {
+                        tbodyReceitas.innerHTML = ''; // Clear existing rows
+                        
+                        filteredTransactions.forEach(transaction => {
+                            const row = document.createElement('tr');
+                            
+                            // Format date from timestamp (assuming ISO string or Unix timestamp)
+                            let dateFormatted = '';
+                            if (transaction.date) {
+                                const date = new Date(transaction.date);
+                                dateFormatted = date.toLocaleDateString('pt-BR', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                }).replace('/', '/'); // Keep DD/MM/YYYY format
+                            }
+                            
+                            // Extract category name from category_id (assuming it's the name directly or has nome property)
+                            const categoryName = typeof transaction.category_id === 'string' ? 
+                                                transaction.category_id : 
+                                                (transaction.category_id && transaction.category_id.nome ? 
+                                                 transaction.category_id.nome : 
+                                                 (transaction.category_id && transaction.category_id.name ? 
+                                                  transaction.category_id.name : 'outros'));
+                            
+                            // Extract account name from account_id (same logic)
+                            const accountName = typeof transaction.account_id === 'string' ? 
+                                               transaction.account_id : 
+                                               (transaction.account_id && transaction.account_id.nome ? 
+                                                transaction.account_id.nome : 
+                                                (transaction.account_id && transaction.account_id.name ? 
+                                                 transaction.account_id.name : '-'));
+                            
+                            // Format amount with proper sign based on type
+                            const amountValue = Math.abs(parseFloat(transaction.amount) || 0);
+                            const formattedAmount = amountValue.toFixed(2).replace('.', ',');
+                            const amountClass = transaction.type === 'receita' ? 'valor-positivo' : 'valor-negativo';
+                            const amountSign = transaction.type === 'receita' ? '+' : '-';
+                            
+                            row.innerHTML = `
+                                <td>${dateFormatted || '-'}</td>
+                                <td>${transaction.descricao || '-'}</td>
+                                <td><span class="category-tag ${categoryName.toLowerCase()}">${capitalizeFirstLetter(categoryName)}</span></td>
+                                <td>${accountName}</td>
+                                <td class="${amountClass}">${amountSign} R$ ${formattedAmount}</td>
+                                <td>
+                                    <a href="#" class="action-btn small" style="background:#f3f4f6;color:var(--cinza-escuro);padding:2px 6px;font-size:0.75rem;">Editar</a>
+                                    <a href="#" class="action-btn small" style="background:#fef2f2;color:var(--vermelho);padding:2px 6px;font-size:0.75rem;">Excluir</a>
+                                </td>
+                            `;
+                            
+                            tbodyReceitas.appendChild(row);
+                        });
+                    }
+                    
+                    // Update despesas table
+                    const tbodyDespesas = document.getElementById('tbodyDespesas');
+                    const despesasFiltered = transactions.filter(t => t.type === 'despesa');
+                    if (despesasFiltered.length === 0 && !isReceitasTab) {
+                        tbodyDespesas.innerHTML = `
+                            <tr><td colspan="6" class="empty-state">Nenhuma despesa encontrada</td></tr>
+                        `;
+                    } else if (isReceitasTab) {
+                        tbodyDespesas.innerHTML = ''; // Clear if not active tab
+                    } else {
+                        tbodyDespesas.innerHTML = ''; // Clear existing rows
+                        
+                        despesasFiltered.forEach(transaction => {
+                            const row = document.createElement('tr');
+                            
+                            // Format date from timestamp
+                            let dateFormatted = '';
+                            if (transaction.date) {
+                                const date = new Date(transaction.date);
+                                dateFormatted = date.toLocaleDateString('pt-BR', {
+                                    day: '2-digit',
+                                    month: '2-digit',
+                                    year: 'numeric'
+                                }).replace('/', '/'); // Keep DD/MM/YYYY format
+                            }
+                            
+                            // Extract category name from category_id
+                            const categoryName = typeof transaction.category_id === 'string' ? 
+                                                transaction.category_id : 
+                                                (transaction.category_id && transaction.category_id.nome ? 
+                                                 transaction.category_id.nome : 
+                                                 (transaction.category_id && transaction.category_id.name ? 
+                                                  transaction.category_id.name : 'outros'));
+                            
+                            // Extract account name from account_id
+                            const accountName = typeof transaction.account_id === 'string' ? 
+                                               transaction.account_id : 
+                                               (transaction.account_id && transaction.account_id.nome ? 
+                                                transaction.account_id.nome : 
+                                                (transaction.account_id && transaction.account_id.name ? 
+                                                 transaction.account_id.name : '-'));
+                            
+                            // Format amount with proper sign based on type
+                            const amountValue = Math.abs(parseFloat(transaction.amount) || 0);
+                            const formattedAmount = amountValue.toFixed(2).replace('.', ',');
+                            const amountClass = transaction.type === 'despesa' ? 'valor-negativo' : 'valor-positivo';
+                            const amountSign = transaction.type === 'despesa' ? '-' : '+';
+                            
+                            row.innerHTML = `
+                                <td>${dateFormatted || '-'}</td>
+                                <td>${transaction.descricao || '-'}</td>
+                                <td><span class="category-tag ${categoryName.toLowerCase()}">${capitalizeFirstLetter(categoryName)}</span></td>
+                                <td>${accountName}</td>
+                                <td class="${amountClass}">${amountSign} R$ ${formattedAmount}</td>
+                                <td>
+                                    <a href="#" class="action-btn small" style="background:#f3f4f6;color:var(--cinza-escuro);padding:2px 6px;font-size:0.75rem;">Editar</a>
+                                    <a href="#" class="action-btn small" style="background:#fef2f2;color:var(--vermelho);padding:2px 6px;font-size:0.75rem;">Excluir</a>
+                                </td>
+                            `;
+                            
+                            tbodyDespesas.appendChild(row);
+                        });
+                    }
+                    
+                } catch (error) {
+                    console.error('Erro ao carregar transações:', error);
+                    // Show error in tables
+                    document.getElementById('tbodyReceitas').innerHTML = `
+                        <tr><td colspan="6" style="text-align:center;color:var(--vermelho);">Erro ao carregar receitas: ${error.message}</td></tr>
+                    `;
+                    document.getElementById('tbodyDespesas').innerHTML = `
+                        <tr><td colspan="6" style="text-align:center;color:var(--vermelho);">Erro ao carregar despesas: ${error.message}</td></tr>
+                    `;
+                }
+            }
+            
+            // Helper functions
+            function formatCurrency(value) {
+                return Number(value).toFixed(2).replace('.', ',');
+            }
+            
+            function capitalizeFirstLetter(string) {
+                if (!string) return '';
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            }
+            
+            // Load initial transactions
+            loadTransactions();
         });
     </script>
-
 </body>
 </html>
