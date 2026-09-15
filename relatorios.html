@@ -6,6 +6,195 @@
     <title>OrbitFin - Relatórios</title>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Print styles to hide sidebar and buttons */
+        @media print {
+            .sidebar,
+            .actions-header,
+            .report-footer .action-btn {
+                display: none !important;
+            }
+            .card {
+                box-shadow: none !important;
+                border: none !important;
+                margin-bottom: 0 !important;
+            }
+            body {
+                background-color: white !important;
+                color: black !important;
+            }
+        }
+        
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--cinza-escuro);
+            font-style: italic;
+            grid-column: 1 / -1;
+        }
+        
+        /* Error state */
+        .error {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--vermelho);
+            grid-column: 1 / -1;
+        }
+        
+        /* Report cards styling enhancements */
+        .report-card {
+            background: var(--branco);
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .report-header {
+            background: #f8fafc;
+            padding: 16px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .report-header h3 {
+            margin: 0 0 8px 0;
+            color: var(--secundaria);
+            font-size: 1.25rem;
+        }
+        
+        .report-subtitle {
+            color: var(--cinza-escuro);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+        
+        .report-body {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .stat-block {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        
+        .stat-block:last-child {
+            border-bottom: none;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--cinza-escuro);
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .stat-value.positivo { color: var(--verde); }
+        .stat-value.negativo { color: var(--vermelho); }
+        
+        /* Progress bars for Gastos por Categoria */
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 16px;
+        }
+        
+        .category-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--cinza-escuro);
+        }
+        
+        .category-percent {
+            font-weight: 600;
+            color: var(--primaria);
+        }
+        
+        .progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background: #f1f5f9;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primaria);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        /* Export buttons */
+        .export-section {
+            margin-top: auto;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .export-section .action-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            margin: 0 8px 8px 0;
+        }
+        
+        .export-section .action-btn:nth-child(1) {
+            background: #f3f4f6;
+            color: var(--cinza-escuro);
+        }
+        
+        .export-section .action-btn:nth-child(1):hover {
+            background: #e5e7eb;
+        }
+        
+        .export-section .action-btn:nth-child(2) {
+            background: var(--primaria);
+            color: var(--branco);
+        }
+        
+        .export-section .action-btn:nth-child(2):hover {
+            background: #c4452e;
+        }
+        
+        .export-section .action-btn:nth-child(3) {
+            background: #f0f9ff;
+            color: #1e40af;
+        }
+        
+        .export-section .action-btn:nth-child(3):hover {
+            background: #dbeafe;
+        }
+        
+        .export-section .action-btn:nth-child(4) {
+            background: #fef2f2;
+            color: var(--vermelho);
+        }
+        
+        .export-section .action-btn:nth-child(4):hover {
+            background: #fee2e2;
+        }
+    </style>
 </head>
 <body>
     <!-- Sidebar -->
@@ -34,7 +223,7 @@
                 </ul>
             </nav>
         </div>
-
+        
         <!-- Menu Inferior (Configurações isoladas) -->
         <div class="sidebar-bottom">
             <hr class="sidebar-divider">
@@ -45,13 +234,13 @@
             </nav>
         </div>
     </aside>
-
+    
     <!-- Main Content -->
     <main class="content">
         <header class="page-header">
             <h1>Relatórios Financeiros</h1>
         </header>
-
+        
         <div class="card">
             <div class="actions-header">
                 <div class="filter-group">
@@ -59,77 +248,475 @@
                     <select id="period">
                         <option value="current">Mês atual</option>
                         <option value="last3">Últimos 3 meses</option>
-                        <option value="year">Ano</option>
+                        <option value="year">Ano atual</option>
+                        <option value="all">Todos os tempos</option>
                     </select>
                 </div>
-                <a href="#" class="action-btn export-pdf"><i class="fi fi-br-file"></i> Exportar PDF</a>
+                <a href="#" class="action-btn export-pdf" id="btnExportPdf"><i class="fi fi-br-file"></i> Exportar PDF</a>
             </div>
         </div>
-
+        
         <div class="reports-grid">
-            <div class="card report-card">
+            <!-- Fluxo de Caixa Card -->
+            <div class="card report-card" id="fluxoCaixaCard">
                 <div class="report-header">
                     <h3>Fluxo de Caixa</h3>
                     <p class="report-subtitle">Entradas vs Saídas</p>
                 </div>
-                <div class="report-body">
-                    <div class="stat-block">
-                        <span class="stat-label">Total Entradas</span>
-                        <span class="stat-value positivo">R$ 12.450,00</span>
-                    </div>
-                    <div class="stat-block">
-                        <span class="stat-label">Total Saídas</span>
-                        <span class="stat-value negativo">R$ 8.320,00</span>
-                    </div>
-                    <div class="stat-block">
-                        <span class="stat-label">Saldo Mensal</span>
-                        <span class="stat-value positivo">R$ 4.130,00</span>
-                    </div>
+                <div class="report-body" id="fluxoCaixaBody">
+                    <!-- Content will be injected via JS -->
                 </div>
-                <div class="report-footer">
-                    <a href="#" class="action-btn small"><i class="fi fi-br-download"></i> Demo. Resultado</a>
-                    <a href="#" class="action-btn small"><i class="fi fi-br-download"></i> Demo. Balanço</a>
+                <div class="report-footer" id="fluxoCaixaFooter">
+                    <!-- Demo buttons will be injected via JS -->
                 </div>
             </div>
-
-            <div class="card report-card">
+            
+            <!-- Gastos por Categoria Card -->
+            <div class="card report-card" id="gastosCategoriaCard">
                 <div class="report-header">
                     <h3>Gastos por Categoria</h3>
                     <p class="report-subtitle">Distribuição mensal</p>
                 </div>
-                <div class="report-body">
-                    <!-- Simple bar placeholders -->
-                    <div class="chart-placeholder">
-                        <div class="bar-item"><span>Alimentação</span><div class="bar"><div class="fill" style="width: 35%;"></div></div></div>
-                        <div class="bar-item"><span>Transporte</span><div class="bar"><div class="fill" style="width: 20%;"></div></div></div>
-                        <div class="bar-item"><span>Lazer</span><div class="bar"><div class="fill" style="width: 15%;"></div></div></div>
-                        <div class="bar-item"><span>Assinaturas</span><div class="bar"><div class="fill" style="width: 30%;"></div></div></div>
-                    </div>
+                <div class="report-body" id="gastosCategoriaBody">
+                    <!-- Content will be injected via JS -->
                 </div>
-                <div class="report-footer">
-                    <a href="#" class="action-btn small"><i class="fi fi-br-download"></i> Exportar Dados</a>
+                <div class="report-footer" id="gastosCategoriaFooter">
+                    <!-- Exportar Dados button will be injected via JS -->
                 </div>
             </div>
-
-            <div class="card report-card">
+            
+            <!-- Exportar Demonstrações Card -->
+            <div class="card report-card" id="exportarCard">
                 <div class="report-header">
                     <h3>Exportar Demonstrações</h3>
                     <p class="report-subtitle">Arquivos prontos para contabilidade</p>
                 </div>
-                <div class="report-body">
+                <div class="report-body" id="exportarBody">
+                    <!-- Download list will be injected via JS -->
+                </div>
+                <div class="report-footer" id="exportarFooter">
+                    <!-- Baixar Todos button will be injected via JS -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
+            const TRANSACTIONS_ENDPOINT = '/api:FODf7XFO/transaction';
+            const token = localStorage.getItem('orbitfin_token');
+            
+            // Redirect to login if no token
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // DOM elements
+            const periodSelect = document.getElementById('period');
+            const fluxoCaixaBody = document.getElementById('fluxoCaixaBody');
+            const fluxoCaixaFooter = document.getElementById('fluxoCaixaFooter');
+            const gastosCategoriaBody = document.getElementById('gastosCategoriaBody');
+            const gastosCategoriaFooter = document.getElementById('gastosCategoriaFooter');
+            const exportarBody = document.getElementById('exportarBody');
+            const exportarFooter = document.getElementById('exportarFooter');
+            const btnExportPdf = document.getElementById('btnExportPdf');
+            
+            // Helper functions
+            function escapeHtml(text) {
+                const map = {
+                    '&': '&',
+                    '<': '<',
+                    '>': '>',
+                    '"': '"',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, m => map[m]);
+            }
+            
+            function formatCurrency(value) {
+                return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(value);
+            }
+            
+            function getDateRange(period) {
+                const today = new Date();
+                let startDate, endDate;
+                
+                endDate = today.toISOString().split('T')[0]; // YYYY-MM-DD
+                
+                switch (period) {
+                    case 'current':
+                        // First day of current month
+                        startDate = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().split('T')[0];
+                        break;
+                    case 'last3':
+                        // 3 months ago from today
+                        startDate = new Date(today.getFullYear(), today.getMonth() - 2, 1).toISOString().split('T')[0];
+                        break;
+                    case 'year':
+                        // First day of current year
+                        startDate = new Date(today.getFullYear(), 0, 1).toISOString().split('T')[0];
+                        break;
+                    case 'all':
+                        // No start date (we'll not filter)
+                        startDate = null;
+                        break;
+                    default:
+                        startDate = null;
+                }
+                
+                return { startDate, endDate };
+            }
+            
+            // Fetch transactions from Xano
+            async function fetchTransactions() {
+                try {
+                    const response = await fetch(`${BASE_URL}${TRANSACTIONS_ENDPOINT}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch transactions');
+                    }
+                    
+                    const transactions = await response.json();
+                    return transactions;
+                } catch (error) {
+                    console.error('Erro ao buscar transações:', error);
+                    throw error;
+                }
+            }
+            
+            // Filter transactions by date range
+            function filterTransactionsByPeriod(transactions, period) {
+                const { startDate, endDate } = getDateRange(period);
+                
+                if (!startDate) {
+                    // No filter for 'all'
+                    return transactions;
+                }
+                
+                return transactions.filter(t => {
+                    const tDate = t.date ? t.date.split('T')[0] : null;
+                    return tDate && tDate >= startDate && tDate <= endDate;
+                });
+            }
+            
+            // Extract category name from category_id (could be string or object)
+            function getCategoryName(categoryId) {
+                if (typeof categoryId === 'string') {
+                    return categoryId;
+                }
+                if (categoryId && typeof categoryId === 'object') {
+                    return categoryId.nome || categoryId.name || 'outros';
+                }
+                return 'outros';
+            }
+            
+            // Compute metrics for Fluxo de Caixa
+            function computeFluxoDeCaixaMetrics(transactions) {
+                let totalEntradas = 0;
+                let totalSaidas = 0;
+                
+                transactions.forEach(t => {
+                    const amount = parseFloat(t.amount) || 0;
+                    if (t.type === 'receita') {
+                        totalEntradas += amount;
+                    } else if (t.type === 'despesa') {
+                        totalSaidas += amount;
+                    }
+                });
+                
+                const saldo = totalEntradas - totalSaidas;
+                
+                return {
+                    totalEntradas,
+                    totalSaidas,
+                    saldo
+                };
+            }
+            
+            // Compute category breakdown for Gastos por Categoria
+            function computeGastosPorCategoria(transactions) {
+                const categoryMap = {};
+                let totalDespesas = 0;
+                
+                transactions.forEach(t => {
+                    if (t.type === 'despesa') {
+                        const amount = parseFloat(t.amount) || 0;
+                        totalDespesas += amount;
+                        const categoryName = getCategoryName(t.category_id);
+                        
+                        if (!categoryMap[categoryName]) {
+                            categoryMap[categoryName] = 0;
+                        }
+                        categoryMap[categoryName] += amount;
+                    }
+                });
+                
+                // Convert to array of objects and calculate percentage
+                const categoryArray = Object.entries(categoryMap).map(([name, amount]) => ({
+                    name,
+                    amount,
+                    percentage: totalDespesas > 0 ? (amount / totalDespesas) * 100 : 0
+                }));
+                
+                // Sort by amount descending
+                categoryArray.sort((a, b) => b.amount - a.amount);
+                
+                return { totalDespesas, categories: categoryArray };
+            }
+            
+            // Render Fluxo de Caixa card
+            function renderFluxoDeCaixa(metrics) {
+                fluxoCaixaBody.innerHTML = `
+                    <div class="stat-block">
+                        <span class="stat-label">Total Entradas</span>
+                        <span class="stat-value positivo">+ ${formatCurrency(metrics.totalEntradas)}</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-label">Total Saídas</span>
+                        <span class="stat-value negativo">- ${formatCurrency(metrics.totalSaidas)}</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-label">Saldo Mensal</span>
+                        <span class="stat-value ${metrics.saldo >= 0 ? 'positivo' : 'negativo'}">
+                            ${metrics.saldo >= 0 ? '+' : '-'}${formatCurrency(Math.abs(metrics.saldo))}
+                        </span>
+                    </div>
+                `;
+                
+                fluxoCaixaFooter.innerHTML = `
+                    <a href="#" class="action-btn small" id="btnDemoResultado"><i class="fi fi-br-download"></i> Demo. Resultado</a>
+                    <a href="#" class="action-btn small" id="btnDemoBalanço"><i class="fi fi-br-download"></i> Demo. Balanço</a>
+                `;
+                
+                // Add event listeners for demo buttons
+                document.getElementById('btnDemoResultado').addEventListener('click', handleDemoResultado);
+                document.getElementById('btnDemoBalanço').addEventListener('click', handleDemoBalanço);
+            }
+            
+            // Render Gastos por Categoria card
+            function renderGastosPorCategoria(data) {
+                gastosCategoriaBody.innerHTML = '';
+                
+                if (data.categories.length === 0) {
+                    gastosCategoriaBody.innerHTML = '<p class="loading">Nenhuma despesa encontrada para o período selecionado.</p>';
+                    return;
+                }
+                
+                data.categories.forEach(cat => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'category-item';
+                    itemDiv.innerHTML = `
+                        <div class="category-label">
+                            <span>${escapeHtml(cat.name)}</span>
+                            <span class="category-percent">${Math.round(cat.percentage)}%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-fill" style="width: ${cat.percentage}%;"></div>
+                        </div>
+                    `;
+                    gastosCategoriaBody.appendChild(itemDiv);
+                });
+                
+                gastosCategoriaFooter.innerHTML = `
+                    <a href="#" class="action-btn small" id="btnExportarDados"><i class="fi fi-br-download"></i> Exportar Dados</a>
+                `;
+                
+                document.getElementById('btnExportarDados').addEventListener('click', handleExportarDados);
+            }
+            
+            // Render Exportar Demonstrações card
+            function renderExportarDemonstracoes() {
+                exportarBody.innerHTML = `
                     <div class="download-list">
                         <div class="download-item"><i class="fi fi-br-file-text"></i><span>DRE - Demonstrativo de Resultados</span></div>
                         <div class="download-item"><i class="fi fi-br-file-text"></i><span>Balanço Patrimonial</span></div>
                         <div class="download-item"><i class="fi fi-br-file-text"></i><span>Fluxo de Caixa Mensal</span></div>
                     </div>
-                </div>
-                <div class="report-footer">
-                    <a href="#" class="action-btn small"><i class="fi fi-br-download"></i> Baixar Todos</a>
-                </div>
-            </div>
-        </div>
-    </main>
-
+                `;
+                
+                exportarFooter.innerHTML = `
+                    <a href="#" class="action-btn small" id="btnBaixarTodos"><i class="fi fi-br-download"></i> Baixar Todos</a>
+                `;
+                
+                document.getElementById('btnBaixarTodos').addEventListener('click', handleBaixarTodos);
+            }
+            
+            // Export PDF function
+            function handleExportPdf() {
+                window.print();
+            }
+            
+            // Demo Resultado - generate CSV of income statement
+            function handleDemoResultado() {
+                // We'll reuse the current filtered transactions
+                // For simplicity, we'll trigger a re-render with current period and then generate CSV
+                // But we need to have the data stored; we'll refactor to have a getCurrentData function
+                alert('Funcionalidade de demonstração em desenvolvimento');
+            }
+            
+            // Demo Balanço - generate CSV of balance sheet
+            function handleDemoBalanço() {
+                alert('Funcionalidade de demonstração em desenvolvimento');
+            }
+            
+            // Exportar Dados - generate CSV of transactions
+            async function handleExportarDados() {
+                try {
+                    const transactions = await fetchTransactions();
+                    const period = periodSelect.value;
+                    const filtered = filterTransactionsByPeriod(transactions, period);
+                    
+                    // Generate CSV
+                    const csvHeader = ['Data', 'Descrição', 'Categoria', 'Tipo', 'Valor (R$)'];
+                    const csvRows = filtered.map(t => {
+                        const date = t.date ? new Date(t.date).toLocaleDateString('pt-BR') : '';
+                        const descricao = escapeHtml(t.descricao || '');
+                        const categoria = escapeHtml(getCategoryName(t.category_id));
+                        const tipo = t.type === 'receita' ? 'Receita' : 'Despesa';
+                        const valor = formatCurrency(parseFloat(t.amount) || 0);
+                        return `"${date}","${descricao}","${categoria}","${tipo}","${valor}"`;
+                    });
+                    
+                    const csvContent = [csvHeader, ...csvRows].map(row => row.join(',')).join('\n');
+                    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                    const url = URL.createObjectURL(blob);
+                    const filename = `transacoes_${period}_${new Date().toISOString().slice(0,10)}.csv`;
+                    
+                    const link = document.createElement('a');
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', filename);
+                    link.style.visibility = 'hidden';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    
+                    alert('Dados exportados com sucesso!');
+                } catch (error) {
+                    console.error('Erro ao exportar dados:', error);
+                    alert('Erro ao exportar dados: ' + error.message);
+                }
+            }
+            
+            // Baixar Todos - generate multiple files (simplified: just one ZIP would be better but we'll do multiple)
+            async function handleBaixarTodos() {
+                try {
+                    const transactions = await fetchTransactions();
+                    const period = periodSelect.value;
+                    const filtered = filterTransactionsByPeriod(transactions, period);
+                    
+                    // For simplicity, we'll generate three CSV files: transactions, summary by category, monthly summary
+                    // 1. Transactions
+                    const csvHeader = ['Data', 'Descrição', 'Categoria', 'Tipo', 'Valor (R$)'];
+                    const csvRows = filtered.map(t => {
+                        const date = t.date ? new Date(t.date).toLocaleDateString('pt-BR') : '';
+                        const descricao = escapeHtml(t.descricao || '');
+                        const categoria = escapeHtml(getCategoryName(t.category_id));
+                        const tipo = t.type === 'receita' ? 'Receita' : 'Despesa';
+                        const valor = formatCurrency(parseFloat(t.amount) || 0);
+                        return `"${date}","${descricao}","${categoria}","${tipo}","${valor}"`;
+                    });
+                    const transactionsCsv = [csvHeader, ...csvRows].map(row => row.join(',')).join('\n');
+                    
+                    // 2. Summary by category (for despesas)
+                    const categoryMap = {};
+                    filtered.forEach(t => {
+                        if (t.type === 'despesa') {
+                            const amount = parseFloat(t.amount) || 0;
+                            const categoryName = getCategoryName(t.category_id);
+                            if (!categoryMap[categoryName]) {
+                                categoryMap[categoryName] = 0;
+                            }
+                            categoryMap[categoryName] += amount;
+                        }
+                    });
+                    const categoryRows = Object.entries(categoryMap).map(([name, amount]) => [
+                        `"${escapeHtml(name)}"`,
+                        formatCurrency(amount)
+                    ]);
+                    const categoryCsv = ['Categoria,Valor (R$)', ...categoryRows.map(r => r.join(',')).join('\n')];
+                    
+                    // 3. Monthly summary (entries vs exits)
+                    const { totalEntradas, totalSaidas, saldo } = computeFluxoDeCaixaMetrics(filtered);
+                    const summaryCsv = [
+                        'Métrica,Valor (R$)',
+                        `"Total Entradas",${formatCurrency(totalEntradas)}`,
+                        `"Total Saídas",${formatCurrency(totalSaidas)}`,
+                        `"Saldo Mensal",${formatCurrency(saldo)}`
+                    ].join('\n');
+                    
+                    // Trigger downloads one by one with a small delay
+                    function downloadBlob(content, filename) {
+                        const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.setAttribute('href', url);
+                        link.setAttribute('download', filename);
+                        link.style.visibility = 'hidden';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        URL.revokeObjectURL(url);
+                    }
+                    
+                    downloadBlob(transactionsCsv, `transacoes_${period}.csv`);
+                    setTimeout(() => {
+                        downloadBlob(categoryCsv, `gastos_por_categoria_${period}.csv`);
+                        setTimeout(() => {
+                            downloadBlob(summaryCsv, `resumo_mensal_${period}.csv`);
+                            alert('Todos os arquivos foram baixados!');
+                        }, 300);
+                    }, 300);
+                } catch (error) {
+                    console.error('Erro ao baixar todos:', error);
+                    alert('Erro ao baixar arquivos: ' + error.message);
+                }
+            }
+            
+            // Main render function
+            async function renderReports() {
+                // Show loading states
+                fluxoCaixaBody.innerHTML = '<div class="loading">Carregando fluxo de caixa...</div>';
+                gastosCategoriaBody.innerHTML = '<div class="loading">Carregando gastos por categoria...</div>';
+                exportarBody.innerHTML = '<div class="loading">Carregando opções de exportação...</div>';
+                
+                try {
+                    const transactions = await fetchTransactions();
+                    const period = periodSelect.value;
+                    const filtered = filterTransactionsByPeriod(transactions, period);
+                    
+                    // Compute and render Fluxo de Caixa
+                    const fluxoMetrics = computeFluxoDeCaixaMetrics(filtered);
+                    renderFluxoDeCaixa(fluxoMetrics);
+                    
+                    // Compute and render Gastos por Categoria
+                    const gastosData = computeGastosPorCategoria(filtered);
+                    renderGastosPorCategoria(gastosData);
+                    
+                    // Render export section
+                    renderExportarDemonstracoes();
+                    
+                } catch (error) {
+                    console.error('Erro ao renderizar relatórios:', error);
+                    fluxoCaixaBody.innerHTML = `<div class="error">Erro ao carregar fluxo de caixa: ${error.message}</div>`;
+                    gastosCategoriaBody.innerHTML = `<div class="error">Erro ao carregar gastos por categoria: ${error.message}</div>`;
+                    exportarBody.innerHTML = `<div class="error">Erro ao carregar exportação: ${error.message}</div>`;
+                }
+            }
+            
+            // Event listeners
+            periodSelect.addEventListener('change', renderReports);
+            btnExportPdf.addEventListener('click', handleExportPdf);
+            
+            // Initial load
+            renderReports();
+        });
+    </script>
 </body>
 </html>
-</body>
