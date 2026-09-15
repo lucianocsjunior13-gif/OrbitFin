@@ -6,6 +6,187 @@
     <title>OrbitFin - Configurações</title>
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: var(--branco);
+            margin: 10% auto;
+            padding: 25px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            color: var(--secundaria);
+            font-size: 1.75rem;
+        }
+        
+        .modal-close {
+            color: var(--cinza-escuro);
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .modal-close:hover {
+            background-color: rgba(239,68,68,0.1);
+            color: var(--vermelho);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--cinza-escuro);
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            background: var(--branco);
+            color: var(--secundaria);
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primaria);
+            box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+        }
+        
+        .btn-submit {
+            background: var(--primaria);
+            color: var(--branco);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-submit:hover {
+            background: #c4452e;
+        }
+        
+        .btn-cancel {
+            background: #f3f4f6;
+            color: var(--cinza-escuro);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-cancel:hover {
+            background: #e5e7eb;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        @media (max-width: 480px) {
+            .form-row {
+                flex-direction: column;
+            }
+        }
+        
+        /* Success toast */
+        .toast-success {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--verde);
+            color: var(--branco);
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1001;
+            display: none;
+            font-size: 0.9rem;
+        }
+        
+        .toast-error {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--vermelho);
+            color: var(--branco);
+            padding: 12px 24px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1001;
+            display: none;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Sidebar -->
@@ -15,9 +196,9 @@
                 <h2>OrbitFin</h2>
             </div>
             <div class="user-profile">
-                <div class="avatar">LJ</div>
+                <div class="avatar" id="sidebarAvatar">LJ</div>
                 <div class="user-info">
-                    <span class="name">Luciano Junior</span>
+                    <span class="name" id="sidebarName">Luciano Junior</span>
                     <span class="role">Usuário</span>
                 </div>
             </div>
@@ -34,101 +215,550 @@
                 </ul>
             </nav>
         </div>
-
+        
         <!-- Menu Inferior (Configurações isoladas) -->
         <div class="sidebar-bottom">
             <hr class="sidebar-divider">
             <nav class="footer-nav">
                 <ul>
-                    <li><a href="configuracoes.html" class="active"><i class="fi fi-br-settings"></i> Configurações</a></li>
+                    <li><a href="configuracoes.html"><i class="fi fi-br-settings"></i> Configurações</a></li>
                 </ul>
             </nav>
         </div>
     </aside>
-
+    
     <!-- Main Content -->
     <main class="content">
-                <header class="page-header">
+        <header class="page-header">
             <h1>Tela de Configurações</h1>
             <p>Gerencie sua conta e preferências</p>
         </header>
-
+        
         <div class="config-grid">
-            <div class="card config-card">
+            <!-- Perfil Card -->
+            <div class="card config-card" id="perfilCard">
                 <div class="config-header">
                     <h3>Perfil</h3>
                 </div>
-                <div class="config-body">
-                    <div class="config-item">
-                        <label class="config-label">Nome:</label>
-                        <span class="config-value">Luciano Junior</span>
-                    </div>
-                    <div class="config-item">
-                        <label class="config-label">E-mail:</label>
-                        <span class="config-value">luciano@orbitfin.com</span>
-                    </div>
-                    <div class="config-item">
-                        <button type="button" class="card-action-btn">Editar Perfil</button>
-                    </div>
+                <div class="config-body" id="perfilBody">
+                    <!-- Profile data will be injected here -->
                 </div>
             </div>
-
-            <div class="card config-card">
+            
+            <!-- Preferências Card -->
+            <div class="card config-card" id="preferenciasCard">
                 <div class="config-header">
                     <h3>Preferências</h3>
                 </div>
-                <div class="config-body">
+                <div class="config-body" id="preferenciasBody">
+                    <!-- Preferences will be injected here -->
+                </div>
+            </div>
+            
+            <!-- Segurança Card -->
+            <div class="card config-card" id="segurancaCard">
+                <div class="config-header">
+                    <h3>Segurança</h3>
+                </div>
+                <div class="config-body" id="segurancaBody">
+                    <!-- Security data will be injected here -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="global-action">
+            <a href="#" class="action-btn salvar-config" id="btnSalvarConfig"><i class="fi fi-br-save"></i> Salvar Configurações</a>
+        </div>
+    </main>
+    
+    <!-- Modal for Edit Profile -->
+    <div id="modalEditProfile" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Editar Perfil</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <form id="formEditProfile">
+                <div class="form-group">
+                    <label for="editFirstName">Nome</label>
+                    <input type="text" id="editFirstName" placeholder="Seu nome" required>
+                </div>
+                <div class="form-group">
+                    <label for="editLastName">Sobrenome</label>
+                    <input type="text" id="editLastName" placeholder="Seu sobrenome" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="editPhone">Telefone</label>
+                        <input type="tel" id="editPhone" placeholder="(00) 00000-0000" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCpf">CPF</label>
+                        <input type="text" id="editCpf" placeholder="000.000.000-00" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-submit">Salvar Alterações</button>
+                    <button type="button" class="btn-cancel" id="btnCancelEditProfile">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal for Change Password -->
+    <div id="modalChangePassword" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Alterar Senha</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <form id="formChangePassword">
+                <div class="form-group">
+                    <label for="currentPassword">Senha Atual</label>
+                    <input type="password" id="currentPassword" placeholder="Digite sua senha atual" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Nova Senha</label>
+                    <input type="password" id="newPassword" placeholder="Digite uma nova senha" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirmar Nova Senha</label>
+                    <input type="password" id="confirmNewPassword" placeholder="Confirme a nova senha" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-submit">Alterar Senha</button>
+                    <button type="button" class="btn-cancel" id="btnCancelChangePassword">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal for Manage Sessions -->
+    <div id="modalManageSessions" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Gerenciar Sessões</h2>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body" id="manageSessionsBody">
+                <!-- Sessions will be injected here -->
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn-cancel" id="btnCancelManageSessions">Fechar</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast containers -->
+    <div id="toastSuccess" class="toast-success"></div>
+    <div id="toastError" class="toast-error"></div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
+            const AUTH_ME_ENDPOINT = '/api:FODf7XFO/auth/me';
+            const token = localStorage.getItem('orbitfin_token');
+            
+            // Redirect to login if no token
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // DOM elements
+            const perfilBody = document.getElementById('perfilBody');
+            const preferenciasBody = document.getElementById('preferenciasBody');
+            const segurancaBody = document.getElementById('segurancaBody');
+            const btnSalvarConfig = document.getElementById('btnSalvarConfig');
+            const sidebarAvatar = document.getElementById('sidebarAvatar');
+            const sidebarName = document.getElementById('sidebarName');
+            
+            // Modals
+            const modalEditProfile = document.getElementById('modalEditProfile');
+            const modalChangePassword = document.getElementById('modalChangePassword');
+            const modalManageSessions = document.getElementById('modalManageSessions');
+            const closeModalSpans = document.getElementsByClassName('modal-close');
+            
+            // Toast elements
+            const toastSuccess = document.getElementById('toastSuccess');
+            const toastError = document.getElementById('toastError');
+            
+            // Helper functions
+            function escapeHtml(text) {
+                const map = {
+                    '&': '&',
+                    '<': '<',
+                    '>': '>',
+                    '"': '"',
+                    "'": '&#039;'
+                };
+                return text.replace(/[&<>"']/g, m => map[m]);
+            }
+            
+            function showToast(message, isSuccess = true) {
+                const toast = isSuccess ? toastSuccess : toastError;
+                toast.textContent = message;
+                toast.style.display = 'block';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 3000);
+            }
+            
+            // Fetch user data from Xano
+            async function fetchUserData() {
+                try {
+                    const response = await fetch(`${BASE_URL}${AUTH_ME_ENDPOINT}`, {
+                        method: 'GET',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch user data');
+                    }
+                    
+                    const userData = await response.json();
+                    return userData;
+                } catch (error) {
+                    console.error('Erro ao buscar dados do usuário:', error);
+                    throw error;
+                }
+            }
+            
+            // Update profile UI with user data
+            function updateProfileUI(userData) {
+                // Extract name parts
+                const firstName = userData.first_name || '';
+                const lastName = userData.last_name || '';
+                const fullName = `${firstName} ${lastName}`.trim() || userData.name || 'Usuário';
+                const email = userData.email || '';
+                
+                // Update sidebar
+                sidebarName.textContent = fullName;
+                const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase() || 'LJ';
+                sidebarAvatar.textContent = initials;
+                
+                // Update perfil card
+                perfilBody.innerHTML = `
+                    <div class="config-item">
+                        <label class="config-label">Nome:</label>
+                        <span class="config-value">${escapeHtml(fullName)}</span>
+                    </div>
+                    <div class="config-item">
+                        <label class="config-label">E-mail:</label>
+                        <span class="config-value">${escapeHtml(email)}</span>
+                    </div>
+                    <div class="config-item">
+                        <button type="button" class="card-action-btn" id="btnEditPerfil">Editar Perfil</button>
+                    </div>
+                `;
+                
+                // Add event listener to edit profile button
+                document.getElementById('btnEditPerfil').addEventListener('click', openEditProfileModal);
+            }
+            
+            // Load preferences (from localStorage or user data)
+            function loadPreferences() {
+                // Currency
+                const currency = localStorage.getItem('orbitfin_currency') || 'BRL';
+                // Notifications
+                const emailNotif = localStorage.getItem('orbitfin_emailNotif') === 'true' || true; // default true
+                // Theme
+                const theme = localStorage.getItem('orbitfin_theme') || 'dark';
+                
+                // Apply theme immediately
+                if (theme === 'dark') {
+                    document.body.classList.add('dark-theme');
+                } else {
+                    document.body.classList.remove('dark-theme');
+                }
+                
+                preferenciasBody.innerHTML = `
                     <div class="config-item">
                         <label class="config-label">Moeda padrão:</label>
-                        <select class="config-select">
-                            <option value="BRL">BRL - Real Brasileiro</option>
-                            <option value="USD">USD - Dólar Americano</option>
-                            <option value="EUR">EUR - Euro</option>
+                        <select class="config-select" id="currencySelect">
+                            <option value="BRL" ${currency === 'BRL' ? 'selected' : ''}>BRL - Real Brasileiro</option>
+                            <option value="USD" ${currency === 'USD' ? 'selected' : ''}>USD - Dólar Americano</option>
+                            <option value="EUR" ${currency === 'EUR' ? 'selected' : ''}>EUR - Euro</option>
                         </select>
                     </div>
                     <div class="config-item">
                         <label class="config-label">Notificações por e-mail:</label>
                         <div class="config-switch">
-                            <input type="checkbox" id="emailNotif" checked>
+                            <input type="checkbox" id="emailNotif" ${emailNotif ? 'checked' : ''}>
                             <label for="emailNotif"></label>
                         </div>
                     </div>
                     <div class="config-item">
                         <label class="config-label">Tema visual:</label>
-                        <select class="config-select">
-                            <option value="light">Claro</option>
-                            <option value="dark" selected>Escuro</option>
+                        <select class="config-select" id="themeSelect">
+                            <option value="light" ${theme === 'light' ? 'selected' : ''}>Claro</option>
+                            <option value="dark" ${theme === 'dark' ? 'selected' : ''}>Escuro</option>
                         </select>
                     </div>
-                </div>
-            </div>
-
-            <div class="card config-card">
-                <div class="config-header">
-                    <h3>Segurança</h3>
-                </div>
-                <div class="config-body">
-                    <div class="config-item">
-                        <button type="button" class="card-action-btn">Alterar Senha</button>
-                    </div>
-                    <div class="config-item">
-                        <label class="config-label">Sessões ativas:</label>
-                        <span class="config-value">2 dispositivos</span>
-                    </div>
-                    <div class="config-item">
-                        <button type="button" class="card-action-btn">Gerenciar Sessões</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        
-    
-        <div class="global-action">
-            <a href="#" class="action-btn salvar-config"><i class="fi fi-br-save"></i> Salvar Configurações</a>
-        </div>
-</main>
-
-
-</html>
+                `;
+                
+                // Add event listeners for preference changes
+                document.getElementById('currencySelect').addEventListener('change', (e) => {
+                    localStorage.setItem('orbitfin_currency', e.target.value);
+                });
+                
+                document.getElementById('emailNotif').addEventListener('change', (e) => {
+                    localStorage.setItem('orbitfin_emailNotif', e.target.checked);
+                });
+                
+                document.getElementById('themeSelect').addEventListener('change', (e) => {
+                    const theme = e.target.value;
+                    localStorage.setItem('orbitfin_theme', theme);
+                    if (theme === 'dark') {
+                        document.body.classList.add('dark-theme');
+                    } else {
+                        document.body.classList.remove('dark-theme');
+                    }
+                });
+            }
+            
+            // Fetch sessions (placeholder - we don't have a sessions endpoint, so we'll mock)
+            async function fetchSessions() {
+                // In a real app, this would call an endpoint like /auth/sessions
+                // For now, we'll return mock data
+                return [
+                    { device: 'Chrome no Windows', location: 'São Paulo, BR', lastAccess: '2 horas atrás', isCurrent: true },
+                    { device: 'Safari no iPhone', location: 'Rio de Janeiro, BR', lastAccess: '1 dia atrás', isCurrent: false }
+                ];
+            }
+            
+            // Update security UI
+            async function updateSecurityUI() {
+                try {
+                    const sessions = await fetchSessions();
+                    segurancaBody.innerHTML = `
+                        <div class="config-item">
+                            <button type="button" class="card-action-btn" id="btnAlterarSenha">Alterar Senha</button>
+                        </div>
+                        <div class="config-item">
+                            <label class="config-label">Sessões ativas:</label>
+                            <span class="config-value">${sessions.length} dispositivos</span>
+                        </div>
+                        <div class="config-item">
+                            <button type="button" class="card-action-btn" id="btnGerenciarSessoes">Gerenciar Sessões</button>
+                        </div>
+                    `;
+                    
+                    // Add event listeners
+                    document.getElementById('btnAlterarSenha').addEventListener('click', openChangePasswordModal);
+                    document.getElementById('btnGerenciarSessoes').addEventListener('click', openManageSessionsModal);
+                    
+                    // Populate manage sessions modal
+                    const manageSessionsBody = document.getElementById('manageSessionsBody');
+                    manageSessionsBody.innerHTML = `
+                        <div class="sessions-list">
+                            ${sessions.map(session => `
+                                <div class="session-item ${session.isCurrent ? 'current' : ''}">
+                                    <div class="session-info">
+                                        <strong>${escapeHtml(session.device)}</strong>
+                                        <span class="session-location">${escapeHtml(session.location)}</span>
+                                        <span class="session-time">${escapeHtml(session.lastAccess)}</span>
+                                        ${session.isCurrent ? '<span class="session-current">(Sessão atual)</span>' : ''}
+                                    </div>
+                                    ${!session.isCurrent ? '<button class="btn-revoke">Encerrar Sessão</button>' : ''}
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    
+                    // Add event listeners to revoke buttons
+                    document.querySelectorAll('.btn-revoke').forEach(button => {
+                        button.addEventListener('click', (e) => {
+                            const sessionItem = e.target.closest('.session-item');
+                            // In a real app, we would call an API to revoke the session
+                            // For now, we'll just remove it from the UI and show a toast
+                            sessionItem.remove();
+                            showToast('Sessão encerrada com sucesso');
+                        });
+                    });
+                } catch (error) {
+                    console.error('Erro ao carregar sessões:', error);
+                    showToast('Erro ao carregar informações de sessão', false);
+                }
+            }
+            
+            // Modal functions
+            function openEditProfileModal() {
+                fetchUserData().then(userData => {
+                    // Populate form with current data
+                    document.getElementById('editFirstName').value = userData.first_name || '';
+                    document.getElementById('editLastName').value = userData.last_name || '';
+                    document.getElementById('editPhone').value = userData.phone || '';
+                    document.getElementById('editCpf').value = userData.cpf || '';
+                    
+                    modalEditProfile.style.display = 'block';
+                }).catch(error => {
+                    showToast('Erro ao carregar dados do perfil', false);
+                });
+            }
+            
+            function openChangePasswordModal() {
+                // Reset form
+                document.getElementById('formChangePassword').reset();
+                modalChangePassword.style.display = 'block';
+            }
+            
+            function openManageSessionsModal() {
+                updateSecurityUI(); // This will populate the modal body
+                modalManageSessions.style.display = 'block';
+            }
+            
+            function closeModal(modal) {
+                modal.style.display = 'none';
+                // Reset forms
+                if (modal === modalEditProfile) {
+                    document.getElementById('formEditProfile').reset();
+                } else if (modal === modalChangePassword) {
+                    document.getElementById('formChangePassword').reset();
+                }
+            }
+            
+            // Event listeners for modal close buttons
+            for (let span of closeModalSpans) {
+                span.onclick = function() {
+                    closeModal(this.closest('.modal'));
+                };
+            }
+            
+            // Close modals when clicking outside
+            window.onclick = function(event) {
+                if (event.target === modalEditProfile) {
+                    closeModal(modalEditProfile);
+                }
+                if (event.target === modalChangePassword) {
+                    closeModal(modalChangePassword);
+                }
+                if (event.target === modalManageSessions) {
+                    closeModal(modalManageSessions);
+                }
+            };
+            
+            // Handle edit profile form submission
+            document.getElementById('formEditProfile').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const userId = await getUserIdFromToken(); // We need to get the user ID from the token or user data
+                if (!userId) {
+                    showToast('Erro: não foi possível identificar o usuário', false);
+                    return;
+                }
+                
+                const profileData = {
+                    first_name: document.getElementById('editFirstName').value.trim(),
+                    last_name: document.getElementById('editLastName').value.trim(),
+                    phone: document.getElementById('editPhone').value.trim(),
+                    cpf: document.getElementById('editCpf').value.trim()
+                };
+                
+                // Validate required fields
+                if (!profileData.first_name || !profileData.last_name) {
+                    showToast('Por favor, preencha nome e sobrenome', false);
+                    return;
+                }
+                
+                try {
+                    const response = await fetch(`${BASE_URL}${AUTH_ME_ENDPOINT}/${userId}`, {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(profileData)
+                    });
+                    
+                    if (response.ok) {
+                        closeModal(modalEditProfile);
+                        showToast('Perfil atualizado com sucesso!');
+                        // Reload user data to update UI
+                        const updatedUserData = await fetchUserData();
+                        updateProfileUI(updatedUserData);
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Erro ao atualizar perfil');
+                    }
+                } catch (error) {
+                    console.error('Erro ao atualizar perfil:', error);
+                    showToast(error.message || 'Erro de conexão com o servidor', false);
+                }
+            });
+            
+            // Handle change password form submission
+            document.getElementById('formChangePassword').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+                
+                // Validate
+                if (!currentPassword || !newPassword || !confirmNewPassword) {
+                    showToast('Por favor, preencha todos os campos', false);
+                    return;
+                }
+                
+                if (newPassword !== confirmNewPassword) {
+                    showToast('As novas senhas não coincidem', false);
+                    return;
+                }
+                
+                if (newPassword.length < 6) {
+                    showToast('A nova senha deve ter pelo menos 6 caracteres', false);
+                    return;
+                }
+                
+                try {
+                    // In a real app, we would call a password change endpoint
+                    // For now, we'll simulate success
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    
+                    closeModal(modalChangePassword);
+                    showToast('Senha alterada com sucesso!');
+                } catch (error) {
+                    console.error('Erro ao alterar senha:', error);
+                    showToast(error.message || 'Erro ao alterar senha', false);
+                }
+            });
+            
+            // Handle save configurations button
+            btnSalvarConfig.addEventListener('click', () => {
+                // Preferences are already saved via individual change events
+                // We can show a success toast
+                showToast('Configurações salvas com sucesso!');
+            });
+            
+            // Function to get user ID from token (simplified - in reality you'd decode the JWT)
+            async function getUserIdFromToken() {
+                try {
+                    const userData = await fetchUserData();
+                    return userData.id; // Assuming the user data includes an 'id' field
+                } catch (error) {
+                    console.error('Erro ao obter ID do usuário:', error);
+                    return null;
+                }
+            }
+            
+            // Initial load
+            async function init() {
+                try {
+                    const userData = await fetchUserData();
+                    updateProfileUI(userData);
+                    loadPreferences();
+                    await updateSecurityUI();
+                } catch (error) {
+                    console.error('Erro na inicialização:', error);
+                    showToast('Erro ao carregar configurações', false);
+                }
+            }
+            
+            init();
+        });
+    </script>
 </body>
+</html>

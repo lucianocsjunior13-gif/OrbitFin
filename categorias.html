@@ -7,7 +7,7 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <link rel="stylesheet" href="css/style.css">
     <style>
-        /* Modal styles */
+        /* Modal styles for Nova Categoria */
         .modal {
             display: none;
             position: fixed;
@@ -22,25 +22,32 @@
         
         .modal-content {
             background-color: var(--branco);
-            margin: 15% auto;
-            padding: 20px;
+            margin: 10% auto;
+            padding: 25px;
             border: 1px solid #888;
-            width: 80%;
+            width: 90%;
             max-width: 500px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
         
         .modal-header h2 {
             margin: 0;
             color: var(--secundaria);
+            font-size: 1.75rem;
         }
         
         .modal-close {
@@ -48,32 +55,41 @@
             font-size: 28px;
             font-weight: bold;
             cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
         
         .modal-close:hover {
+            background-color: rgba(239,68,68,0.1);
             color: var(--vermelho);
         }
         
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .form-group label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 500;
             color: var(--cinza-escuro);
+            font-size: 0.95rem;
         }
         
         .form-group input,
         .form-group select {
             width: 100%;
-            padding: 10px;
+            padding: 12px 14px;
             border: 1px solid #D1D5DB;
             border-radius: 8px;
             background: var(--branco);
             color: var(--secundaria);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
         
         .form-group input:focus,
@@ -83,15 +99,57 @@
             box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
         }
         
+        .icon-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 12px;
+            margin: 10px 0;
+        }
+        
+        .icon-option {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+            background-color: #f8fafc;
+        }
+        
+        .icon-option:hover {
+            background-color: #f1f5f9;
+            transform: scale(1.05);
+        }
+        
+        .icon-option.selected {
+            border-color: var(--primaria);
+            background-color: #eff6ff;
+            transform: scale(1.05);
+        }
+        
+        .icon-option i {
+            font-size: 1.5rem;
+            color: var(--cinza-escuro);
+        }
+        
         .btn-submit {
             background: var(--primaria);
             color: var(--branco);
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
             cursor: pointer;
             width: 100%;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .btn-submit:hover {
@@ -102,12 +160,18 @@
             background: #f3f4f6;
             color: var(--cinza-escuro);
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
             cursor: pointer;
             width: 100%;
             margin-top: 10px;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
         
         .btn-cancel:hover {
@@ -116,8 +180,8 @@
         
         .form-row {
             display: flex;
-            gap: 15px;
-            margin-bottom: 15px;
+            gap: 16px;
+            margin-bottom: 20px;
         }
         
         .form-row .form-group {
@@ -135,17 +199,25 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         
         .category-card {
             background: var(--branco);
             border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             height: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            border: 1px solid #f1f5f9;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            border-color: #e2e8f0;
         }
         
         .category-card.despesa {
@@ -163,36 +235,54 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
-            margin: 20px;
+            font-size: 1.75rem;
+            margin: 25px auto 20px;
             flex-shrink: 0;
+            border-radius: 12px;
+        }
+        
+        .category-card.despesa .category-icon {
+            background: #fef2f2;
+        }
+        
+        .category-card.receita .category-icon {
+            background: #dcfce7;
         }
         
         .category-icon i {
             color: var(--secundaria);
         }
         
+        .category-card.despesa .category-icon i {
+            color: var(--vermelho);
+        }
+        
+        .category-card.receita .category-icon i {
+            color: var(--verde);
+        }
+        
         .category-info {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 0 20px 20px;
+            padding: 0 25px 25px;
         }
         
         .category-info h3 {
-            margin: 0 0 10px;
+            margin: 0 0 12px;
             color: var(--secundaria);
-            font-size: 1.25rem;
+            font-size: 1.5rem;
+            font-weight: 600;
         }
         
         .category-type {
             display: inline-block;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.85rem;
             font-weight: 500;
             text-transform: capitalize;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
         
         .category-type.despesa {
@@ -201,35 +291,46 @@
         }
         
         .category-type.receita {
-            background: #f0f9ff;
+            background: #dcfce7;
             color: var(--verde);
         }
         
         .category-budget {
             display: flex;
             flex-direction: column;
+            margin-top: auto;
         }
         
         .budget-label {
-            font-size: 0.875rem;
+            font-size: 0.9rem;
             color: var(--cinza-escuro);
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-weight: 500;
         }
         
         .progress-bar {
             width: 100%;
             height: 8px;
-            background: #f3f4f6;
+            background: #f1f5f9;
             border-radius: 4px;
             overflow: hidden;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
         
         .progress-fill {
             height: 100%;
             background: var(--primaria);
-            width: 0;
+            width: 0%;
             transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+        
+        .category-card.despesa .progress-fill {
+            background: var(--vermelho);
+        }
+        
+        .category-card.receita .progress-fill {
+            background: var(--verde);
         }
         
         .budget-value {
@@ -241,28 +342,32 @@
         .category-actions {
             display: flex;
             justify-content: flex-end;
-            gap: 10px;
-            padding: 15px 20px;
+            gap: 12px;
+            padding: 20px 25px;
             border-top: 1px solid #eee;
         }
         
         .action-btn.small {
-            display: inline-block;
-            padding: 6px 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
             font-size: 0.875rem;
-            border-radius: 4px;
+            border-radius: 6px;
             text-decoration: none;
             cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .action-btn.small:hover {
-            opacity: 0.9;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
         
         .action-btn.small.edit {
             background: #f0f9ff;
-            color: var(--azul);
+            color: #1e40af;
+        }
+        
+        .action-btn.small.edit:hover {
+            background: #dbeafe;
         }
         
         .action-btn.small.delete {
@@ -270,12 +375,17 @@
             color: var(--vermelho);
         }
         
+        .action-btn.small.delete:hover {
+            background: #fee2e2;
+        }
+        
         .empty-state {
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
             color: var(--cinza-escuro);
             font-style: italic;
             grid-column: 1 / -1;
+            font-size: 1.1rem;
         }
         
         /* Nova Categoria button */
@@ -283,17 +393,35 @@
             background: var(--primaria);
             color: var(--branco);
             border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 0.9rem;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            transition: background-color 0.2s;
         }
         
         .nova-categoria:hover {
             background: #c4452e;
+        }
+        
+        /* Tabs styling - override if needed */
+        .tab-btn {
+            padding: 12px 20px;
+            font-weight: 500;
+        }
+        
+        .tab-btn.active {
+            color: var(--primaria);
+            font-weight: 600;
+        }
+        
+        .tab-btn.active::after {
+            height: 3px;
+            background: var(--primaria);
         }
     </style>
 </head>
@@ -360,13 +488,13 @@
             </div>
             <div class="tab-content">
                 <div id="despesas" class="tab-pane active">
-                    <div class="categories-grid" id="despesasList">
-                        <!-- Cards will be inserted here -->
+                    <div id="categoriesContainer" class="categories-grid">
+                        <!-- Cards will be injected here -->
                     </div>
                 </div>
                 <div id="receitas" class="tab-pane">
-                    <div class="categories-grid" id="receitasList">
-                        <!-- Cards will be inserted here -->
+                    <div id="categoriesContainer" class="categories-grid">
+                        <!-- Cards will be injected here -->
                     </div>
                 </div>
             </div>
@@ -382,9 +510,10 @@
             </div>
             <form id="formCategoria">
                 <div class="form-group">
-                    <label for="nomeCategoria">Nome</label>
+                    <label for="nomeCategoria">Nome da Categoria</label>
                     <input type="text" id="nomeCategoria" placeholder="Ex: Alimentação, Salário" required>
                 </div>
+                
                 <div class="form-row">
                     <div class="form-group">
                         <label for="tipoCategoria">Tipo</label>
@@ -395,16 +524,21 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="iconeCategoria">Ícone (classe CSS)</label>
-                        <input type="text" id="iconeCategoria" placeholder="Ex: fi fi-br-utensils" value="fi fi-br-question">
+                        <label for="orcamentoCategoria">Orçamento Mensal (R$)</label>
+                        <input type="number" id="orcamentoCategoria" step="0.01" min="0" placeholder="0.00" required>
                     </div>
                 </div>
+                
                 <div class="form-group">
-                    <label for="orcamentoCategoria">Orçamento mensal (R$)</label>
-                    <input type="number" id="orcamentoCategoria" step="0.01" min="0" placeholder="0.00" required>
+                    <label for="iconeCategoria">Ícone da Categoria</label>
+                    <div class="icon-options" id="iconOptions">
+                        <!-- Icon options will be populated by JS -->
+                    </div>
+                    <input type="hidden" id="selectedIcon" value="fi fi-br-question">
                 </div>
+                
                 <div class="form-group">
-                    <button type="submit" class="btn-submit">Salvar Categoria</button>
+                    <button type="submit" class="btn-submit"><i class="fi fi-br-plus"></i> Salvar Categoria</button>
                     <button type="button" class="btn-cancel" id="btnCancelCategoria">Cancelar</button>
                 </div>
             </form>
@@ -414,6 +548,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
+            const ENDPOINT = '/api:FODf7XFO/category';
             const token = localStorage.getItem('orbitfin_token');
             
             // Redirect to login if no token
@@ -421,6 +556,21 @@
                 window.location.href = 'login.html';
                 return;
             }
+            
+            // Icon options for categories
+            const iconOptions = [
+                { name: 'Alimentação', icon: 'fi fi-br-utensils', emoji: '🍽️' },
+                { name: 'Transporte', icon: 'fi fi-br-car', emoji: '🚗' },
+                { name: 'Lazer', icon: 'fi fi-br-ticket', emoji: '🎮' },
+                { name: 'Cartão', icon: 'fi fi-br-credit-card', emoji: '💳' },
+                { name: 'Salário', icon: 'fi fi-br-wallet', emoji: '💰' },
+                { name: 'Moradia', icon: 'fi fi-br-home', emoji: '🏠' },
+                { name: 'Saúde', icon: 'fi fi-br-heart', emoji: '❤️' },
+                { name: 'Educação', icon: 'fi fi-br-book', emoji: '📚' },
+                { name: 'Assinaturas', icon: 'fi fi-br-layer', emoji: '📺' },
+                { name: 'Investimentos', icon: 'fi fi-br-chart-line-up', emoji: '📈' },
+                { name: 'Outros', icon: 'fi fi-br-question', emoji: '❓' }
+            ];
             
             // Tab switching functionality
             const tabBtns = document.querySelectorAll('.tab-btn');
@@ -456,9 +606,12 @@
             // Open modal
             btnNovaCategoria.onclick = () => {
                 modalCategoria.style.display = 'block';
-                // Reset form
+                // Reset form and icon selection
                 document.getElementById('formCategoria').reset();
-                document.getElementById('iconeCategoria').value = 'fi fi-br-question';
+                document.getElementById('selectedIcon').value = 'fi fi-br-question';
+                renderIconOptions();
+                // Set focus to first input
+                document.getElementById('nomeCategoria').focus();
             };
             
             // Close modals when clicking on (x)
@@ -484,7 +637,7 @@
                 const categoryData = {
                     name: document.getElementById('nomeCategoria').value.trim(),
                     type: document.getElementById('tipoCategoria').value,
-                    icon: document.getElementById('iconeCategoria).value.trim() || 'fi fi-br-question',
+                    icon: document.getElementById('selectedIcon').value,
                     budget: parseFloat(document.getElementById('orcamentoCategoria').value) || 0
                 };
                 
@@ -495,7 +648,7 @@
                 }
                 
                 try {
-                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/category`, {
+                    const response = await fetch(`${BASE_URL}${ENDPOINT}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -529,7 +682,7 @@
             // Function to load categories from Xano
             async function loadCategories() {
                 try {
-                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/category`, {
+                    const response = await fetch(`${BASE_URL}${ENDPOINT}`, {
                         method: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -546,6 +699,37 @@
                     console.error('Erro ao carregar categorias:', error);
                     throw error;
                 }
+            }
+            
+            // Function to render icon options in modal
+            function renderIconOptions() {
+                const iconOptionsContainer = document.getElementById('iconOptions');
+                iconOptionsContainer.innerHTML = '';
+                
+                iconOptions.forEach(option => {
+                    const iconDiv = document.createElement('div');
+                    iconDiv.className = 'icon-option';
+                    iconDiv.innerHTML = `<i class="${option.icon}"></i>`;
+                    iconDiv.title = option.name;
+                    
+                    // Check if this icon is currently selected
+                    if (option.icon === document.getElementById('selectedIcon').value) {
+                        iconDiv.classList.add('selected');
+                    }
+                    
+                    iconDiv.addEventListener('click', () => {
+                        // Remove selected class from all options
+                        iconOptionsContainer.querySelectorAll('.icon-option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        // Add selected class to clicked option
+                        iconDiv.classList.add('selected');
+                        // Update hidden input
+                        document.getElementById('selectedIcon').value = option.icon;
+                    });
+                    
+                    iconOptionsContainer.appendChild(iconDiv);
+                });
             }
             
             // Function to render categories in the grids
@@ -568,8 +752,8 @@
                     
                     // Get the container for active tab
                     const container = isDespesasTab ? 
-                        document.getElementById('despesasList') : 
-                        document.getElementById('receitasList');
+                        document.getElementById('despesas').querySelector('.categories-grid') : 
+                        document.getElementById('receitas').querySelector('.categories-grid');
                     
                     // Clear container
                     container.innerHTML = '';
@@ -577,7 +761,7 @@
                     if (filteredCategories.length === 0) {
                         container.innerHTML = `
                             <div class="empty-state">
-                                Nenhuma ${isDespesasTab ? 'despesa' : 'receita'} encontrada
+                                Nenhuma ${isDespesasTab ? 'despesa' : 'receita'} cadastrada nesta aba.
                             </div>
                         `;
                         return;
@@ -592,7 +776,10 @@
                         const budgetValue = new Intl.NumberFormat('pt-BR', {
                             style: 'currency',
                             currency: 'BRL'
-                        }).format(category.budget);
+                        }).format(category.budget || 0);
+                        
+                        // Determine progress width (simple visualization based on budget)
+                        const progressWidth = Math.min(Math.max((category.budget || 0) / 10000 * 100, 0), 100);
                         
                         card.innerHTML = `
                             <div class="category-icon">
@@ -605,7 +792,7 @@
                             <div class="category-budget">
                                 <span class="budget-label">Orçamento mensal</span>
                                 <div class="progress-bar">
-                                    <div class="progress-fill" style="width: ${Math.min(Math.max(category.budget / 10000 * 100, 0), 100)}%;"></div>
+                                    <div class="progress-fill" style="width: ${progressWidth}%;"></div>
                                 </div>
                                 <span class="budget-value">${budgetValue}</span>
                             </div>
@@ -632,9 +819,7 @@
                     });
                 }).catch(error => {
                     console.error('Erro ao renderizar categorias:', error);
-                    const container = isDespesasTab ? 
-                        document.getElementById('despesasList') : 
-                        document.getElementById('receitasList');
+                    const container = document.querySelector('.tab-pane.active .categories-grid');
                     container.innerHTML = `
                         <div class="empty-state" style="color: var(--vermelho);">
                             Erro ao carregar categorias: ${error.message}
@@ -646,7 +831,7 @@
             // Function to delete a category
             async function deleteCategory(categoryId) {
                 try {
-                    const response = await fetch(`${BASE_URL}/api:FODf7XFO/category/${categoryId}`, {
+                    const response = await fetch(`${BASE_URL}${ENDPOINT}/${categoryId}`, {
                         method: 'DELETE',
                         headers: {
                             'Authorization': `Bearer ${token}`
