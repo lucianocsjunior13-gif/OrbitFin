@@ -1766,7 +1766,7 @@ body {
     gap: 12px;
 }
 @media (min-width: 600px) {
-    .login-form {
+    .login-form:not(#loginForm) {
         grid-template-columns: repeat(2, 1fr);
     }
     /* Make email field full width */
@@ -1778,6 +1778,23 @@ body {
     .login-form > p.login-footer {
         grid-column: 1 / -1;
     }
+}
+/* Login-specific stacking: force full-width inputs */
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+#loginForm .form-group {
+    width: 100%;
+}
+#loginForm .form-group input {
+    width: 100%;
+}
+#loginForm button,
+#loginForm .login-footer {
+    width: 100%;
+    text-align: center;
 }
 .login-header {
     text-align: center;

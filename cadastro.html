@@ -59,11 +59,6 @@
             const errorDiv = document.getElementById('signupError');
             errorDiv.textContent = '';
 
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const cpf = document.getElementById('cpf').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
             const confirmPassword = document.getElementById('confirmPassword').value;
 
@@ -78,12 +73,12 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        first_name: firstName,
-                        last_name: lastName,
-                        cpf,
-                        phone,
-                        email,
-                        password
+                        first_name: document.getElementById('firstName').value.trim(),
+                        last_name: document.getElementById('lastName').value.trim(),
+                        cpf: document.getElementById('cpf').value.trim(),
+                        phone: document.getElementById('phone').value.trim(),
+                        email: document.getElementById('email').value.trim(),
+                        password: document.getElementById('password').value
                     })
                 });
 
