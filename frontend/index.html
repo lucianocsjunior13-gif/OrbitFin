@@ -3,342 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OrbitFin - Dashboard Financeiro</title>
-    
-
+    <title>OrbitFin - Painel</title>
+    <!-- A tag do CSS está apontando para a pasta correta, mesmo que ainda não tenha estilo lá -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <!-- Login Screen -->
-    <div id="login-screen" class="auth-screen">
-        <div class="auth-form">
-            <h2>OrbitFin Login</h2>
-            <form id="login-form">
-                <div class="form-group">
-                    <label for="login-email">E-mail</label>
-                    <input type="email" id="login-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="login-password">Senha</label>
-                    <input type="password" id="login-password" name="password" required>
-                </div>
-                <button type="submit" class="btn">Entrar</button>
-                <div id="login-error" class="error-message"></div>
-                <a href="#" id="show-register" class="switch-link">Não tem conta? Cadastre-se</a>
-            </form>
+
+    <!-- CABEÇALHO SUPERIOR (Substituiu a antiga barra lateral) -->
+    <header class="topbar">
+        <div class="logo-container">
+            <h1>OrbitFin</h1>
         </div>
-    </div>
+        
+        <!-- Menu de Navegação -->
+        <nav class="main-nav">
+            <ul>
+                <li><a href="#">Início</a></li>
+                <li><a href="#">Contas</a></li>
+                <li><a href="#">Metas</a></li>
+                <li><a href="#">Configurações</a></li>
+            </ul>
+        </nav>
 
-    <!-- Register Screen -->
-    <div id="register-screen" class="auth-screen" style="display: none;">
-        <div class="auth-form">
-            <h2>OrbitFin Cadastro</h2>
-            <form id="register-form">
-                <div class="form-group">
-                    <label for="register-name">Nome completo</label>
-                    <input type="text" id="register-name" name="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-email">E-mail</label>
-                    <input type="email" id="register-email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="register-password">Senha</label>
-                    <input type="password" id="register-password" name="password" required>
-                </div>
-                <button type="submit" class="btn">Cadastrar</button>
-                <div id="register-error" class="error-message"></div>
-                <a href="#" id="show-login" class="switch-link">Já tem conta? Faça login</a>
-            </form>
+        <!-- Perfil do Usuário e Novo Projeto -->
+        <div class="user-profile">
+            <span>Luciano Junior</span>
+            <button class="new-project-btn">+ Novo Projeto</button>
         </div>
-    </div>
+    </header>
 
-    <!-- Dashboard Screen -->
-    <div id="dashboard-screen" class="dashboard-screen" style="display: none;">
-        <!-- Header / Nav -->
-        <header>
-            <div class="logo-container">
-                <div class="logo-icon">
-                    <div class="logo-orbit"></div>
-                </div>
-                <div class="logo-text">OrbitFin</div>
+    <!-- ÁREA PRINCIPAL DO DASHBOARD -->
+    <main class="dashboard-content">
+        
+        <section class="welcome-header">
+            <h2>Bem-vindo, Luciano!</h2>
+            <p>Seu resumo financeiro em tempo real</p>
+        </section>
+
+        <!-- 1. BLOCO DE RESUMOS (Os 3 cards do topo) -->
+        <section class="summary-grid">
+            <div class="card">
+                <h3>Saldo Total</h3>
+                <p>R$ 4.051,70</p>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Transações</a></li>
-                    <li><a href="#">Metas</a></li>
-                    <li><a href="#">Configurações</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- Área Principal do Dashboard -->
-        <div class="dashboard-container">
-            <!-- Coluna Esquerda (Principal) -->
-            <div class="main-column">
-                <!-- Saldo e Ações -->
-                <div class="card balance-section">
-                    <div>
-                        <h2>Saldo Atual Consolidado</h2>
-                        <div class="balance-amount">R$ 5.430,00</div>
-                    </div>
-                    <div>
-                        <button class="btn">+ Nova Receita</button>
-                        <button class="btn" style="background-color: var(--azul-marinho); margin-left: 10px;">- Nova Despesa</button>
-                    </div>
-                </div>
-
-                <!-- Transações Recentes (Tabela Transaction) -->
-                <div class="card">
-                    <h2>Últimas Movimentações</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Data</th>
-                                <th>Descrição</th>
-                                <th>Categoria</th>
-                                <th>Conta</th>
-                                <th>Valor</th>
-                            </tr>
-                        </thead>
-                        <tbody id="transacoes-tbody">
-                            <tr>
-                                <td>12/10/2026</td>
-                                <td>Mercado Livre</td>
-                                <td>Compras</td>
-                                <td>Nubank</td>
-                                <td class="expense">- R$ 150,00</td>
-                            </tr>
-                            <tr>
-                                <td>10/10/2026</td>
-                                <td>Salário</td>
-                                <td>Receita</td>
-                                <td>Itaú</td>
-                                <td class="income">+ R$ 4.500,00</td>
-                            </tr>
-                            <tr>
-                                <td>08/10/2026</td>
-                                <td>Uber</td>
-                                <td>Transporte</td>
-                                <td>Nubank</td>
-                                <td class="expense">- R$ 35,50</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="card">
+                <h3>Receitas deste mês</h3>
+                <p>R$ 4.200,00</p>
             </div>
-
-            <!-- Coluna Direita (Widgets e IA) -->
-            <div class="side-column">
-                <!-- Insights da IA (Tabela AiInsight) -->
-                <div class="card">
-                    <h2>Orbit AI - Análise Inteligente</h2>
-                    <div class="ai-insight">
-                        <h3>💡 Oportunidade de Economia</h3>
-                        <p>Notamos que seus gastos com <strong>Alimentação fora de casa</strong> aumentaram 20% em relação ao mês passado. Tente definir um limite (Budget) para essa categoria!</p>
-                    </div>
-                </div>
-
-                <!-- Limites de Gastos (Tabela Budget) -->
-                <div class="card">
-                    <h2>Limites de Gastos (Budgets)</h2>
-
-                    <div class="goal-item">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Lazer</span>
-                            <span>R$ 750 / R$ 1000</span>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="goal-item">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Transporte</span>
-                            <span>R$ 200 / R$ 400</span>
-                        </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 50%; background-color: var(--azul-marinho);"></div>
-                        </div>
-                    </div>
-                </div>
+            <div class="card">
+                <h3>Despesas deste mês</h3>
+                <p>R$ 148,30</p>
             </div>
-        </div>
-    </div>
+        </section>
 
-    <script>
-        // Simple data fetching for local testing
-        let token = localStorage.getItem('orbitfin_token');
+        <!-- 2. BLOCO DE AÇÃO (Saldo consolidado e botões) -->
+        <section class="action-card">
+            <div>
+                <h3>Saldo Atual Consolidado</h3>
+                <p>R$ 4.051,70</p>
+            </div>
+            <div>
+                <button>+ Nova Receita</button>
+                <button>- Nova Despesa</button>
+            </div>
+        </section>
 
-        async function loadData() {
-            try {
-                const headers = {};
-                if (token) {
-                    headers['Authorization'] = `Bearer ${token}`;
-                }
-
-                // Try to fetch from local backend (adjust endpoints as needed)
-                const [saldoResponse, transacoesResponse, insightsResponse, budgetsResponse] = await Promise.all([
-                    fetch('http://localhost:5000/api/saldo', { headers }).then(r => r.json()),
-                    fetch('http://localhost:5000/api/transacoes', { headers }).then(r => r.json()),
-                    fetch('http://localhost:5000/api/insights', { headers }).then(r => r.json()),
-                    fetch('http://localhost:5000/api/budgets', { headers }).then(r => r.json())
-                ]);
-
-                // Update saldo
-                const saldoElement = document.querySelector('.balance-amount');
-                if (saldoElement && saldoResponse.valor !== undefined) {
-                    saldoElement.textContent = `R$ ${saldoResponse.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-                }
-
-                // Update transacoes table
-                const tbody = document.querySelector('#transacoes-tbody');
-                if (tbody && Array.isArray(transacoesResponse)) {
-                    tbody.innerHTML = transacoesResponse.map(t => `
-                        <tr>
-                            <td>${t.data}</td>
-                            <td>${t.descricao}</td>
-                            <td>${t.categoria}</td>
-                            <td>${t.conta}</td>
-                            <td class="${t.tipo === 'despesa' ? 'expense' : 'income'}">
-                                ${t.tipo === 'despesa' ? '- R$' : '+ R$'} ${Math.abs(t.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
-                            </td>
-                        </tr>
-                    `).join('');
-                }
-
-                // Update insights
-                const insightElement = document.querySelector('.ai-insight p');
-                if (insightElement && insightsResponse.texto) {
-                    insightElement.innerHTML = insightsResponse.texto;
-                }
-
-                // Update budgets
-                const budgetContainers = document.querySelectorAll('.progress-bar-container');
-                if (budgetContainers.length >= 2 && Array.isArray(budgetsResponse)) {
-                    budgetsResponse.forEach((b, index) => {
-                        if (budgetContainers[index]) {
-                            const bar = budgetContainers[index].querySelector('.progress-bar');
-                            const amountSpan = budgetContainers[index].previousElementSibling.querySelector('span:nth-child(2)');
-                            if (bar && amountSpan) {
-                                bar.style.width = b.percentual + '%';
-                                amountSpan.textContent = `R$ ${b.gastoAtual.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} / R$ ${b.limite.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-                            }
-                        }
-                    });
-                }
-            } catch (error) {
-                console.warn('Backend not available, using placeholder data:', error);
-                // Keep placeholder data as is
-            }
-        }
-
-        // Load data when DOM is ready
-        document.addEventListener('DOMContentLoaded', () => {
-            const loginScreen = document.getElementById('login-screen');
-            const registerScreen = document.getElementById('register-screen');
-            const dashboardScreen = document.getElementById('dashboard-screen');
+        <!-- 3. BLOCO INFERIOR (Tabela e Insights) -->
+        <section class="bento-grid">
             
-            if (token) {
-                loginScreen.style.display = 'none';
-                registerScreen.style.display = 'none';
-                dashboardScreen.style.display = 'block';
-                loadData();
-            } else {
-                loginScreen.style.display = 'flex';
-                registerScreen.style.display = 'none';
-                dashboardScreen.style.display = 'none';
-            }
+            <!-- Tabela de Movimentações -->
+            <div class="card transactions-card">
+                <h3>Últimas Movimentações</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Descrição</th>
+                            <th>Categoria</th>
+                            <th>Conta</th>
+                            <th>Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>12/10/2026</td>
+                            <td>Mercado Livre</td>
+                            <td>Compras</td>
+                            <td>Nubank</td>
+                            <td>- R$ 89,90</td>
+                        </tr>
+                        <tr>
+                            <td>10/10/2026</td>
+                            <td>Salário</td>
+                            <td>Receita</td>
+                            <td>Itaú</td>
+                            <td>+ R$ 3.200,00</td>
+                        </tr>
+                        <tr>
+                            <td>08/10/2026</td>
+                            <td>Uber</td>
+                            <td>Transporte</td>
+                            <td>Nubank</td>
+                            <td>- R$ 25,50</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            // Show register screen
-            document.getElementById('show-register').addEventListener('click', (e) => {
-                e.preventDefault();
-                loginScreen.style.display = 'none';
-                registerScreen.style.display = 'flex';
-            });
+            <!-- Orbit AI e Budgets -->
+            <div class="side-content">
+                <div class="card ai-insights">
+                    <h3>Orbit AI - Análise Inteligente</h3>
+                    <p>💡 <strong>Oportunidade de Economia:</strong> Notamos que seus gastos com Alimentação fora de casa aumentaram 20% em relação ao mês passado. Tente definir um limite (Budget) para essa categoria!</p>
+                </div>
 
-            // Show login screen
-            document.getElementById('show-login').addEventListener('click', (e) => {
-                e.preventDefault();
-                registerScreen.style.display = 'none';
-                loginScreen.style.display = 'flex';
-            });
+                <div class="card budgets">
+                    <h3>Limites de Gastos (Budgets)</h3>
+                    <ul>
+                        <li>Lazer: R$ 750,00 / R$ 1.000,00</li>
+                        <li>Transporte: R$ 200,00 / R$ 400,00</li>
+                    </ul>
+                </div>
+            </div>
 
-            // Login form handler
-            const loginForm = document.getElementById('login-form');
-            loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const email = document.getElementById('login-email').value;
-                const password = document.getElementById('login-password').value;
-                const errorDiv = document.getElementById('login-error');
-                errorDiv.textContent = '';
+        </section>
 
-                try {
-                    const response = await fetch('http://localhost:5000/api/login', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ email, password })
-                    });
+    </main>
 
-                    if (!response.ok) {
-                        throw new Error('Login failed');
-                    }
-
-                    const data = await response.json();
-                    token = data.access_token;
-                    localStorage.setItem('orbitfin_token', token);
-
-                    // Switch to dashboard
-                    loginScreen.style.display = 'none';
-                    registerScreen.style.display = 'none';
-                    dashboardScreen.style.display = 'block';
-                    loadData(); // Load dashboard data
-                } catch (error) {
-                    errorDiv.textContent = 'E-mail ou senha inválidos';
-                }
-            });
-
-            // Register form handler
-            const registerForm = document.getElementById('register-form');
-            registerForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                const name = document.getElementById('register-name').value;
-                const email = document.getElementById('register-email').value;
-                const password = document.getElementById('register-password').value;
-                const errorDiv = document.getElementById('register-error');
-                errorDiv.textContent = '';
-
-                try {
-                    const response = await fetch('http://localhost:5000/api/register', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ name, email, password })
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Registration failed');
-                    }
-
-                    const data = await response.json();
-                    token = data.access_token;
-                    localStorage.setItem('orbitfin_token', token);
-
-                    // Switch to dashboard
-                    registerScreen.style.display = 'none';
-                    loginScreen.style.display = 'none';
-                    dashboardScreen.style.display = 'block';
-                    loadData(); // Load dashboard data
-                } catch (error) {
-                    errorDiv.textContent = 'Erro ao cadastrar. Tente novamente.';
-                }
-            });
-        });
-    </script>
 </body>
 </html>

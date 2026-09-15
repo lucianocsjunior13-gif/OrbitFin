@@ -1,339 +1,254 @@
-
-        /* Paleta de Cores e Guia Visual baseada no Documento */
-        :root {
-            --vermelho-marte: #f97316; /* Botões, Destaques, Alertas, IA */
-            --azul-marinho: #0f172a;   /* Cabeçalhos, Menus, Textos principais */
-            --cinza-claro: #F4F6F8;    /* Fundo, Leitura limpa */
-            --branco: #FFFFFF;         /* Fundo dos Cards */
-            --verde-positivo: #2E7D32; /* Para receitas */
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
+/* =========================================
+   1. RESET & BASE (A fundação do visual)
+   ========================================= */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--cinza-claro);
-    color: var(--azul-marinho);
 }
 
-        /* Auth Screens (Login & Register) */
-                .auth-screen {
+body {
+    background-color: #F4F6F8; /* Fundo cinza bem claro para contraste */
+    color: #1A2238; /* Azul marinho muito escuro para os textos principais */
+}
+
+/* =========================================
+   2. CABEÇALHO (O novo menu no topo)
+   ========================================= */
+.topbar {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    min-height: 100vh;
-    background-color: var(--azul-marinho);
-    background-image: 
-        radial-gradient(circle at 1% 2%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 3% 5%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 5% 1%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 7% 8%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 9% 3%, #fff 1.2px, transparent 1.2px),
-        radial-gradient(circle at 11% 10%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 13% 15%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 15% 5%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 17% 20%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 19% 8%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 21% 3%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 23% 25%, #fff 1.2px, transparent 1.2px),
-        radial-gradient(circle at 25% 12%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 27% 5%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 29% 18%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 31% 22%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 33% 8%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 35% 25%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 37% 10%, #fff 1.2px, transparent 1.2px),
-        radial-gradient(circle at 39% 30%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 41% 5%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 43% 15%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 45% 22%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 47% 8%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 49% 3%, #fff 1.2px, transparent 1.2px),
-        radial-gradient(circle at 51% 20%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 53% 10%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 55% 25%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 57% 12%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 59% 5%, #fff 1.2px, transparent 1.2px),
-        radial-gradient(circle at 61% 18%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 63% 8%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 65% 22%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 67% 30%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 69% 15%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 71% 3%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 73% 25%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 75% 10%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 77% 20%, #fff 1.2px, transparent 1.2px),
-        radial-gradient(circle at 79% 8%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 81% 15%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 83% 22%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 85% 5%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 87% 25%, #fff 1.2px, transparent 1.2px),
-        radial-gradient(circle at 89% 12%, #fff 0.8px, transparent 0.8px),
-        radial-gradient(circle at 91% 5%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 93% 18%, #fff 1px, transparent 1px),
-        radial-gradient(circle at 95% 22%, #fff 0.5px, transparent 0.5px),
-        radial-gradient(circle at 97% 8%, #fff 0.8px, transparent 0.8px);
-    background-size: 100% 100%;
+    background-color: #1A2238; /* O clássico Azul Marinho do OrbitFin */
+    padding: 1.2rem 3rem;
+    color: #FFFFFF;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-                .auth-form {
-                    background: var(--branco);
-                    padding: 2.5rem;
-                    border-radius: 16px;
-                    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-                    width: 100%;
-                    max-width: 500px;
-                }
+.topbar h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
 
-                .auth-form h2 {
-                    text-align: center;
-                    margin-bottom: 2rem;
-                    color: var(--azul-marinho);
-                    font-size: 2rem;
-                }
+.main-nav ul {
+    display: flex;
+    list-style: none; /* Tira as bolinhas da lista */
+    gap: 2.5rem; /* Espaço entre os links */
+}
 
-                .auth-form .form-group {
-                    margin-bottom: 1.2rem;
-                }
+.main-nav a {
+    color: #A0AEC0; /* Cinza claro */
+    text-decoration: none; /* Tira o sublinhado */
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
 
-                .auth-form label {
-                    display: block;
-                    margin-bottom: 0.5rem;
-                    font-weight: 500;
-                    color: var(--azul-marinho);
-                    font-size: 1.1rem;
-                }
+.main-nav a:hover {
+    color: #FFFFFF; /* Fica branco puro ao passar o mouse */
+}
 
-                .auth-form input {
-                    width: 100%;
-                    padding: 1rem;
-                    border: 1px solid var(--cinza-claro);
-                    border-radius: 8px;
-                    font-size: 1.1rem;
-                }
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
 
-                .auth-form input:focus {
-                    outline: none;
-                    border-color: var(--vermelho-marte);
-                }
+/* O novo botão tracejado que substituiu o 'Create Teams' */
+.new-project-btn {
+    background-color: transparent;
+    border: 1px dashed #A0AEC0;
+    color: #FFFFFF;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
 
-                .auth-form .btn {
-                    width: 100%;
-                    background-color: var(--vermelho-marte);
-                    color: var(--branco);
-                    border: none;
-                    padding: 1rem 2rem;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-weight: bold;
-                    font-size: 1.1rem;
-                    transition: opacity 0.3s;
-                }
+.new-project-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: #FFFFFF;
+}
 
-                .auth-form .btn:hover {
-                    opacity: 0.8;
-                }
+/* =========================================
+   3. ÁREA DO DASHBOARD (O container que segura tudo)
+   ========================================= */
+.dashboard-content {
+    max-width: 1200px;
+    margin: 0 auto; /* Centraliza a página em telas grandes */
+    padding: 2rem;
+}
 
-                .auth-form .error-message {
-                    color: var(--vermelho-marte);
-                    margin-top: 1rem;
-                    text-align: center;
-                    min-height: 1.5rem;
-                    font-size: 0.9rem;
-                }
+.welcome-header {
+    margin-bottom: 2rem;
+}
 
-                .auth-form .switch-link {
-                    display: block;
-                    text-align: center;
-                    margin-top: 1.2rem;
-                    color: var(--vermelho-marte);
-                    text-decoration: none;
-                    font-size: 0.9rem;
-                }
+.welcome-header h2 {
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
 
-                .auth-form .switch-link:hover {
-                    text-decoration: underline;
-                }
+.welcome-header p {
+    color: #6B7280;
+}
 
-        /* Cabeçalho / Navbar */
-        header {
-            background-color: var(--azul-marinho);
-            color: var(--branco);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
+/* =========================================
+   4. ESTRUTURA DOS CARDS REUTILIZÁVEIS
+   ========================================= */
+.card {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03); /* Sombra bem suave */
+}
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+/* =========================================
+   5. GRID DE RESUMOS (Os 3 cards no topo)
+   ========================================= */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas iguais */
+    gap: 24px;
+    margin-bottom: 24px;
+}
 
-        /* Representação em CSS do Logo (Pentágono + Órbita Laranja) */
-        .logo-icon {
-            width: 30px;
-            height: 30px;
-            background-color: var(--vermelho-marte);
-            clip-path: polygon(50% 0%, 100% 38%, 81% 100%, 19% 100%, 0% 38%);
-            position: relative;
-        }
+.summary-grid .card h3 {
+    font-size: 0.95rem;
+    color: #6B7280;
+    margin-bottom: 12px;
+    font-weight: 500;
+}
 
-        .logo-orbit {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            border: 2px solid var(--vermelho-marte); /* Laranja da Órbita */
-            border-radius: 50%;
-            top: -5px;
-            left: -5px;
-            transform: rotateX(60deg) rotateY(20deg);
-        }
+.summary-grid .card p {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1A2238;
+}
 
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+/* =========================================
+   6. CARD DE AÇÃO (Onde ficam os botões Nova Receita/Despesa)
+   ========================================= */
+.action-card {
+    background-color: #FFFFFF;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
 
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
+.action-card h3 {
+    font-size: 0.95rem;
+    color: #6B7280;
+    margin-bottom: 8px;
+}
 
-        nav ul li a {
-            color: var(--branco);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
+.action-card p {
+    font-size: 2.2rem;
+    font-weight: bold;
+}
 
-        nav ul li a:hover {
-            color: var(--vermelho-marte);
-        }
+.action-card button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 12px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
 
-        /* Container Principal do Dashboard */
-        .dashboard-container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 2rem;
-        }
+.action-card button:hover {
+    transform: translateY(-2px); /* Efeito de pular um pouquinho */
+    opacity: 0.9;
+}
 
-        /* Estilos dos Cards */
-        .card {
-            background-color: var(--branco);
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 1.5rem;
-        }
+.action-card button:first-of-type {
+    background-color: #E05638; /* Botão Receita (Laranja) */
+    color: #FFFFFF;
+}
 
-        .card h2 {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: var(--azul-marinho);
-            border-bottom: 2px solid var(--cinza-claro);
-            padding-bottom: 0.5rem;
-        }
+.action-card button:last-of-type {
+    background-color: #1A2238; /* Botão Despesa (Azul) */
+    color: #FFFFFF;
+}
 
-        /* Resumo de Saldo */
-        .balance-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+/* =========================================
+   7. BENTO GRID (A parte de baixo do Dashboard)
+   ========================================= */
+.bento-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* A tabela fica 2x maior que a lateral direita */
+    gap: 24px;
+}
 
-        .balance-amount {
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
+.side-content {
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Espaço entre IA e Budgets */
+}
 
-        .btn {
-            background-color: var(--vermelho-marte);
-            color: var(--branco);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: opacity 0.3s;
-        }
+/* =========================================
+   8. TABELA DE TRANSAÇÕES
+   ========================================= */
+.transactions-card h3 {
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+}
 
-        .btn:hover {
-            opacity: 0.8;
-        }
+table {
+    width: 100%;
+    border-collapse: collapse; /* Gruda as bordas da tabela */
+}
 
-        /* Insights da IA */
-        .ai-insight {
-            background-color: #FFF3E0;
-            border-left: 4px solid var(--vermelho-marte);
-            padding: 1rem;
-            border-radius: 0 8px 8px 0;
-            margin-top: 1rem;
-        }
+th, td {
+    text-align: left;
+    padding: 14px 8px;
+    border-bottom: 1px solid #F3F4F6; /* Linha divisória bem clarinha */
+}
 
-        .ai-insight h3 {
-            color: var(--vermelho-marte);
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
+th {
+    color: #6B7280;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
 
-        /* Tabela de Transações */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+/* =========================================
+   9. ORBIT AI (O card bonitão da Inteligência Artificial)
+   ========================================= */
+.ai-insights {
+    background: linear-gradient(135deg, #E05638, #FF758C); /* Gradiente Laranja/Rosa */
+    color: #FFFFFF;
+    border: none;
+}
 
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid var(--cinza-claro);
-        }
+.ai-insights h3 {
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+}
 
-        th {
-            color: var(--azul-marinho);
-            font-weight: 600;
-        }
+.ai-insights p {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    background-color: rgba(255, 255, 255, 0.15); /* Fundo de vidro pro texto */
+    padding: 16px;
+    border-radius: 8px;
+}
 
-        .expense { color: var(--vermelho-marte); font-weight: bold; }
-        .income { color: var(--verde-positivo); font-weight: bold; }
+.budgets ul {
+    list-style: none;
+    margin-top: 16px;
+}
 
-        /* Metas / Budgets */
-        .progress-bar-container {
-            background-color: var(--cinza-claro);
-            border-radius: 8px;
-            height: 12px;
-            width: 100%;
-            margin-top: 5px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            background-color: var(--vermelho-marte);
-            height: 100%;
-            width: 75%; /* Exemplo estático */
-        }
-
-        .goal-item {
-            margin-bottom: 1rem;
-        }
-    
-
-@keyframes moveNightSky {
-    0% { background-position: 0 0, 40px 60px, 130px 270px, 70px 100px, 200px 200px; }
-    100% { background-position: -150px -150px, -200px -200px, -250px -250px, -300px -300px, -350px -350px; }
+.budgets li {
+    margin-bottom: 12px;
+    font-size: 0.95rem;
+    color: #4B5563;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed #E5E7EB;
 }
