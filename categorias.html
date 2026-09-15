@@ -48,10 +48,169 @@
 
     <!-- Main Content -->
     <main class="content">
-        <header class="welcome">
-            <h1>Tela de Categorias</h1>
-            <p>Gerencie suas categorias de gastos e receitas</p>
+        <header class="page-header">
+            <h1>Gerenciamento de Categorias</h1>
+            <p>Organize seus gastos e receitas por classificações</p>
         </header>
+
+        <div class="card">
+            <div class="actions-header">
+                <a href="#" class="action-btn nova-categoria"><i class="fi fi-br-plus"></i> Nova Categoria</a>
+                <div class="filter-input">
+                    <label for="catSearch">Buscar:</label>
+                    <input type="text" id="catSearch" placeholder="Nome da categoria...">
+                </div>
+            </div>
+        </div>
+
+        <div class="card tabs-card">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="despesas">Despesas</button>
+                <button class="tab-btn" data-tab="receitas">Receitas</button>
+            </div>
+            <div class="tab-content">
+                <div id="despesas" class="tab-pane active">
+                    <div class="categories-grid">
+                        <div class="category-card despesa">
+                            <div class="category-icon">
+                                <i class="fi fi-br-utensils"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3>Alimentação</h3>
+                                <span class="category-type">Despesa</span>
+                            </div>
+                            <div class="category-budget">
+                                <span class="budget-label">Orçamento mensal</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 65%;"></div>
+                                </div>
+                                <span class="budget-value">R$ 800,00</span>
+                            </div>
+                            <div class="category-actions">
+                                <a href="#" class="action-btn small">Editar</a>
+                                <a href="#" class="action-btn small">Excluir</a>
+                            </div>
+                        </div>
+
+                        <div class="category-card despesa">
+                            <div class="category-icon">
+                                <i class="fi fi-br-car"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3>Transporte</h3>
+                                <span class="category-type">Despesa</span>
+                            </div>
+                            <div class="category-budget">
+                                <span class="budget-label">Orçamento mensal</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 45%;"></div>
+                                </div>
+                                <span class="budget-value">R$ 400,00</span>
+                            </div>
+                            <div class="category-actions">
+                                <a href="#" class="action-btn small">Editar</a>
+                                <a href="#" class="action-btn small">Excluir</a>
+                            </div>
+                        </div>
+
+                        <div class="category-card despesa">
+                            <div class="category-icon">
+                                <i class="fi fi-br-ticket"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3>Lazer</h3>
+                                <span class="category-type">Despesa</span>
+                            </div>
+                            <div class="category-budget">
+                                <span class="budget-label">Orçamento mensal</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 30%;"></div>
+                                </div>
+                                <span class="budget-value">R$ 250,00</span>
+                            </div>
+                            <div class="category-actions">
+                                <a href="#" class="action-btn small">Editar</a>
+                                <a href="#" class="action-btn small">Excluir</a>
+                            </div>
+                        </div>
+
+                        <div class="category-card despesa">
+                            <div class="category-icon">
+                                <i class="fi fi-br-credit-card"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3>Assinaturas</h3>
+                                <span class="category-type">Despesa</span>
+                            </div>
+                            <div class="category-budget">
+                                <span class="budget-label">Orçamento mensal</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 80%;"></div>
+                                </div>
+                                <span class="budget-value">R$ 150,00</span>
+                            </div>
+                            <div class="category-actions">
+                                <a href="#" class="action-btn small">Editar</a>
+                                <a href="#" class="action-btn small">Excluir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="receitas" class="tab-pane">
+                    <div class="categories-grid">
+                        <div class="category-card receita">
+                            <div class="category-icon">
+                                <i class="fi fi-br-wallet"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3>Salário</h3>
+                                <span class="category-type">Receita</span>
+                            </div>
+                            <div class="category-budget">
+                                <span class="budget-label">Total recebido</span>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 90%;"></div>
+                                </div>
+                                <span class="budget-value">R$ 3.200,00</span>
+                            </div>
+                            <div class="category-actions">
+                                <a href="#" class="action-btn small">Editar</a>
+                                <a href="#" class="action-btn small">Excluir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active from all buttons
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    // Add active to clicked
+                    this.classList.add('active');
+                    // Hide all tab panes
+                    document.querySelectorAll('.tab-pane').forEach(pane => {
+                        pane.classList.remove('active');
+                        pane.style.display = 'none';
+                    });
+                    // Show selected pane
+                    const tabId = this.getAttribute('data-tab');
+                    const activePane = document.getElementById(tabId);
+                    if (activePane) {
+                        activePane.classList.add('active');
+                        activePane.style.display = 'block';
+                    }
+                });
+            });
+        });
+    </script>
+
 </body>
 </html>

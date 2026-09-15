@@ -693,3 +693,345 @@ body {
     border-color: var(--primaria);
     box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
 }
+
+/* Final adjustments for Transactions screen */
+.actions-filters {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.actions-left {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.filters-right {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.filter-input {
+    display: flex;
+    flex-direction: column;
+}
+.filter-input label {
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    font-size: 0.85rem;
+}
+.filter-input input,
+.filter-input select {
+    padding: 8px 10px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    background: var(--branco);
+    color: var(--secundaria);
+    font-size: 0.9rem;
+}
+.filter-input input:focus,
+.filter-input select:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+}
+/* Ensure card wrappers have proper margin */
+.content > .card {
+    margin-bottom: 1.5rem;
+}
+
+/* Transactions page specific styles */
+.content .card {
+    height: auto;
+    min-height: auto;
+}
+/* Tabs styling */
+.tabs-card {
+    margin-top: 1rem;
+}
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0;
+}
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+}
+.tab-btn:hover {
+    color: var(--primaria);
+}
+.tab-btn.active {
+    color: var(--primaria);
+    font-weight: 600;
+}
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 3px;
+    background: var(--primaria);
+}
+.tab-pane {
+    display: none;
+    padding-top: 1rem;
+}
+.tab-pane.active {
+    display: block;
+}
+/* Ensure table inside tabs has no extra margin */
+.tab-pane .transactions-table {
+    margin-top: 0;
+}
+
+/* Ensure tab panes are hidden/shown via JS, but also set default */
+.tab-pane {
+    display: none;
+}
+.tab-pane.active {
+    display: block;
+}
+/* Also ensure tables inside are displayed as table (default) */
+.tab-pane .transactions-table {
+    display: table;
+    width: 100%;
+}
+
+/* Categories page styles */
+.actions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.actions-header .action-btn.nova-categoria {
+    background: var(--primaria);
+    color: var(--branco);
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+.actions-header .action-btn.nova-categoria:hover {
+    background: #c4452e;
+}
+.actions-header .filter-input {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+}
+.actions-header .filter-input label {
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    font-size: 0.85rem;
+}
+.actions-header .filter-input input {
+    padding: 8px 10px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    background: var(--branco);
+    color: var(--secundaria);
+    font-size: 0.9rem;
+}
+.actions-header .filter-input input:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+}
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+.category-card {
+    background: var(--branco);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.category-card.despesa .category-icon { background: #fef2f2; }
+.category-card.receita .category-icon { background: #dcfce7; }
+.category-card.despesa .category-type { color: var(--vermelho); }
+.category-card.receita .category-type { color: var(--verde); }
+.category-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+.category-icon i {
+    color: var(--primaria);
+}
+.category-card.despesa .category-icon i { color: var(--vermelho); }
+.category-card.receita .category-icon i { color: var(--verde); }
+.category-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.category-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    color: var(--secundaria);
+}
+.category-type {
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.category-budget {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.budget-label {
+    font-size: 0.85rem;
+    color: var(--cinza-escuro);
+    font-weight: 500;
+}
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.progress-fill {
+    height: 100%;
+    background-color: var(--primaria);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+.category-card.despesa .progress-fill { background-color: var(--vermelho); }
+.category-card.receita .progress-fill { background-color: var(--verde); }
+.budget-value {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--secundaria);
+}
+.category-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.category-actions .action-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+.category-actions .action-btn:nth-child(1) { /* Editar */
+    background: #f3f4f6;
+    color: var(--cinza-escuro);
+}
+.category-actions .action-btn:nth-child(1):hover {
+    background: #e5e7eb;
+}
+.category-actions .action-btn:nth-child(2) { /* Excluir */
+    background: #fef2f2;
+    color: var(--vermelho);
+}
+.category-actions .action-btn:nth-child(2):hover {
+    background: #fee2e2;
+}
+/* Responsividade: já está no grid, mas ajustamos para telas muito pequenas */
+@media (max-width: 480px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+    .actions-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .actions-header .action-btn.nova-categoria {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Tabs for categories page */
+.tabs-card {
+    margin-top: 0;
+}
+.tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 0;
+}
+.tab-btn {
+    background: transparent;
+    border: none;
+    padding: 12px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+}
+.tab-btn:hover {
+    color: var(--primaria);
+}
+.tab-btn.active {
+    color: var(--primaria);
+    font-weight: 600;
+}
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    width: 100%;
+    height: 3px;
+    background: var(--primaria);
+}
+.tab-pane {
+    display: none;
+    padding-top: 1rem;
+}
+.tab-pane.active {
+    display: block;
+}
+.tab-pane .categories-grid {
+    margin-top: 0;
+}
+/* Ensure cards inside tabs have height auto */
+.content .card {
+    height: auto;
+    min-height: auto;
+}
