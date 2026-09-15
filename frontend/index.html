@@ -4,9 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OrbitFin - Dashboard Financeiro</title>
-    
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Enhanced sidebar styles for better visibility */
+        .sidebar-nav ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        
+        .sidebar-nav li {
+            margin: 0.5rem 0;
+        }
+        
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: inherit;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            gap: 0.75rem;
+        }
+        
+        .sidebar-nav a:hover:not(.active) {
+            background-color: rgba(249, 115, 22, 0.1);
+            color: #f97316;
+        }
+        
+        .sidebar-nav a.active {
+            background-color: #f97316;
+            color: white;
+        }
+        
+        .sidebar-nav a.active:hover {
+            background-color: #ea580c;
+        }
+        
+        /* Icon styling for Flaticon Uicons */
+                .sidebar i, .sidebar .nav-icon {
+                    font-size: 1.1rem;
+                    display: flex;
+                    align-items: center;
+                }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .sidebar-nav a {
+                padding: 1rem;
+                justify-content: center;
+            }
+            
+            .sidebar-nav a span {
+                display: none;
+            }
+            
+            .sidebar-nav a .nav-icon {
+                min-width: unset;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Login Screen -->
@@ -55,43 +118,151 @@
 
     <!-- Dashboard Screen -->
     <div id="dashboard-screen" class="dashboard-screen" style="display: none;">
-        <!-- Header / Nav -->
-        <header>
-            <div class="logo-container">
-                <div class="logo-icon">
-                    <div class="logo-orbit"></div>
-                </div>
-                <div class="logo-text">OrbitFin</div>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#">Dashboard</a></li>
-                    <li><a href="#">Transações</a></li>
-                    <li><a href="#">Metas</a></li>
-                    <li><a href="#">Configurações</a></li>
-                </ul>
-            </nav>
-        </header>
-
-        <!-- Área Principal do Dashboard -->
-        <div class="dashboard-container">
-            <!-- Coluna Esquerda (Principal) -->
-            <div class="main-column">
-                <!-- Saldo e Ações -->
-                <div class="card balance-section">
-                    <div>
-                        <h2>Saldo Atual Consolidado</h2>
-                        <div class="balance-amount">R$ 5.430,00</div>
+        <!-- Sidebar -->
+                <aside class="sidebar">
+                    <!-- Logo -->
+                    <div class="sidebar-logo">
+                        <div class="logo-icon">📊</div>
+                        <div class="logo-text">OrbitFin</div>
                     </div>
-                    <div>
-                        <button class="btn">+ Nova Receita</button>
-                        <button class="btn" style="background-color: var(--azul-marinho); margin-left: 10px;">- Nova Despesa</button>
+            
+                    <!-- User Profile -->
+                    <div class="sidebar-profile">
+                        <div class="profile-image">👤</div>
+                        <div class="profile-info">
+                            <div class="profile-name">Luciano Junior</div>
+                            <div class="profile-role">Usuário</div>
+                        </div>
+                    </div>
+            
+                    <!-- Navigation -->
+                                        <nav class="sidebar-nav">
+                                            <ul>
+                                                <li><a href="#" class="nav-link active" data-view="dashboard"><i class="fi fi-br-home nav-icon"></i><span>Dashboard</span></a></li>
+                                                <li><a href="#" class="nav-link" data-view="transactions"><i class="fi fi-br-list nav-icon"></i><span>Transações</span></a></li>
+                                                <li><a href="#" class="nav-link" data-view="goals"><i class="fi fi-br-target nav-icon"></i><span>Metas</span></a></li>
+                                                <li><a href="#" class="nav-link" data-view="settings"><i class="fi fi-br-settings nav-icon"></i><span>Configurações</span></a></li>
+                                            </ul>
+                                        </nav>
+            
+                    <!-- Bottom CTA -->
+                                        <div class="sidebar-cta">
+                                            <div class="cta-icon"><i class="fi fi-br-plus"></i></div>
+                                            <div class="cta-content">
+                                                <div class="cta-title">Create Teams</div>
+                                                <div class="cta-subtitle">Collaborate with colleagues</div>
+                                            </div>
+                                        </div>
+                </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <section class="view" data-view="dashboard">
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+                    <h1>Bem-vindo, <span id="welcome-user-name">Usuário</span>!</h1>
+                    <p>Seu resumo financeiro em tempo real</p>
+                    <div class="welcome-stats">
+                        <div class="stat-card">
+                            <h3>Saldo Total</h3>
+                            <p class="stat-value" id="welcome-saldo">R$ 0,00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Receitas deste mês</h3>
+                            <p class="stat-value" id="welcome-receitas">R$ 0,00</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Despesas deste mês</h3>
+                            <p class="stat-value" id="welcome-despesas">R$ 0,00</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Dashboard Content -->
+                <div class="dashboard-content">
+                    <!-- Saldo e Ações -->
+                    <div class="card balance-section">
+                        <div>
+                            <h2>Saldo Atual Consolidado</h2>
+                            <div class="balance-amount" id="dashboard-saldo">R$ 0,00</div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn" id="btn-nova-receita">+ Nova Receita</button>
+                            <button class="btn secondary" id="btn-nova-despesa">- Nova Despesa</button>
+                        </div>
+                    </div>
+
+                    <!-- Transações Recentes -->
+                    <div class="card">
+                        <h2>Últimas Movimentações</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Data</th>
+                                    <th>Descrição</th>
+                                    <th>Categoria</th>
+                                    <th>Conta</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transacoes-tbody">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <!-- Transações Recentes (Tabela Transaction) -->
+                <!-- Sidebar Widgets -->
+                <aside class="sidebar-widgets">
+                    <!-- Insights da IA -->
+                    <div class="card">
+                        <h2>Orbit AI - Análise Inteligente</h2>
+                        <div class="ai-insight">
+                            <h3>💡 Oportunidade de Economia</h3>
+                            <p>Notamos que seus gastos com <strong>Alimentação fora de casa</strong> aumentaram 20% em relação ao mês passado. Tente definir um limite (Budget) para essa categoria!</p>
+                        </div>
+                    </div>
+
+                    <!-- Limites de Gastos -->
+                    <div class="card">
+                        <h2>Limites de Gastos (Budgets)</h2>
+                        <div class="goal-item">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Lazer</span>
+                                <span id="budget-lazer-amount">R$ 0 / R$ 0</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="budget-lazer-bar"></div>
+                            </div>
+                            <div class="goal-progress" id="budget-lazer-percent">(0%)</div>
+                        </div>
+                        <div class="goal-item">
+                            <div style="display: flex; justify-content: space-between;">
+                                <span>Transporte</span>
+                                <span id="budget-transporte-amount">R$ 0 / R$ 0</span>
+                            </div>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="budget-transporte-bar"></div>
+                            </div>
+                            <div class="goal-progress" id="budget-transporte-percent">(0%)</div>
+                        </div>
+                    </div>
+                </aside>
+            </section>
+
+            <!-- Transactions View -->
+            <section class="view" data-view="transactions">
+                <header class="view-header">
+                    <h1>Transações</h1>
+                    <div class="view-actions">
+                        <button class="btn" id="btn-add-transaction">+ Nova Transação</button>
+                        <button class="btn secondary" id="btn-filter-transactions">Filtrar</button>
+                    </div>
+                </header>
+
                 <div class="card">
-                    <h2>Últimas Movimentações</h2>
+                    <h2>Todas as Transações</h2>
                     <table>
                         <thead>
                             <tr>
@@ -99,78 +270,182 @@
                                 <th>Descrição</th>
                                 <th>Categoria</th>
                                 <th>Conta</th>
+                                <th>Tipo</th>
                                 <th>Valor</th>
                             </tr>
                         </thead>
-                        <tbody id="transacoes-tbody">
-                            <tr>
-                                <td>12/10/2026</td>
-                                <td>Mercado Livre</td>
-                                <td>Compras</td>
-                                <td>Nubank</td>
-                                <td class="expense">- R$ 150,00</td>
-                            </tr>
-                            <tr>
-                                <td>10/10/2026</td>
-                                <td>Salário</td>
-                                <td>Receita</td>
-                                <td>Itaú</td>
-                                <td class="income">+ R$ 4.500,00</td>
-                            </tr>
-                            <tr>
-                                <td>08/10/2026</td>
-                                <td>Uber</td>
-                                <td>Transporte</td>
-                                <td>Nubank</td>
-                                <td class="expense">- R$ 35,50</td>
-                            </tr>
+                        <tbody id="all-transactions-tbody">
+                            <!-- Will be populated by JavaScript -->
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </section>
 
-            <!-- Coluna Direita (Widgets e IA) -->
-            <div class="side-column">
-                <!-- Insights da IA (Tabela AiInsight) -->
-                <div class="card">
-                    <h2>Orbit AI - Análise Inteligente</h2>
-                    <div class="ai-insight">
-                        <h3>💡 Oportunidade de Economia</h3>
-                        <p>Notamos que seus gastos com <strong>Alimentação fora de casa</strong> aumentaram 20% em relação ao mês passado. Tente definir um limite (Budget) para essa categoria!</p>
+            <!-- Goals View -->
+            <section class="view" data-view="goals">
+                <header class="view-header">
+                    <h1>Metas e Objetivos</h1>
+                </header>
+
+                <div class="goals-grid">
+                    <div class="card">
+                        <h2>Metas de Economia</h2>
+                        <div class="goal-item">
+                            <h3>Viagem para o Japão</h3>
+                            <p>Economize para sua viagem dos sonhos</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="goal-japao-bar" style="background-color: var(--vermelho-marte);"></div>
+                            </div>
+                            <div class="goal-progress">
+                                <span id="goal-japao-current">R$ 0</span> / <span id="goal-japao-target">R$ 0</span>
+                                <span id="goal-japao-percent">(0%)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Metas de Investimento</h2>
+                        <div class="goal-item">
+                            <h3>Reserva de Emergência</h3>
+                            <p>Mantenha 6 meses de despesas protegidas</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="goal-emergencia-bar" style="background-color: #10B981;"></div>
+                            </div>
+                            <div class="goal-progress">
+                                <span id="goal-emergencia-current">R$ 0</span> / <span id="goal-emergencia-target">R$ 0</span>
+                                <span id="goal-emergencia-percent">(0%)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Metas de Quitação de Dívidas</h2>
+                        <div class="goal-item">
+                            <h3>Cartão de Crédito</h3>
+                            <p>Elimine dívidas com juros altos</p>
+                            <div class="progress-bar-container">
+                                <div class="progress-bar" id="goal-divida-bar" style="background-color: #F59E0B;"></div>
+                            </div>
+                            <div class="goal-progress">
+                                <span id="goal-divida-current">R$ 0</span> / <span id="goal-divida-target">R$ 0</span>
+                                <span id="goal-divida-percent">(0%)</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <!-- Limites de Gastos (Tabela Budget) -->
-                <div class="card">
-                    <h2>Limites de Gastos (Budgets)</h2>
+            <!-- Settings View -->
+            <section class="view" data-view="settings">
+                <header class="view-header">
+                    <h1>Configurações</h1>
+                </header>
 
-                    <div class="goal-item">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Lazer</span>
-                            <span>R$ 750 / R$ 1000</span>
+                <div class="settings-grid">
+                    <div class="card">
+                        <h2>Conta</h2>
+                        <div class="setting-item">
+                            <div class="setting-label">Nome completo</div>
+                            <div class="setting-value" id="profile-name">Luciano do Carmo Simões Junior</div>
                         </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar"></div>
+                        <div class="setting-item">
+                            <div class="setting-label">E-mail</div>
+                            <div class="setting-value" id="profile-email">luciano.carmo@aluno.impacta.edu.br</div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-label">Telefone</div>
+                            <div class="setting-value" id="profile-phone">(11) 99999-9999</div>
+                        </div>
+                        <button class="btn btn-block" id="btn-edit-profile">Editar Perfil</button>
+                    </div>
+
+                    <div class="card">
+                        <h2>Segurança</h2>
+                        <div class="setting-item">
+                            <div class="setting-label">Senha</div>
+                            <div class="setting-value">••••••••</div>
+                            <a href="#" class="setting-link">Alterar senha</a>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-label">Autenticação de dois fatores</div>
+                            <div class="setting-value">
+                                <label class="switch">
+                                    <input type="checkbox" id="2fa-toggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span id="2fa-status">Ativado</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-label">Sessões ativas</div>
+                            <div class="setting-value" id="active-sessions">2 dispositivos</div>
+                            <a href="#" class="setting-link">Gerenciar sessões</a>
                         </div>
                     </div>
 
-                    <div class="goal-item">
-                        <div style="display: flex; justify-content: space-between;">
-                            <span>Transporte</span>
-                            <span>R$ 200 / R$ 400</span>
+                    <div class="card">
+                        <h2>Notificações</h2>
+                        <div class="setting-item">
+                            <div class="setting-label">Notificações por e-mail</div>
+                            <div class="setting-value">
+                                <label class="switch">
+                                    <input type="checkbox" id="email-notif-toggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span id="email-notif-status">Ativado</span>
+                            </div>
                         </div>
-                        <div class="progress-bar-container">
-                            <div class="progress-bar" style="width: 50%; background-color: var(--azul-marinho);"></div>
+                        <div class="setting-item">
+                            <div class="setting-label">Notificações por push</div>
+                            <div class="setting-value">
+                                <label class="switch">
+                                    <input type="checkbox" id="push-notif-toggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span id="push-notif-status">Ativado</span>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-label">Alertas de gasto</div>
+                            <div class="setting-value">
+                                <label class="switch">
+                                    <input type="checkbox" id="spend-alert-toggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                                <span id="spend-alert-status">Ativado</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <h2>Integrações</h2>
+                        <div class="setting-item">
+                            <div class="setting-label">Bancos conectados</div>
+                            <div class="setting-value" id="connected-banks">2 instituições</div>
+                            <a href="#" class="setting-link">Gerenciar conexões</a>
+                        </div>
+                        <div class="setting-item">
+                            <div class="setting-label">Cartões de crédito</div>
+                            <div class="setting-value" id="credit-cards">3 cartões</div>
+                            <a href="#" class="setting-link">Gerenciar cartões</a>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     </div>
 
     <script>
         // Simple data fetching for local testing
         let token = localStorage.getItem('orbitfin_token');
+        let currentView = 'dashboard';
+        let userName = localStorage.getItem('orbitfin_user_name') || 'Usuário';
+
+        // Função para formatar valor monetário em português do Brasil
+        function formatCurrency(value) {
+            if (value === null || value === undefined) return 'R$ 0,00';
+            return `R$ ${Math.abs(value).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        }
 
         async function loadData() {
             try {
@@ -180,18 +455,34 @@
                 }
 
                 // Try to fetch from local backend (adjust endpoints as needed)
-                const [saldoResponse, transacoesResponse, insightsResponse, budgetsResponse] = await Promise.all([
+                const [saldoResponse, transacoesResponse, insightsResponse, budgetsResponse, goalsResponse] = await Promise.all([
                     fetch('http://localhost:5000/api/saldo', { headers }).then(r => r.json()),
                     fetch('http://localhost:5000/api/transacoes', { headers }).then(r => r.json()),
                     fetch('http://localhost:5000/api/insights', { headers }).then(r => r.json()),
-                    fetch('http://localhost:5000/api/budgets', { headers }).then(r => r.json())
+                    fetch('http://localhost:5000/api/budgets', { headers }).then(r => r.json()),
+                    fetch('http://localhost:5000/api/goals', { headers }).then(r => r.json())
                 ]);
 
-                // Update saldo
-                const saldoElement = document.querySelector('.balance-amount');
-                if (saldoElement && saldoResponse.valor !== undefined) {
-                    saldoElement.textContent = `R$ ${saldoResponse.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                // Update user name if available
+                if (saldoResponse.userName) {
+                    userName = saldoResponse.userName;
+                    localStorage.setItem('orbitfin_user_name', userName);
+                    document.getElementById('welcome-user-name').textContent = userName;
+                    document.getElementById('profile-name').textContent = userName;
                 }
+
+                // Update saldo
+                const saldoElements = document.querySelectorAll('#dashboard-saldo, #welcome-saldo');
+                if (saldoResponse.valor !== undefined) {
+                    const formattedSaldo = formatCurrency(saldoResponse.valor);
+                    saldoElements.forEach(el => {
+                        el.textContent = formattedSaldo;
+                    });
+                }
+
+                // Update welcome stats
+                document.getElementById('welcome-receitas').textContent = formatCurrency(saldoResponse.receitasMensais || 0);
+                document.getElementById('welcome-despesas').textContent = formatCurrency(saldoResponse.despesasMensais || 0);
 
                 // Update transacoes table
                 const tbody = document.querySelector('#transacoes-tbody');
@@ -203,7 +494,7 @@
                             <td>${t.categoria}</td>
                             <td>${t.conta}</td>
                             <td class="${t.tipo === 'despesa' ? 'expense' : 'income'}">
-                                ${t.tipo === 'despesa' ? '- R$' : '+ R$'} ${Math.abs(t.valor).toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                                ${t.tipo === 'despesa' ? '- R$' : '+ R$'} ${formatCurrency(t.valor)}
                             </td>
                         </tr>
                     `).join('');
@@ -222,17 +513,212 @@
                         if (budgetContainers[index]) {
                             const bar = budgetContainers[index].querySelector('.progress-bar');
                             const amountSpan = budgetContainers[index].previousElementSibling.querySelector('span:nth-child(2)');
-                            if (bar && amountSpan) {
+                            const percentSpan = budgetContainers[index].nextElementSibling;
+                            if (bar && amountSpan && percentSpan) {
                                 bar.style.width = b.percentual + '%';
-                                amountSpan.textContent = `R$ ${b.gastoAtual.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})} / R$ ${b.limite.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+                                amountSpan.textContent = `R$ ${formatCurrency(b.gastoAtual)} / R$ ${formatCurrency(b.limite)}`;
+                                percentSpan.textContent = `(${b.percentual}%)`;
+                                
+                                // Set color based on percentage
+                                if (b.percentual >= 90) {
+                                    bar.style.backgroundColor = '#DC2626'; // vermelho para quase estourado
+                                } else if (b.percentual >= 70) {
+                                    bar.style.backgroundColor = '#D97706'; // amarelo para atenção
+                                } else {
+                                    bar.style.backgroundColor = '#16A34A'; // verde para OK
+                                }
                             }
                         }
                     });
                 }
+
+                // Update all transactions table
+                const allTbody = document.querySelector('#all-transactions-tbody');
+                if (allTbody && Array.isArray(transacoesResponse)) {
+                    allTbody.innerHTML = transacoesResponse.map(t => `
+                        <tr>
+                            <td>${t.data}</td>
+                            <td>${t.descricao}</td>
+                            <td>${t.categoria}</td>
+                            <td>${t.conta}</td>
+                            <td class="badge ${t.tipo === 'despesa' ? 'expense' : 'income'}">
+                                ${t.tipo === 'despesa' ? 'Despesa' : 'Receita'}
+                            </td>
+                            <td class="${t.tipo === 'despesa' ? 'expense' : 'income'}">
+                                ${t.tipo === 'despesa' ? '- R$' : '+ R$'} ${formatCurrency(t.valor)}
+                            </td>
+                        </tr>
+                    `).join('');
+                }
+
+                // Update goals
+                if (Array.isArray(goalsResponse)) {
+                    goalsResponse.forEach(goal => {
+                        const percent = goal.target > 0 ? Math.min(100, Math.round((goal.current / goal.target) * 100)) : 0;
+                        
+                        // Update based on goal name/description
+                        if (goal.descricao && goal.descricao.includes('Viagem para o Japão')) {
+                            document.getElementById('goal-japao-current').textContent = formatCurrency(goal.current);
+                            document.getElementById('goal-japao-target').textContent = formatCurrency(goal.target);
+                            document.getElementById('goal-japao-percent').textContent = `(${percent}%)`;
+                            document.getElementById('goal-japao-bar').style.width = percent + '%';
+                        } else if (goal.descricao && goal.descricao.includes('Reserva de Emergência')) {
+                            document.getElementById('goal-emergencia-current').textContent = formatCurrency(goal.current);
+                            document.getElementById('goal-emergencia-target').textContent = formatCurrency(goal.target);
+                            document.getElementById('goal-emergencia-percent').textContent = `(${percent}%)`;
+                            document.getElementById('goal-emergencia-bar').style.width = percent + '%';
+                        } else if (goal.descricao && goal.descricao.includes('Cartão de Crédito')) {
+                            document.getElementById('goal-divida-current').textContent = formatCurrency(goal.current);
+                            document.getElementById('goal-divida-target').textContent = formatCurrency(goal.target);
+                            document.getElementById('goal-divida-percent').textContent = `(${percent}%)`;
+                            document.getElementById('goal-divida-bar').style.width = percent + '%';
+                        }
+                    });
+                }
+
             } catch (error) {
                 console.warn('Backend not available, using placeholder data:', error);
-                // Keep placeholder data as is
+                // Keep placeholder data as is, but make it more realistic
+                loadPlaceholderData();
             }
+        }
+
+        function loadPlaceholderData() {
+            // More realistic placeholder data
+            const placeholderName = localStorage.getItem('orbitfin_user_name') || 'Usuário';
+            document.getElementById('welcome-user-name').textContent = placeholderName;
+            document.getElementById('profile-name').textContent = placeholderName;
+
+            // Sample transactions for placeholder
+            const sampleTransacoes = [
+                { data: '12/10/2026', descricao: 'Mercado Livre', categoria: 'Compras', conta: 'Nubank', tipo: 'despesa', valor: -89.90 },
+                { data: '10/10/2026', descricao: 'Salário', categoria: 'Receita', conta: 'Itaú', tipo: 'receita', valor: 3200.00 },
+                { data: '08/10/2026', descricao: 'Uber', categoria: 'Transporte', conta: 'Nubank', tipo: 'despesa', valor: -25.50 },
+                { data: '05/10/2026', descricao: 'Netflix', categoria: 'Assinaturas', conta: 'Nubank', tipo: 'despesa', valor: -32.90 },
+                { data: '01/10/2026', descricao: 'Depósito Inicial', categoria: 'Transferência', conta: 'Itaú', tipo: 'receita', valor: 1000.00 }
+            ];
+
+            // Update saldo
+            const totalSaldo = sampleTransacoes.reduce((sum, t) => sum + t.valor, 0);
+            const totalReceitas = sampleTransacoes
+                .filter(t => t.tipo === 'receita')
+                .reduce((sum, t) => sum + t.valor, 0);
+            const totalDespesas = sampleTransacoes
+                .filter(t => t.tipo === 'despesa')
+                .reduce((sum, t) => sum + Math.abs(t.valor), 0);
+
+            document.querySelectorAll('#dashboard-saldo, #welcome-saldo').forEach(el => {
+                el.textContent = formatCurrency(totalSaldo);
+            });
+            document.getElementById('welcome-receitas').textContent = formatCurrency(totalReceitas);
+            document.getElementById('welcome-despesas').textContent = formatCurrency(totalDespesas);
+
+            // Update recent transactions
+            const tbody = document.querySelector('#transacoes-tbody');
+            if (tbody) {
+                tbody.innerHTML = sampleTransacoes.map(t => `
+                    <tr>
+                        <td>${t.data}</td>
+                        <td>${t.descricao}</td>
+                        <td>${t.categoria}</td>
+                        <td>${t.conta}</td>
+                        <td class="${t.tipo === 'despesa' ? 'expense' : 'income'}">
+                            ${t.tipo === 'despesa' ? '- R$' : '+ R$'} ${formatCurrency(t.valor)}
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Update all transactions
+            const allTbody = document.querySelector('#all-transactions-tbody');
+            if (allTbody) {
+                allTbody.innerHTML = sampleTransacoes.map(t => `
+                    <tr>
+                        <td>${t.data}</td>
+                        <td>${t.descricao}</td>
+                        <td>${t.categoria}</td>
+                        <td>${t.conta}</td>
+                        <td class="badge ${t.tipo === 'despesa' ? 'expense' : 'income'}">
+                            ${t.tipo === 'despesa' ? 'Despesa' : 'Receita'}
+                        </td>
+                        <td class="${t.tipo === 'despesa' ? 'expense' : 'income'}">
+                            ${t.tipo === 'despesa' ? '- R$' : '+ R$'} ${formatCurrency(t.valor)}
+                        </td>
+                    </tr>
+                `).join('');
+            }
+
+            // Update budgets with sample data
+            const sampleBudgets = [
+                { categoria: 'Lazer', gastoAtual: 450, limite: 1000, percentual: 45 },
+                { categoria: 'Transporte', gastoAtual: 180, limite: 400, percentual: 45 }
+            ];
+
+            sampleBudgets.forEach((b, index) => {
+                const container = document.querySelectorAll('.progress-bar-container')[index];
+                if (container) {
+                    const bar = container.querySelector('.progress-bar');
+                    const amountSpan = container.previousElementSibling.querySelector('span:nth-child(2)');
+                    const percentSpan = container.nextElementSibling;
+                    if (bar && amountSpan && percentSpan) {
+                        bar.style.width = b.percentual + '%';
+                        amountSpan.textContent = `R$ ${formatCurrency(b.gastoAtual)} / R$ ${formatCurrency(b.limite)}`;
+                        percentSpan.textContent = `(${b.percentual}%)`;
+                        
+                        // Set color based on percentage
+                        if (b.percentual >= 90) {
+                            bar.style.backgroundColor = '#DC2626';
+                        } else if (b.percentual >= 70) {
+                            bar.style.backgroundColor = '#D97706';
+                        } else {
+                            bar.style.backgroundColor = '#16A34A';
+                        }
+                    }
+                }
+            });
+
+            // Update goals with sample data
+            const sampleGoals = [
+                { nome: 'Viagem para o Japão', current: 1500, target: 5000 },
+                { nome: 'Reserva de Emergência', current: 8000, target: 15000 },
+                { nome: 'Cartão de Crédito', current: 1200, target: 3000 } // dívida a ser paga
+            ];
+
+            sampleGoals.forEach(goal => {
+                const percent = goal.target > 0 ? Math.min(100, Math.round((goal.current / goal.target) * 100)) : 0;
+                
+                if (goal.nome === 'Viagem para o Japão') {
+                    document.getElementById('goal-japao-current').textContent = formatCurrency(goal.current);
+                    document.getElementById('goal-japao-target').textContent = formatCurrency(goal.target);
+                    document.getElementById('goal-japao-percent').textContent = `(${percent}%)`;
+                    document.getElementById('goal-japao-bar').style.width = percent + '%';
+                } else if (goal.nome === 'Reserva de Emergência') {
+                    document.getElementById('goal-emergencia-current').textContent = formatCurrency(goal.current);
+                    document.getElementById('goal-emergencia-target').textContent = formatCurrency(goal.target);
+                    document.getElementById('goal-emergencia-percent').textContent = `(${percent}%)`;
+                    document.getElementById('goal-emergencia-bar').style.width = percent + '%';
+                } else if (goal.nome === 'Cartão de Crédito') {
+                    document.getElementById('goal-divida-current').textContent = formatCurrency(goal.current);
+                    document.getElementById('goal-divida-target').textContent = formatCurrency(goal.target);
+                    document.getElementById('goal-divida-percent').textContent = `(${percent}%)`;
+                    document.getElementById('goal-divida-bar').style.width = percent + '%';
+                }
+            });
+        }
+
+        // View switching
+        function showView(viewName) {
+            // Hide all views
+            document.querySelectorAll('.view').forEach(el => {
+                el.style.display = el.dataset.view === viewName ? 'block' : 'none';
+            });
+
+            // Update active nav link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.toggle('active', link.dataset.view === viewName);
+            });
+
+            currentView = viewName;
         }
 
         // Load data when DOM is ready
@@ -240,12 +726,13 @@
             const loginScreen = document.getElementById('login-screen');
             const registerScreen = document.getElementById('register-screen');
             const dashboardScreen = document.getElementById('dashboard-screen');
-            
+
             if (token) {
                 loginScreen.style.display = 'none';
                 registerScreen.style.display = 'none';
                 dashboardScreen.style.display = 'block';
                 loadData();
+                showView('dashboard');
             } else {
                 loginScreen.style.display = 'flex';
                 registerScreen.style.display = 'none';
@@ -269,7 +756,7 @@
             // Login form handler
             const loginForm = document.getElementById('login-form');
             loginForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
+                e.preventForce();
                 const email = document.getElementById('login-email').value;
                 const password = document.getElementById('login-password').value;
                 const errorDiv = document.getElementById('login-error');
@@ -291,12 +778,16 @@
                     const data = await response.json();
                     token = data.access_token;
                     localStorage.setItem('orbitfin_token', token);
+                    if (data.userName) {
+                        localStorage.setItem('orbitfin_user_name', data.userName);
+                    }
 
                     // Switch to dashboard
                     loginScreen.style.display = 'none';
                     registerScreen.style.display = 'none';
-                    dashboardScreen.style.display = 'block';
-                    loadData(); // Load dashboard data
+                    document.getElementById('dashboard-screen').style.display = 'block';
+                    loadData();
+                    showView('dashboard');
                 } catch (error) {
                     errorDiv.textContent = 'E-mail ou senha inválidos';
                 }
@@ -328,15 +819,69 @@
                     const data = await response.json();
                     token = data.access_token;
                     localStorage.setItem('orbitfin_token', token);
+                    if (data.userName) {
+                        localStorage.setItem('orbitfin_user_name', data.userName);
+                    }
 
                     // Switch to dashboard
                     registerScreen.style.display = 'none';
                     loginScreen.style.display = 'none';
-                    dashboardScreen.style.display = 'block';
-                    loadData(); // Load dashboard data
+                    document.getElementById('dashboard-screen').style.display = 'block';
+                    loadData();
+                    showView('dashboard');
                 } catch (error) {
                     errorDiv.textContent = 'Erro ao cadastrar. Tente novamente.';
                 }
+            });
+
+            // Button functionality
+            document.getElementById('btn-nova-receita').addEventListener('click', () => {
+                alert('Funcionalidade de Nova Receita em desenvolvimento!\\nEsta tela permitiria adicionar uma nova receita.');
+            });
+
+            document.getElementById('btn-nova-despesa').addEventListener('click', () => {
+                alert('Funcionalidade de Nova Despesa em desenvolvimento!\\nEsta tela permitiria adicionar uma nova despesa.');
+            });
+
+            document.getElementById('btn-add-transaction').addEventListener('click', () => {
+                alert('Funcionalidade de Nova Transação em desenvolvimento!\\nEsta tela permitiria adicionar uma nova transação.');
+            });
+
+            document.getElementById('btn-filter-transactions').addEventListener('click', () => {
+                alert('Funcionalidade de Filtro de Transações em desenvolvimento!\\nEsta tela permitiria filtrar transações por período, categoria, etc.');
+            });
+
+            document.getElementById('btn-edit-profile').addEventListener('click', () => {
+                alert('Funcionalidade de Editar Perfil em desenvolvimento!\\nEsta tela permitiria editar suas informações de conta.');
+            });
+
+            // Sidebar navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const view = link.dataset.view;
+                    showView(view);
+                });
+            });
+
+            // 2FA toggle
+            document.getElementById('2fa-toggle').addEventListener('change', (e) => {
+                document.getElementById('2fa-status').textContent = e.target.checked ? 'Ativado' : 'Desativado';
+            });
+
+            // Email notifications toggle
+            document.getElementById('email-notif-toggle').addEventListener('change', (e) => {
+                document.getElementById('email-notif-status').textContent = e.target.checked ? 'Ativado' : 'Desativado';
+            });
+
+            // Push notifications toggle
+            document.getElementById('push-notif-toggle').addEventListener('change', (e) => {
+                document.getElementById('push-notif-status').textContent = e.target.checked ? 'Ativado' : 'Desativado';
+            });
+
+            // Spend alerts toggle
+            document.getElementById('spend-alert-toggle').addEventListener('change', (e) => {
+                document.getElementById('spend-alert-status').textContent = e.target.checked ? 'Ativado' : 'Desativado';
             });
         });
     </script>
