@@ -277,50 +277,70 @@ body {
     font-weight: 500;
 }
 
-/* Card 2: Mini Gráfico de Barras */
-.mini-chart {
-    display: flex;
-    height: 80px;
-    gap: 4px;
-    align-items: flex-end;
-    margin: 1.5rem 0;
+/* Card 2: Receitas e Despesas - CORREÇÃO URGENTE DO GRÁFICO */
+.chart-card {
+    position: relative;
+    padding-bottom: 36px !important;
+    overflow: hidden;
 }
-.chart-bar {
-    background-color: var(--primaria);
-    flex: 1;
+.chart-container {
+    margin-top: 15px;
+}
+.bars-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    height: 120px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #E5E7EB;
+}
+.bar-group {
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+    height: 100%;
+}
+.bar {
+    width: 7px;
     border-radius: 4px 4px 0 0;
 }
-.chart-label {
-    text-align: center;
+.bar.receita {
+    background-color: #1A2238;
+}
+.bar.despesa {
+    background-color: #E05638;
+}
+.chart-months {
+    display: flex;
+    justify-content: space-between;
     font-size: 0.75rem;
-    color: var(--cinza-escuro);
-    margin-top: 0.5rem;
-    flex: 1;
+    color: #6B7280;
+    margin-top: 8px;
+    padding: 0 4px;
 }
 .chart-legend {
     display: flex;
+    gap: 20px;
+    margin-top: 14px;
     justify-content: center;
-    gap: 1.5rem;
-    margin-top: 1rem;
     font-size: 0.85rem;
+    color: #4B5563;
 }
 .legend-item {
     display: flex;
     align-items: center;
-    gap: 0.25rem;
+    gap: 6px;
 }
-.legend-item.receita {
-    color: var(--verde);
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: inline-block;
 }
-.legend-item.despesa {
-    color: var(--vermelho);
-}
-.legend-item::before {
-    content: "■";
-    font-size: 0.75rem;
-}
+.receita-dot { background-color: #1A2238; }
+.despesa-dot { background-color: #E05638; }
 
-/* Card 3: Mini Gráfico de Linha */
+/* Card 3: Limites de Gastos */
 .mini-line-chart {
     position: relative;
     height: 80px;
