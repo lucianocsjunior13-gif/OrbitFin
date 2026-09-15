@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrbitFin - Login</title>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h2>OrbitFin</h2>
+                <p>Acesse sua conta financeira</p>
+            </div>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn-primary">Entrar</button>
+                <p class="login-footer">
+                    Não tem conta? <a href="#">Criar conta</a>
+                </p>
+            </form>
+            <div id="loginError" class="error-message" style="color: var(--vermelho); font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2rem;"></div>
+
+        </div>
+    </div>
+        <script>
+        const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
+
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const errorDiv = document.getElementById('loginError');
+            errorDiv.textContent = ''; // clear previous error
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch(`${BASE_URL}/api:FODf7XFO/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                                    localStorage.setItem('orbitfin_token', data.authToken);
+                                    // Redireciona para o painel principal (Visão Geral)
+                                    window.location.href = 'index.html';
+                                } else {
+                                    // Always show friendly message for credential errors
+                                    errorDiv.textContent = 'E-mail ou senha inválidos, tente novamente.';
+                                }
+            } catch (error) {
+                console.error('Erro na requisição:', error);
+                errorDiv.textContent = 'Erro de conexão com o servidor do Xano.';
+            }
+        });
+    </script>
+
+</body>
+</html>
+</body>

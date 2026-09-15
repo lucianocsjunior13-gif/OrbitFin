@@ -1741,3 +1741,110 @@ body {
 .card-action-btn:hover {
     background-color: #c94a2e;
 }
+
+/* Login page styles */
+.login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f4f6f9;
+    padding: 20px;
+}
+.login-card {
+    background: var(--branco);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    width: 100%;
+    max-width: 400px;
+}
+/* Form grid layout for signup */
+.login-form {
+    display: grid;
+    gap: 12px;
+}
+@media (min-width: 600px) {
+    .login-form {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    /* Make email field full width */
+    .login-form .form-group:nth-child(5) {
+        grid-column: 1 / -1;
+    }
+    /* Make button and footer full width */
+    .login-form > button,
+    .login-form > p.login-footer {
+        grid-column: 1 / -1;
+    }
+}
+.login-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.login-header h2 {
+    color: var(--primaria);
+    margin-bottom: 0.5rem;
+    font-size: 2rem;
+}
+.login-header p {
+    color: var(--cinza-escuro);
+    font-size: 1.1rem;
+}
+.login-form .form-group {
+    margin-bottom: 1.5rem;
+}
+.login-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    font-size: 0.9rem;
+}
+.login-form input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    background: var(--branco);
+    color: var(--secundaria);
+    font-size: 0.9rem;
+}
+.login-form input:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+}
+.btn-primary {
+    background: var(--primaria);
+    color: var(--branco);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+.btn-primary:hover {
+    background: #c4452e;
+}
+.login-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+.login-footer a {
+    color: var(--primaria);
+    text-decoration: none;
+}
+.login-footer a:hover {
+    text-decoration: underline;
+}
+
+/* Error message styling for login */
+.error-message {
+    min-height: 1.2rem; /* reserve space to avoid layout shift */
+}
