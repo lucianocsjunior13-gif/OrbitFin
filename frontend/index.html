@@ -26,78 +26,93 @@
             color: var(--azul-marinho);
         }
 
-        /* Login Screen */
-        .login-screen {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: var(--cinza-claro);
-        }
+        /* Auth Screens (Login & Register) */
+                .auth-screen {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    min-height: 100vh;
+                    background-color: var(--cinza-claro);
+                }
 
-        .login-form {
-            background: var(--branco);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 400px;
-        }
+                .auth-form {
+                    background: var(--branco);
+                    padding: 2.5rem;
+                    border-radius: 16px;
+                    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+                    width: 100%;
+                    max-width: 500px;
+                }
 
-        .login-form h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--azul-marinho);
-        }
+                .auth-form h2 {
+                    text-align: center;
+                    margin-bottom: 2rem;
+                    color: var(--azul-marinho);
+                    font-size: 2rem;
+                }
 
-        .login-form .form-group {
-            margin-bottom: 1rem;
-        }
+                .auth-form .form-group {
+                    margin-bottom: 1.2rem;
+                }
 
-        .login-form label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: var(--azul-marinho);
-        }
+                .auth-form label {
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    font-weight: 500;
+                    color: var(--azul-marinho);
+                    font-size: 1.1rem;
+                }
 
-        .login-form input {
-            width: 100%;
-            padding: 0.8rem;
-            border: 1px solid var(--cinza-claro);
-            border-radius: 8px;
-            font-size: 1rem;
-        }
+                .auth-form input {
+                    width: 100%;
+                    padding: 1rem;
+                    border: 1px solid var(--cinza-claro);
+                    border-radius: 8px;
+                    font-size: 1.1rem;
+                }
 
-        .login-form input:focus {
-            outline: none;
-            border-color: var(--vermelho-marte);
-        }
+                .auth-form input:focus {
+                    outline: none;
+                    border-color: var(--vermelho-marte);
+                }
 
-        .login-form .btn {
-            width: 100%;
-            background-color: var(--vermelho-marte);
-            color: var(--branco);
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: opacity 0.3s;
-        }
+                .auth-form .btn {
+                    width: 100%;
+                    background-color: var(--vermelho-marte);
+                    color: var(--branco);
+                    border: none;
+                    padding: 1rem 2rem;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    transition: opacity 0.3s;
+                }
 
-        .login-form .btn:hover {
-            opacity: 0.8;
-        }
+                .auth-form .btn:hover {
+                    opacity: 0.8;
+                }
 
-        .login-form .error-message {
-            color: var(--vermelho-marte);
-            margin-top: 1rem;
-            text-align: center;
-            min-height: 1.5rem;
-            font-size: 0.9rem;
-        }
+                .auth-form .error-message {
+                    color: var(--vermelho-marte);
+                    margin-top: 1rem;
+                    text-align: center;
+                    min-height: 1.5rem;
+                    font-size: 0.9rem;
+                }
+
+                .auth-form .switch-link {
+                    display: block;
+                    text-align: center;
+                    margin-top: 1.2rem;
+                    color: var(--vermelho-marte);
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                }
+
+                .auth-form .switch-link:hover {
+                    text-decoration: underline;
+                }
 
         /* Cabeçalho / Navbar */
         header {
@@ -271,20 +286,45 @@
 </head>
 <body>
     <!-- Login Screen -->
-    <div id="login-screen" class="login-screen">
-        <div class="login-form">
+    <div id="login-screen" class="auth-screen">
+        <div class="auth-form">
             <h2>OrbitFin Login</h2>
             <form id="login-form">
                 <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" required>
+                    <label for="login-email">E-mail</label>
+                    <input type="email" id="login-email" name="email" required>
                 </div>
                 <div class="form-group">
-                    <label for="password">Senha</label>
-                    <input type="password" id="password" name="password" required>
+                    <label for="login-password">Senha</label>
+                    <input type="password" id="login-password" name="password" required>
                 </div>
                 <button type="submit" class="btn">Entrar</button>
                 <div id="login-error" class="error-message"></div>
+                <a href="#" id="show-register" class="switch-link">Não tem conta? Cadastre-se</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Screen -->
+    <div id="register-screen" class="auth-screen" style="display: none;">
+        <div class="auth-form">
+            <h2>OrbitFin Cadastro</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-name">Nome completo</label>
+                    <input type="text" id="register-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">E-mail</label>
+                    <input type="email" id="register-email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Senha</label>
+                    <input type="password" id="register-password" name="password" required>
+                </div>
+                <button type="submit" class="btn">Cadastrar</button>
+                <div id="register-error" class="error-message"></div>
+                <a href="#" id="show-login" class="switch-link">Já tem conta? Faça login</a>
             </form>
         </div>
     </div>
@@ -474,23 +514,40 @@
         // Load data when DOM is ready
         document.addEventListener('DOMContentLoaded', () => {
             const loginScreen = document.getElementById('login-screen');
+            const registerScreen = document.getElementById('register-screen');
             const dashboardScreen = document.getElementById('dashboard-screen');
             
             if (token) {
                 loginScreen.style.display = 'none';
+                registerScreen.style.display = 'none';
                 dashboardScreen.style.display = 'block';
                 loadData();
             } else {
                 loginScreen.style.display = 'flex';
+                registerScreen.style.display = 'none';
                 dashboardScreen.style.display = 'none';
             }
+
+            // Show register screen
+            document.getElementById('show-register').addEventListener('click', (e) => {
+                e.preventDefault();
+                loginScreen.style.display = 'none';
+                registerScreen.style.display = 'flex';
+            });
+
+            // Show login screen
+            document.getElementById('show-login').addEventListener('click', (e) => {
+                e.preventDefault();
+                registerScreen.style.display = 'none';
+                loginScreen.style.display = 'flex';
+            });
 
             // Login form handler
             const loginForm = document.getElementById('login-form');
             loginForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
                 const errorDiv = document.getElementById('login-error');
                 errorDiv.textContent = '';
 
@@ -513,10 +570,48 @@
 
                     // Switch to dashboard
                     loginScreen.style.display = 'none';
+                    registerScreen.style.display = 'none';
                     dashboardScreen.style.display = 'block';
                     loadData(); // Load dashboard data
                 } catch (error) {
                     errorDiv.textContent = 'E-mail ou senha inválidos';
+                }
+            });
+
+            // Register form handler
+            const registerForm = document.getElementById('register-form');
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const name = document.getElementById('register-name').value;
+                const email = document.getElementById('register-email').value;
+                const password = document.getElementById('register-password').value;
+                const errorDiv = document.getElementById('register-error');
+                errorDiv.textContent = '';
+
+                try {
+                    const response = await fetch('http://localhost:5000/api/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ name, email, password })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Registration failed');
+                    }
+
+                    const data = await response.json();
+                    token = data.access_token;
+                    localStorage.setItem('orbitfin_token', token);
+
+                    // Switch to dashboard
+                    registerScreen.style.display = 'none';
+                    loginScreen.style.display = 'none';
+                    dashboardScreen.style.display = 'block';
+                    loadData(); // Load dashboard data
+                } catch (error) {
+                    errorDiv.textContent = 'Erro ao cadastrar. Tente novamente.';
                 }
             });
         });
