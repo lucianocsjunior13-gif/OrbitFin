@@ -118,7 +118,7 @@ body {
 }
 
 /* ITEM ATIVO - EFEITE DE RECORTE EDGE-TO-EDGE */
-.sidebar-top .main-nav a.ativo {
+.sidebar-top .main-nav a.active {
     background-color: var(--fundo); /* MESMA COR DO BODY */
     color: var(--secundaria);       /* TEXTO E ICONE AZUL MARINHO */
     border-radius: 30px 0 0 30px;  /* ARREDONDADO ESQUERDA, RETO DIREITA */
@@ -129,7 +129,7 @@ body {
 }
 
 /* ICONE DO ITEM ATIVO */
-.sidebar-top .main-nav a.ativo::before {
+.sidebar-top .main-nav a.active::before {
     color: var(--secundaria);
 }
 
@@ -476,7 +476,7 @@ body {
         padding-left: 0;
         padding-right: 0;
     }
-    .sidebar-top .main-nav a.ativo {
+    .sidebar-top .main-nav a.active {
         margin-left: 15px;
         padding: 10px 15px;
         width: calc(100% - 15px);
