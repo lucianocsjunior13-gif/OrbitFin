@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrbitFin - Dashboard</title>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <div class="logo-container">
+                <h2>OrbitFin</h2>
+            </div>
+            <div class="user-profile">
+                <div class="avatar">LJ</div>
+                <div class="user-info">
+                    <span class="name">Luciano Junior</span>
+                    <span class="role">Usuário</span>
+                </div>
+            </div>
+            <hr class="sidebar-divider">
+            
+            <!-- Menu Principal -->
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="ativo"><i class="fi fi-br-home"></i> Visão Geral</a></li>
+                    <li><a href="transacoes.html"><i class="fi fi-br-wallet"></i> Transações</a></li>
+                    <li><a href="categorias.html"><i class="fi fi-br-apps"></i> Categorias</a></li>
+                    <li><a href="metas.html"><i class="fi fi-br-target"></i> Metas</a></li>
+                    <li><a href="relatorios.html"><i class="fi fi-br-chart-line-up"></i> Relatórios</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Menu Inferior (Configurações isoladas) -->
+        <div class="sidebar-bottom">
+            <hr class="sidebar-divider">
+            <nav class="footer-nav">
+                <ul>
+                    <li><a href="configuracoes.html"><i class="fi fi-br-settings"></i> Configurações</a></li>
+                </ul>
+            </nav>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="content">
+        <header class="welcome">
+            <h1>Bem-vindo, Luciano!</h1>
+            <p>Seu resumo financeiro em tempo real</p>
+        </header>
+
+        <!-- Upper Grid (3 columns) -->
+        <div class="dashboard-grid">
+            <!-- Card 1: Saldo Total -->
+            <section class="card saldo-total-card">
+                <h3>Saldo Total</h3>
+                <p class="valor">R$ 145.720,00</p>
+                <div class="bancos-conectados">
+                    <div class="banco-badge">
+                        <i class="fi fi-br-wallet"></i>
+                    </div>
+                    <span class="texto-contas">3 contas conectadas</span>
+                </div>
+                <!-- Barra divisoria laranja de ponta a ponta -->
+                <div class="card-bottom-bar"></div>
+            </section>
+
+            <!-- Card 2: Receitas e Despesas -->
+            <section class="card chart-card">
+                <h3>Receitas e Despesas</h3>
+                
+                <div class="chart-container">
+                    <div class="bars-wrapper">
+                        <div class="bar-group"><div class="bar receita" style="height: 70%;"></div><div class="bar despesa" style="height: 40%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 50%;"></div><div class="bar despesa" style="height: 30%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 90%;"></div><div class="bar despesa" style="height: 60%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 60%;"></div><div class="bar despesa" style="height: 45%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 80%;"></div><div class="bar despesa" style="height: 50%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 65%;"></div><div class="bar despesa" style="height: 35%;"></div></div>
+                    </div>
+                    <div class="chart-months">
+                        <span>Jan</span><span>Fev</span><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span>
+                    </div>
+                </div>
+
+                <div class="chart-legend">
+                    <div class="legend-item"><span class="dot receita-dot"></span> Receitas</div>
+                    <div class="legend-item"><span class="dot despesa-dot"></span> Despesas</div>
+                </div>
+
+                <div class="card-bottom-bar"></div>
+            </section>
+
+            <!-- Card 3: Limites de Gastos -->
+            <section class="card">
+                <h2>Limites de Gastos</h2>
+                <div class="card-content">
+                    <div class="mini-line-chart">
+                        <div class="chart-point" style="bottom: 20%;"></div>
+                        <div class="chart-point" style="bottom: 40%;"></div>
+                        <div class="chart-point" style="bottom: 60%;"></div>
+                        <div class="chart-point" style="bottom: 50%;"></div>
+                        <div class="chart-point" style="bottom: 70%;"></div>
+                        <div class="chart-point" style="bottom: 30%;"></div>
+                    </div>
+                    <div class="chart-labels">
+                        <span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
+                    </div>
+                    <div class="category-selector">
+                        <select>
+                            <option value="todas">Todas as categorias</option>
+                            <option value="alimentacao">Alimentação</option>
+                            <option value="transporte">Transporte</option>
+                            <option value="lazer">Lazer</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Lower Grid (3 columns / blocos) -->
+        <div class="dashboard-grid">
+            <!-- Card 4: Transações Recentes -->
+            <section class="card">
+                <h2>Transações Recentes</h2>
+                <div class="card-content">
+                    <table class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Descrição</th>
+                                <th>Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>12/10</td>
+                                <td>Uber</td>
+                                <td class="valor-negativo">- R$ 25,50</td>
+                            </tr>
+                            <tr>
+                                <td>10/10</td>
+                                <td>Mercado Livre</td>
+                                <td class="valor-negativo">- R$ 89,90</td>
+                            </tr>
+                            <tr>
+                                <td>08/10</td>
+                                <td>Salário</td>
+                                <td class="valor-positivo">+ R$ 3.200,00</td>
+                            </tr>
+                            <tr>
+                                <td>05/10</td>
+                                <td>Netflix</td>
+                                <td class="valor-negativo">- R$ 39,90</td>
+                            </tr>
+                            <tr>
+                                <td>02/10</td>
+                                <td>Freelance Design</td>
+                                <td class="valor-positivo">+ R$ 1.500,00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Card 5: Gastos por Categoria -->
+            <section class="card">
+                <h2>Gastos por Categoria</h2>
+                <div class="card-content">
+                    <div class="progress-category">
+                        <div class="category-label">Alimentação</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 65%;"></div>
+                        </div>
+                        <div class="progress-percentage">65%</div>
+                    </div>
+                    <div class="progress-category">
+                        <div class="category-label">Lazer</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;"></div>
+                        </div>
+                        <div class="progress-percentage">45%</div>
+                    </div>
+                    <div class="progress-category">
+                        <div class="category-label">Transporte</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%;"></div>
+                        </div>
+                        <div class="progress-percentage">30%</div>
+                    </div>
+                    <div class="progress-category">
+                        <div class="category-label">Assinaturas</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 80%;"></div>
+                        </div>
+                        <div class="progress-percentage">80%</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Card 6: AI Insights - Destaque -->
+            <section class="card ai-insights">
+                <h2>AI Insights</h2>
+                <div class="card-content">
+                    <p>💡 <strong>Dica:</strong> Reduza gastos com Assinaturas este mês. Você tem 3 serviços ativos que raramente usa.</p>
+                    <p>📊 <strong>Tendência:</strong> Seus gastos com Alimentação estão 12% acima da média dos últimos 3 meses.</p>
+                    <p>🎯 <strong>Oportunidade:</strong> Considere negociar seu plano de celular - pode economizar até R$ 50/mês.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>
