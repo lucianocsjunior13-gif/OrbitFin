@@ -48,10 +48,87 @@
 
     <!-- Main Content -->
     <main class="content">
-        <header class="welcome">
+                <header class="page-header">
             <h1>Tela de Configurações</h1>
             <p>Gerencie sua conta e preferências</p>
         </header>
-    </main>
-</body>
+
+        <div class="config-grid">
+            <div class="card config-card">
+                <div class="config-header">
+                    <h3>Perfil</h3>
+                </div>
+                <div class="config-body">
+                    <div class="config-item">
+                        <label class="config-label">Nome:</label>
+                        <span class="config-value">Luciano Junior</span>
+                    </div>
+                    <div class="config-item">
+                        <label class="config-label">E-mail:</label>
+                        <span class="config-value">luciano@orbitfin.com</span>
+                    </div>
+                    <div class="config-item">
+                        <button type="button" class="card-action-btn">Editar Perfil</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card config-card">
+                <div class="config-header">
+                    <h3>Preferências</h3>
+                </div>
+                <div class="config-body">
+                    <div class="config-item">
+                        <label class="config-label">Moeda padrão:</label>
+                        <select class="config-select">
+                            <option value="BRL">BRL - Real Brasileiro</option>
+                            <option value="USD">USD - Dólar Americano</option>
+                            <option value="EUR">EUR - Euro</option>
+                        </select>
+                    </div>
+                    <div class="config-item">
+                        <label class="config-label">Notificações por e-mail:</label>
+                        <div class="config-switch">
+                            <input type="checkbox" id="emailNotif" checked>
+                            <label for="emailNotif"></label>
+                        </div>
+                    </div>
+                    <div class="config-item">
+                        <label class="config-label">Tema visual:</label>
+                        <select class="config-select">
+                            <option value="light">Claro</option>
+                            <option value="dark" selected>Escuro</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card config-card">
+                <div class="config-header">
+                    <h3>Segurança</h3>
+                </div>
+                <div class="config-body">
+                    <div class="config-item">
+                        <button type="button" class="card-action-btn">Alterar Senha</button>
+                    </div>
+                    <div class="config-item">
+                        <label class="config-label">Sessões ativas:</label>
+                        <span class="config-value">2 dispositivos</span>
+                    </div>
+                    <div class="config-item">
+                        <button type="button" class="card-action-btn">Gerenciar Sessões</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+    
+        <div class="global-action">
+            <a href="#" class="action-btn salvar-config"><i class="fi fi-br-save"></i> Salvar Configurações</a>
+        </div>
+</main>
+
+
 </html>
+</body>

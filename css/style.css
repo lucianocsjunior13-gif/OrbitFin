@@ -1035,3 +1035,709 @@ body {
     height: auto;
     min-height: auto;
 }
+
+/* Goals page styles */
+.actions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+.actions-header .action-btn.nova-meta {
+    background: var(--primaria);
+    color: var(--branco);
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+.actions-header .action-btn.nova-meta:hover {
+    background: #c4452e;
+}
+.actions-header .filter-input {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+}
+.actions-header .filter-input label {
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    font-size: 0.85rem;
+}
+.actions-header .filter-input input {
+    padding: 8px 10px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    background: var(--branco);
+    color: var(--secundaria);
+    font-size: 0.9rem;
+}
+.actions-header .filter-input input:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+}
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+.goal-card {
+    background: var(--branco);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.goal-card .goal-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-center: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+    background: #f0f9ff;
+}
+.goal-card .goal-icon i {
+    color: var(--primaria);
+}
+.goal-card .goal-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.goal-card .goal-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    color: var(--secundaria);
+}
+.goal-card .goal-info p {
+    font-size: 0.9rem;
+    color: var(--cinza-escuro);
+    margin: 0 0 1rem 0;
+}
+.goal-card .goal-progress {
+    margin-top: 1rem;
+}
+.goal-card .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+.goal-card .progress-label .progress-percent {
+    font-weight: 600;
+    color: var(--primaria);
+}
+.goal-card .progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.goal-card .progress-fill {
+    height: 100%;
+    background-color: var(--primaria);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+.goal-card .goal-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.goal-card .goal-actions .action-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+.goal-card .goal-actions .action-btn:nth-child(1) { /* Editar */
+    background: #f3f4f6;
+    color: var(--cinza-escuro);
+}
+.goal-card .goal-actions .action-btn:nth-child(1):hover {
+    background: #e5e7eb;
+}
+.goal-card .goal-actions .action-btn:nth-child(2) { /* Excluir */
+    background: #fef2f2;
+    color: var(--vermelho);
+}
+.goal-card .goal-actions .action-btn:nth-child(2):hover {
+    background: #fee2e2;
+}
+/* Responsividade: já está no grid, mas ajustamos para telas muito pequenas */
+@media (max-width: 480px) {
+    .goals-grid {
+        grid-template-columns: 1fr;
+    }
+    .actions-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .actions-header .action-btn.nova-meta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Metas page specific fixes */
+/* Ensure card has auto height */
+.content .card {
+    height: auto;
+    min-height: auto;
+}
+/* Actions header inside card */
+.actions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 0; /* remove bottom margin since card provides padding */
+}
+.actions-header .action-btn.nova-meta {
+    background: var(--primaria);
+    color: var(--branco);
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+.actions-header .action-btn.nova-meta:hover {
+    background: #c4452e;
+}
+.actions-header .filter-input {
+    display: flex;
+    flex-direction: column;
+    min-width: 180px;
+}
+.actions-header .filter-input label {
+    margin-bottom: 4px;
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    font-size: 0.85rem;
+}
+.actions-header .filter-input input {
+    padding: 8px 10px;
+    border: 1px solid #D1D5DB;
+    border-radius: 6px;
+    background: var(--branco);
+    color: var(--secundaria);
+    font-size: 0.9rem;
+}
+.actions-header .filter-input input:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+}
+/* Goals grid */
+.goals-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+/* Goal card */
+.goal-card {
+    background: var(--branco);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.goal-card .goal-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+    background: #f0f9ff;
+}
+.goal-card .goal-icon i {
+    color: var(--primaria);
+}
+.goal-card .goal-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+.goal-card .goal-info h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    color: var(--secundaria);
+}
+.goal-card .goal-info p {
+    font-size: 0.9rem;
+    color: var(--cinza-escuro);
+    margin: 0 0 1rem 0;
+}
+.goal-card .goal-progress {
+    margin: 1rem 0;
+}
+.goal-card .progress-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+.goal-card .progress-label .progress-percent {
+    font-weight: 600;
+    color: var(--primaria);
+}
+.goal-card .progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.goal-card .progress-fill {
+    height: 100%;
+    background-color: var(--primaria);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+.goal-card .goal-actions {
+    margin-top: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.goal-card .goal-actions .action-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+.goal-card .goal-actions .action-btn:nth-child(1) { /* Editar */
+    background: #f3f4f6;
+    color: var(--cinza-escuro);
+}
+.goal-card .goal-actions .action-btn:nth-child(1):hover {
+    background: #e5e7eb;
+}
+.goal-card .goal-actions .action-btn:nth-child(2) { /* Excluir */
+    background: #fef2f2;
+    color: var(--vermelho);
+}
+.goal-card .goal-actions .action-btn:nth-child(2):hover {
+    background: #fee2e2;
+}
+/* Responsividade */
+@media (max-width: 480px) {
+    .goals-grid {
+        grid-template-columns: 1fr;
+    }
+    .actions-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .actions-header .action-btn.nova-meta {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* Fix excess whitespace on pages like Metas */
+body {
+    align-items: flex-start; /* Prevent children from stretching to full height */
+}
+.sidebar {
+    align-self: stretch; /* Keep sidebar full height */
+}
+.content {
+    min-height: auto;
+    height: auto;
+}
+
+/* Reports page specific styles */
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+.report-card {
+    /* inherits from .card */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.report-header {
+    margin-bottom: 1rem;
+}
+.report-header h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.25rem;
+    color: var(--secundaria);
+}
+.report-subtitle {
+    font-size: 0.9rem;
+    color: var(--cinza-escuro);
+}
+.report-body {
+    flex: 1;
+    margin-bottom: 1rem;
+}
+.stat-block {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #eee;
+}
+.stat-block:last-child {
+    border-bottom: none;
+}
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--cinza-escuro);
+}
+.stat-value {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.stat-value.positivo { color: var(--verde); }
+.stat-value.negativo { color: var(--vermelho); }
+.chart-placeholder {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.bar-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.bar-item span {
+    font-size: 0.85rem;
+    color: var(--cinza-escuro);
+    min-width: 80px;
+}
+.bar {
+    flex: 1;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 0.5rem;
+}
+.fill {
+    height: 100%;
+    background-color: var(--primaria);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+.download-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.download-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--cinza-escuro);
+}
+.download-item i {
+    color: var(--primaria);
+    width: 20px;
+    text-align: center;
+}
+.report-footer {
+    margin-top: auto;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+.report-footer .action-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-align: center;
+    transition: background-color 0.2s;
+}
+.report-footer .action-btn:nth-child(1) { /* first button */
+    background: #f3f4f6;
+    color: var(--cinza-escuro);
+}
+.report-footer .action-btn:nth-child(1):hover {
+    background: #e5e7eb;
+}
+.report-footer .action-btn:nth-child(2) { /* second button */
+    background: var(--primaria);
+    color: var(--branco);
+}
+.report-footer .action-btn:nth-child(2):hover {
+    background: #c4452e;
+}
+/* Exportar PDF button specific */
+.action-btn.export-pdf {
+    background: var(--primaria);
+    color: var(--branco);
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+.action-btn.export-pdf:hover {
+    background: #c4452e;
+}
+/* Ensure container height auto */
+.content .card {
+    height: auto;
+    min-height: auto;
+}
+
+/* Configurations page styles */
+.config-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+.config-card {
+    /* inherits from .card */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.config-header {
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+.config-header h3 {
+    margin: 0;
+    font-size: 1.125rem;
+    color: var(--secundaria);
+}
+.config-body {
+    flex: 1;
+}
+.config-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f8fafc;
+}
+.config-item:last-child {
+    border-bottom: none;
+}
+.config-label {
+    font-weight: 500;
+    color: var(--cinza-escuro);
+    font-size: 0.9rem;
+}
+.config-value {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--secundaria);
+}
+.config-select {
+    padding: 6px 8px;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    background: var(--branco);
+    color: var(--secundaria);
+    font-size: 0.9rem;
+    min-width: 120px;
+}
+.config-select:focus {
+    outline: none;
+    border-color: var(--primaria);
+    box-shadow: 0 0 0 2px rgba(224,86,56,0.2);
+}
+.config-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+.config-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.config-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+.config-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .config-slider {
+    background-color: var(--primaria);
+}
+input:checked + .config-slider:before {
+    transform: translateX(20px);
+}
+.global-action {
+    margin-top: 2rem;
+    text-align: center;
+}
+.action-btn.salvar-config {
+    background: var(--primaria);
+    color: var(--branco);
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background-color 0.2s;
+}
+.action-btn.salvar-config:hover {
+    background: #c4452e;
+}
+/* Ensure container height auto */
+.content .card {
+    height: auto;
+    min-height: auto;
+}
+
+/* Final touches for configuracoes.html */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-content: flex-start;
+}
+.page-header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+.page-header p {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.1rem;
+    color: var(--cinza-escuro);
+}
+.page-header .action-btn.salvar-config {
+    /* keep existing styling */
+}
+/* Ensure switch is terracota */
+.config-switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+}
+.config-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.config-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 20px;
+}
+.config-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+input:checked + .config-slider {
+    background-color: var(--primaria);
+}
+input:checked + .config-slider:before {
+    transform: translateX(20px);
+}
+/* Ensure no excess whitespace */
+body {
+    align-items: flex-start;
+}
+.sidebar {
+    align-self: stretch;
+}
+.content {
+    min-height: auto;
+    height: auto;
+}
+
+/* Card action buttons styling */
+.card-action-btn {
+    background-color: #E05638; /* Terracota oficial do OrbitFin */
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.card-action-btn:hover {
+    background-color: #c94a2e;
+}

@@ -48,10 +48,89 @@
 
     <!-- Main Content -->
     <main class="content">
-        <header class="welcome">
+        <header class="page-header">
             <h1>Relatórios Financeiros</h1>
             <p>Visualize e exporte seus relatórios financeiros</p>
         </header>
+
+        <div class="card">
+            <div class="actions-header">
+                <div class="filter-group">
+                    <label for="period">Período:</label>
+                    <select id="period">
+                        <option value="current">Mês atual</option>
+                        <option value="last3">Últimos 3 meses</option>
+                        <option value="year">Ano</option>
+                    </select>
+                </div>
+                <a href="#" class="action-btn export-pdf"><i class="fi fi-br-file"></i> Exportar PDF</a>
+            </div>
+        </div>
+
+        <div class="reports-grid">
+            <div class="card report-card">
+                <div class="report-header">
+                    <h3>Fluxo de Caixa</h3>
+                    <p class="report-subtitle">Entradas vs Saídas</p>
+                </div>
+                <div class="report-body">
+                    <div class="stat-block">
+                        <span class="stat-label">Total Entradas</span>
+                        <span class="stat-value positivo">R$ 12.450,00</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-label">Total Saídas</span>
+                        <span class="stat-value negativo">R$ 8.320,00</span>
+                    </div>
+                    <div class="stat-block">
+                        <span class="stat-label">Saldo Mensal</span>
+                        <span class="stat-value positivo">R$ 4.130,00</span>
+                    </div>
+                </div>
+                <div class="report-footer">
+                    <a href="#" class="action-btn small"><i class="fi fi-br-download"></i> Demo. Resultado</a>
+                    <a href="#" class="action-btn small"><i class="fi fi-br-download"></i> Demo. Balanço</a>
+                </div>
+            </div>
+
+            <div class="card report-card">
+                <div class="report-header">
+                    <h3>Gastos por Categoria</h3>
+                    <p class="report-subtitle">Distribuição mensal</p>
+                </div>
+                <div class="report-body">
+                    <!-- Simple bar placeholders -->
+                    <div class="chart-placeholder">
+                        <div class="bar-item"><span>Alimentação</span><div class="bar"><div class="fill" style="width: 35%;"></div></div></div>
+                        <div class="bar-item"><span>Transporte</span><div class="bar"><div class="fill" style="width: 20%;"></div></div></div>
+                        <div class="bar-item"><span>Lazer</span><div class="bar"><div class="fill" style="width: 15%;"></div></div></div>
+                        <div class="bar-item"><span>Assinaturas</span><div class="bar"><div class="fill" style="width: 30%;"></div></div></div>
+                    </div>
+                </div>
+                <div class="report-footer">
+                    <a href="#" class="action-btn small"><i class="fi fi-br-download"></i> Exportar Dados</a>
+                </div>
+            </div>
+
+            <div class="card report-card">
+                <div class="report-header">
+                    <h3>Exportar Demonstrações</h3>
+                    <p class="report-subtitle">Arquivos prontos para contabilidade</p>
+                </div>
+                <div class="report-body">
+                    <div class="download-list">
+                        <div class="download-item"><i class="fi fi-br-file-text"></i><span>DRE - Demonstrativo de Resultados</span></div>
+                        <div class="download-item"><i class="fi fi-br-file-text"></i><span>Balanço Patrimonial</span></div>
+                        <div class="download-item"><i class="fi fi-br-file-text"></i><span>Fluxo de Caixa Mensal</span></div>
+                    </div>
+                </div>
+                <div class="report-footer">
+                    <a href="#" class="action-btn small"><i class="fi fi-br-download"></i> Baixar Todos</a>
+                </div>
+            </div>
+        </div>
     </main>
+
 </body>
 </html>
+</body>
