@@ -95,31 +95,52 @@
                 <div class="card-bottom-bar"></div>
             </section>
 
-            <!-- Card 3: Limites de Gastos -->
-            <section class="card">
-                <h2>Limites de Gastos</h2>
-                <div class="card-content">
-                    <div class="mini-line-chart">
-                        <div class="chart-point" style="bottom: 20%;"></div>
-                        <div class="chart-point" style="bottom: 40%;"></div>
-                        <div class="chart-point" style="bottom: 60%;"></div>
-                        <div class="chart-point" style="bottom: 50%;"></div>
-                        <div class="chart-point" style="bottom: 70%;"></div>
-                        <div class="chart-point" style="bottom: 30%;"></div>
-                    </div>
-                    <div class="chart-labels">
-                        <span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
-                    </div>
-                    <div class="category-selector">
-                        <select>
-                            <option value="todas">Todas as categorias</option>
-                            <option value="alimentacao">Alimentação</option>
-                            <option value="transporte">Transporte</option>
-                            <option value="lazer">Lazer</option>
-                        </select>
-                    </div>
+                                                <!-- Card 3: Limites de Gastos -->
+            <section class="card limits-card">
+                <h3>Limites de Gastos</h3>
+                
+                <!-- Seletor de Categorias -->
+                <div class="filter-container">
+                    <select id="categorySelect" onchange="updateChart()">
+                        <option value="all">Todas as categorias</option>
+                        <option value="lazer">Lazer</option>
+                        <option value="alimentacao">Alimentação</option>
+                        <option value="transporte">Transporte</option>
+                    </select>
                 </div>
+
+                <!-- Gráfico de Linha (Apenas o SVG limpo, sem pontos) -->
+                <div class="line-chart-container">
+                    <svg class="line-svg" viewBox="0 0 300 100" preserveAspectRatio="none">
+                        <path id="chartPath" d="M 10,75 Q 80,20 150,45 T 290,65" fill="none" stroke="#E05638" stroke-width="3" stroke-linecap="round" />
+                    </svg>
+                </div>
+
+                <!-- Meses do Rodapé -->
+                <div class="chart-months">
+                    <span>Jul</span><span>Ago</span><span>Set</span><span>Out</span><span>Nov</span><span>Dez</span>
+                </div>
+
+                <!-- Barra inferior padrão do OrbitFin -->
+                <div class="card-bottom-bar"></div>
             </section>
+
+            <script>
+                function updateChart() {
+                    const select = document.getElementById('categorySelect').value;
+                    const path = document.getElementById('chartPath');
+                    
+                    if (select === 'lazer') {
+                        path.setAttribute('d', 'M 10,80 Q 80,30 150,60 T 290,30');
+                    } else if (select === 'alimentacao') {
+                        path.setAttribute('d', 'M 10,30 Q 80,80 150,30 T 290,70');
+                    } else if (select === 'transporte') {
+                        path.setAttribute('d', 'M 10,60 Q 80,40 150,50 T 290,40');
+                    } else {
+                        path.setAttribute('d', 'M 10,75 Q 80,20 150,45 T 290,65');
+                    }
+                }
+            </script>
         </div>
 
         <!-- Lower Grid (3 columns / blocos) -->
