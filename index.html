@@ -56,42 +56,48 @@
         <!-- Upper Grid (3 columns) -->
         <div class="dashboard-grid">
             <!-- Card 1: Saldo Total -->
-            <section class="card">
-                <h2>Saldo Total</h2>
-                <div class="card-content">
-                    <div class="amount">R$ 145.720,00</div>
-                    <div class="card-footer">
-                        <div class="accounts-connected">
-                            <span class="icon">🏦</span>
-                            <span class="text">3 contas conectadas</span>
-                        </div>
+            <section class="card saldo-total-card">
+                <h3>Saldo Total</h3>
+                <p class="valor">R$ 145.720,00</p>
+                <div class="bancos-conectados">
+                    <div class="banco-badge">
+                        <i class="fi fi-br-wallet"></i>
                     </div>
+                    <span class="texto-contas">3 contas conectadas</span>
                 </div>
+                <!-- Barra divisoria laranja de ponta a ponta -->
+                <div class="card-bottom-bar"></div>
             </section>
 
-            <!-- Card 2: Receitas e Despesas (Mini Gráfico) -->
-            <section class="card">
-                <h2>Receitas e Despesas</h2>
-                <div class="card-content">
-                    <div class="mini-chart">
-                        <div class="chart-bar" style="height: 60%;"></div>
-                        <div class="chart-bar" style="height: 30%;"></div>
-                        <div class="chart-bar" style="height: 80%;"></div>
-                        <div class="chart-bar" style="height: 40%;"></div>
-                        <div class="chart-bar" style="height: 70%;"></div>
-                        <div class="chart-bar" style="height: 50%;"></div>
-                        <div class="chart-label">Jan</div>
-                        <div class="chart-label">Fev</div>
-                        <div class="chart-label">Mar</div>
-                        <div class="chart-label">Abr</div>
-                        <div class="chart-label">Mai</div>
-                        <div class="chart-label">Jun</div>
+            <!-- Card 2: Receitas e Despesas -->
+            <section class="card chart-card">
+                <h3>Receitas e Despesas</h3>
+                
+                <!-- Área do Gráfico de Barras -->
+                <div class="chart-container">
+                    <div class="bars-wrapper">
+                        <!-- Barras simuladas para os meses -->
+                        <div class="bar-group"><div class="bar receita" style="height: 70%;"></div><div class="bar despesa" style="height: 40%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 50%;"></div><div class="bar despesa" style="height: 30%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 90%;"></div><div class="bar despesa" style="height: 60%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 60%;"></div><div class="bar despesa" style="height: 45%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 80%;"></div><div class="bar despesa" style="height: 50%;"></div></div>
+                        <div class="bar-group"><div class="bar receita" style="height: 65%;"></div><div class="bar despesa" style="height: 35%;"></div></div>
                     </div>
-                    <div class="chart-legend">
-                        <span class="legend-item receita">Receitas</span>
-                        <span class="legend-item despesa">Despesas</span>
+                    <!-- Legenda dos meses posicionada corretamente abaixo das barras -->
+                    <div class="chart-months">
+                        <span>Jan</span><span>Fev</span><span>Mar</span><span>Abr</span><span>Mai</span><span>Jun</span>
                     </div>
                 </div>
+
+                <!-- Legenda de Cores -->
+                <div class="chart-legend">
+                    <div class="legend-item"><span class="dot receita-dot"></span> Receitas</div>
+                    <div class="legend-item"><span class="dot despesa-dot"></span> Despesas</div>
+                </div>
+
+                <!-- Barra inferior padrão do OrbitFin -->
+                <div class="card-bottom-bar"></div>
             </section>
 
             <!-- Card 3: Limites de Gastos -->

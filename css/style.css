@@ -4,6 +4,9 @@
     --fundo: #F4F6F8;         /* Cinza Claro */
     --branco: #FFFFFF;
     --cinza-claro: #A0AEC0;   /* Cinza claro para links inativos */
+    --cinza-escuro: #64748b;  /* Cinza médio para texto secundário */
+    --verde: #10B981;         /* Verde para valores positivos */
+    --vermelho: #EF4444;      /* Vermelho para valores negativos */
 }
 
 * {
@@ -185,42 +188,257 @@ body {
     margin-bottom: 0.5rem;
 }
 .welcome p {
-    color: #64748b; /* cinza médio para subtítulo */
+    color: var(--cinza-escuro);
     font-size: 1.1rem;
 }
 
 /* Cards genéricos */
 .card {
     background: var(--branco);
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     padding: 1.5rem;
     margin-bottom: 1.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .card h2 {
     color: var(--secundaria);
     margin-bottom: 1rem;
     font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-/* Botão Primário */
-.btn-primary {
-    display: inline-block;
-    padding: 0.75rem 1.5rem;
-    background-color: var(--primaria);
+/* AI Insights Card - Destaque com cor primária */
+.card.ai-insights {
+    background: var(--primaria);
     color: var(--branco);
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.2s, transform 0.1s;
 }
-.btn-primary:hover {
-    background-color: #d0482e;
-    transform: translateY(-2px);
+.card.ai-insights h2 {
+    color: var(--branco);
+}
+.card.ai-insights p {
+    color: var(--branco);
+    opacity: 0.9;
+    line-height: 1.6;
+}
+
+/* Dashboard Grid */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 2rem;
+}
+
+/* Card Content */
+.card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Card 1: Saldo Total - ESTILOS SIMPLIFICADOS SOLICITADOS */
+.saldo-total-card .valor {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--secundaria);
+    margin: 1rem 0;
+}
+.bancos-conectados {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+}
+.banco-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: #F3F4F6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1A2238;
+    font-size: 0.9rem;
+}
+.banco-badge i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+}
+.texto-contas {
+    font-size: 0.85rem;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+/* Card 2: Mini Gráfico de Barras */
+.mini-chart {
+    display: flex;
+    height: 80px;
+    gap: 4px;
+    align-items: flex-end;
+    margin: 1.5rem 0;
+}
+.chart-bar {
+    background-color: var(--primaria);
+    flex: 1;
+    border-radius: 4px 4px 0 0;
+}
+.chart-label {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--cinza-escuro);
+    margin-top: 0.5rem;
+    flex: 1;
+}
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    font-size: 0.85rem;
+}
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+.legend-item.receita {
+    color: var(--verde);
+}
+.legend-item.despesa {
+    color: var(--vermelho);
+}
+.legend-item::before {
+    content: "■";
+    font-size: 0.75rem;
+}
+
+/* Card 3: Mini Gráfico de Linha */
+.mini-line-chart {
+    position: relative;
+    height: 80px;
+    margin: 1.5rem 0;
+}
+.chart-point {
+    position: absolute;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    background-color: var(--primaria);
+    border-radius: 50%;
+    transform: translateX(-50%);
+}
+.chart-point:nth-child(1) { left: 16.66%; }
+.chart-point:nth-child(2) { left: 33.33%; }
+.chart-point:nth-child(3) { left: 50%; }
+.chart-point:nth-child(4) { left: 66.66%; }
+.chart-point:nth-child(5) { left: 83.33%; }
+.chart-point:nth-child(6) { left: 100%; }
+.chart-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    color: var(--cinza-escuro);
+}
+.category-selector {
+    margin-top: 1rem;
+}
+.category-selector select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: var(--branco);
+    color: var(--secundaria);
+    font-size: 0.9rem;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231A2238' d='M6 9l3-3H3z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 0.75rem;
+}
+
+/* Card 4: Transações Recentes */
+.transactions-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+.transactions-table th,
+.transactions-table td {
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+.transactions-table th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: var(--cinza-escuro);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+}
+.transactions-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+.transactions-table .valor-positivo {
+    color: var(--verde);
+    font-weight: 600;
+}
+.transactions-table .valor-negativo {
+    color: var(--vermelho);
+    font-weight: 600;
+}
+
+/* Card 5: Gastos por Categoria */
+.progress-category {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+.progress-category:last-child {
+    margin-bottom: 0;
+}
+.category-label {
+    min-width: 100px;
+    font-weight: 500;
+    color: var(--secundaria);
+}
+.progress-bar {
+    flex: 1;
+    height: 8px;
+    background-color: #eee;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 1rem;
+}
+.progress-fill {
+    height: 100%;
+    background-color: var(--primaria);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+}
+.progress-percentage {
+    min-width: 40px;
+    text-align: right;
+    font-weight: 600;
+    color: var(--secundaria);
 }
 
 /* Responsividade básica */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
     .sidebar {
         width: 200px;
@@ -229,6 +447,9 @@ body {
         margin-left: 200px;
         width: calc(100% - 200px);
         padding: 1.5rem;
+    }
+    .dashboard-grid {
+        grid-template-columns: 1fr;
     }
     .sidebar-top,
     .sidebar-bottom {
@@ -243,5 +464,11 @@ body {
     .sidebar-top .main-nav a:hover,
     .sidebar-bottom .footer-nav a:hover {
         border-radius: 30px 0 0 30px;
+    }
+    .amount {
+        font-size: 2rem;
+    }
+    .saldo-total-card .valor {
+        font-size: 2rem;
     }
 }
