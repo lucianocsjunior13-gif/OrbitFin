@@ -196,9 +196,9 @@
                 <h2>OrbitFin</h2>
             </div>
             <div class="user-profile">
-                <div class="avatar" id="sidebarAvatar">LJ</div>
+                <div class="avatar" id="sidebarAvatar">—</div>
                 <div class="user-info">
-                    <span class="name" id="sidebarName">Luciano Junior</span>
+                    <span class="name" id="sidebarName">—</span>
                     <span class="role">Usuário</span>
                 </div>
             </div>
@@ -353,6 +353,7 @@
     <div id="toastSuccess" class="toast-success"></div>
     <div id="toastError" class="toast-error"></div>
     
+    <script src="js/orbitfin-ui.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
@@ -364,6 +365,7 @@
                 window.location.href = 'login.html';
                 return;
             }
+
             
             // DOM elements
             const perfilBody = document.getElementById('perfilBody');
@@ -429,15 +431,11 @@
             // Update profile UI with user data
             function updateProfileUI(userData) {
                 // Extract name parts
-                const firstName = userData.first_name || '';
-                const lastName = userData.last_name || '';
-                const fullName = `${firstName} ${lastName}`.trim() || userData.name || 'Usuário';
                 const email = userData.email || '';
-                
-                // Update sidebar
-                sidebarName.textContent = fullName;
-                const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase() || 'LJ';
-                sidebarAvatar.textContent = initials;
+
+                // Sidebar: o helper le `name` (o que o backend devolve) e
+                // cai para first_name/last_name ou o e-mail, nunca um nome fixo.
+                const fullName = OrbitFinUI.fillUserIdentity(userData);
                 
                 // Update perfil card
                 perfilBody.innerHTML = `
