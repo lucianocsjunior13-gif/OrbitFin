@@ -372,9 +372,9 @@
                 <h2>OrbitFin</h2>
             </div>
             <div class="user-profile">
-                <div class="avatar">LJ</div>
+                <div class="avatar" id="sidebarAvatar">—</div>
                 <div class="user-info">
-                    <span class="name">Luciano Junior</span>
+                    <span class="name" id="sidebarName">—</span>
                     <span class="role">Usuário</span>
                 </div>
             </div>
@@ -469,6 +469,7 @@
         </div>
     </div>
     
+    <script src="js/orbitfin-ui.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
@@ -480,6 +481,9 @@
                 window.location.href = 'login.html';
                 return;
             }
+
+            // preenche nome e avatar do sidebar com o usuario real
+            OrbitFinUI.loadUserIdentity(BASE_URL, token);
             
             // Icon options for goals
             const iconOptions = [

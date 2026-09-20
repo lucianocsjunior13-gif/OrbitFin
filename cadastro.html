@@ -63,9 +63,16 @@
             e.preventDefault();
             console.log('Submissão disparada com sucesso!');
 
+            const primeiroNome = document.getElementById('firstName')?.value.trim() || '';
+            const sobrenome = document.getElementById('lastName')?.value.trim() || '';
+
             const payload = {
-                first_name: document.getElementById('firstName')?.value.trim() || '',
-                last_name: document.getElementById('lastName')?.value.trim() || '',
+                // O backend guarda o nome em `name`; sem este campo o
+                // cadastro era salvo em branco. Os dois abaixo ficam por
+                // compatibilidade caso o schema volte a separa-los.
+                name: `${primeiroNome} ${sobrenome}`.trim(),
+                first_name: primeiroNome,
+                last_name: sobrenome,
                 cpf: document.getElementById('cpf')?.value.trim() || '',
                 phone: document.getElementById('phone')?.value.trim() || '',
                 email: document.getElementById('email')?.value.trim() || '',

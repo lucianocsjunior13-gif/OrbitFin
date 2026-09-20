@@ -15,9 +15,9 @@
                 <h2>OrbitFin</h2>
             </div>
             <div class="user-profile">
-                <div class="avatar" id="sidebarAvatar">LJ</div>
+                <div class="avatar" id="sidebarAvatar">—</div>
                 <div class="user-info">
-                    <span class="name" id="sidebarName">Luciano Junior</span>
+                    <span class="name" id="sidebarName">—</span>
                     <span class="role">Usuário</span>
                 </div>
             </div>
@@ -49,7 +49,7 @@
     <!-- Main Content -->
     <main class="content">
         <header class="welcome">
-            <h1>Bem-vindo, <span id="welcomeName">Luciano!</span></h1>
+            <h1>Bem-vindo, <span id="welcomeName">—</span></h1>
             <p>Seu resumo financeiro em tempo real</p>
         </header>
         
@@ -149,6 +149,7 @@
         </div>
     </main>
     
+    <script src="js/orbitfin-ui.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io';
@@ -159,6 +160,7 @@
                 window.location.href = 'login.html';
                 return;
             }
+
             
             // DOM elements
             const welcomeName = document.getElementById('welcomeName');
@@ -215,8 +217,8 @@
                     return await response.json();
                 } catch (error) {
                     console.error('Erro ao buscar dados do usuário:', error);
-                    // Fallback to default
-                    return { first_name: 'Luciano', last_name: 'Junior', email: '' };
+                    // Sem dados do usuario: nao inventa um nome real
+                    return null;
                 }
             }
             
@@ -241,14 +243,9 @@
             
             // Update welcome and sidebar with user data
             function updateUserUI(userData) {
-                const firstName = userData.first_name || '';
-                const lastName = userData.last_name || '';
-                const fullName = `${firstName} ${lastName}`.trim() || 'Usuário';
-                welcomeName.textContent = `${firstName}!`;
-                sidebarName.textContent = fullName;
-                // Set avatar initials
-                const initials = (firstName.charAt(0) + lastName.charAt(0)).toUpperCase() || 'LJ';
-                sidebarAvatar.textContent = initials;
+                // OrbitFinUI trata `name` (o que o backend devolve) e
+                // first_name/last_name apenas como compatibilidade.
+                OrbitFinUI.fillUserIdentity(userData);
             }
             
             // Update Saldo Total and Contas
@@ -512,13 +509,18 @@
             async function renderDashboard() {
                 try {
                     // Fetch user data and transactions in parallel
-                    const [userData, transactions] = await Promise.all([
+                    // allSettled e nao all: uma falha nas transacoes nao pode
+                    // apagar a identidade do usuario no sidebar.
+                    const [resUsuario, resTransacoes] = await Promise.allSettled([
                         fetchUserData(),
                         fetchTransactions()
                     ]);
-                    
-                    // Update UI
-                    updateUserUI(userData);
+
+                    updateUserUI(resUsuario.status === 'fulfilled' ? resUsuario.value : null);
+
+                    if (resTransacoes.status === 'rejected') throw resTransacoes.reason;
+                    const transactions = resTransacoes.value;
+
                     updateBalanceAndAccounts(transactions);
                     updateRevenueExpenseChart(transactions);
                     updateLimitChart(transactions);
@@ -526,8 +528,27 @@
                     updateCategoryExpenses(transactions);
                 } catch (error) {
                     console.error('Erro ao renderizar dashboard:', error);
-                    // Show error messages in the cards? We'll just log for now.
-                    // Optionally, we could set error states in each card.
+                    // Sem isto o painel ficava zerado e parecia "sem dados",
+                    // quando na verdade a requisicao tinha falhado.
+                    // Nao deixar "R$ 0,00" no lugar: saldo zero falso engana
+                    // mais do que um aviso de falha.
+                    if (totalBalanceEl) totalBalanceEl.textContent = '—';
+                    if (connectedAccountsEl) connectedAccountsEl.textContent = 'dados indisponíveis';
+                    OrbitFinUI.showDataError(
+                        barsWrapper,
+                        'Não foi possível carregar receitas e despesas.',
+                        renderDashboard
+                    );
+                    OrbitFinUI.showDataError(
+                        recentTransactionsBody,
+                        'Não foi possível carregar suas transações.',
+                        renderDashboard
+                    );
+                    OrbitFinUI.showDataError(
+                        categoryExpensesContainer,
+                        'Não foi possível carregar os gastos por categoria.',
+                        renderDashboard
+                    );
                 }
             }
             
