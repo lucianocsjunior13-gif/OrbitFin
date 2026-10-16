@@ -1,8 +1,4 @@
 import streamlit as st
-from services.storage import (
-    get_budgets,
-    get_expenses_by_category,
-)
 import pandas as pd
 from datetime import datetime
 import plotly.express as px
@@ -15,6 +11,7 @@ from views.register import render_register
 from views.dashboard import render_dashboard
 from views.transactions import render_transactions
 from views.budget import render_budget
+from views.goals import render_goals
 
 page_config()
 
@@ -45,54 +42,10 @@ def main_app():
         render_budget()
     elif st.session_state.page == "metas":
         render_header("metas")
-        show_goals()
+        render_goals()
     elif st.session_state.page == "relatorios":
         render_header("relatorios")
         show_relatorios()
-
-def show_goals():
-    """Display the goals/savings page."""
-    user_id = st.session_state.user['id']
-    
-    # Get data
-    budgets = get_budgets()
-    expenses_by_category = get_expenses_by_category(user_id)
-    
-    st.subheader("🎯 Progresso das Metas")
-    
-    for budget in budgets:
-        categoria = budget.get('categoria', 'N/A')
-        limite = float(budget.get('limite', 0))
-        gasto_atual = float(expenses_by_category.get(categoria, 0))
-        restante = limite - gasto_atual
-        
-        st.write(f"**Meta para {categoria}**")
-        
-        if limite > 0:
-            percentual_usado = (gasto_atual / limite) * 100
-            progress = min(gasto_atual / limite, 1.0)
-            
-            st.progress(progress)
-            
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                st.write(f"Gasto: R$ {gasto_atual:,.2f}")
-            with col2:
-                st.write(f"Limite: R$ {limite:,.2f}")
-            with col3:
-                st.write(f"Restante: R$ {restante:,.2f}")
-            
-            # Status indicators
-            if restante <= 0:
-                st.error("🎉 Meta atingida ou ultrapassada!")
-            elif restante <= limite * 0.1:  # Less than 10% remaining
-                st.warning("⚠️ Quase atingindo o limite")
-            else:
-                st.info(f"✅ Faltam R$ {restante:,.2f} para atingir a meta")
-        else:
-            st.write("Meta não definida (limite não informado)")
-        
-        st.divider()
 
 def show_relatorios():
     import streamlit as st

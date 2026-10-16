@@ -20,4 +20,4 @@ Mesmo de `004`–`006`: `#010103` / `#F3F5F7` / `#FFFFFF` / `#191919` · Manrope
 - [ ] Header shell via `main_app`
 
 ## Próximo delta
-Metas / Relatórios.
+Metas (`008`) / Relatórios.
