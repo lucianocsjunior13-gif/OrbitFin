@@ -570,4 +570,4 @@ if __name__ == "__main__":
         else:
             render_login()
     else:
-        main_app()redesign auth screens
+        main_app()
