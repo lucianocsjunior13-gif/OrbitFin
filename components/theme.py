@@ -7,200 +7,136 @@ import streamlit as st
 
 _THEME_PATH = Path(__file__).resolve().parent.parent / "css" / "orbitfin_theme.css"
 
-_AUTH_FULLBLEED = """
-html, body {
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 100% !important;
-  overflow: hidden !important;
-  background: #FFFFFF !important;
-}
-
-.stApp,
-[data-testid="stAppViewContainer"],
-[data-testid="stAppViewContainer"] > .main,
-section.main,
-.main {
-  margin: 0 !important;
-  padding: 0 !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
-  background: #FFFFFF !important;
-  overflow: hidden !important;
-}
-
+# Auth simples: form centralizado (estilo referência Logoipsum)
+_AUTH_CSS = """
 [data-testid="stHeader"],
 header[data-testid="stHeader"],
-div[data-testid="stToolbar"],
-div[data-testid="stDecoration"],
-div[data-testid="stStatusWidget"],
-footer {
-  display: none !important;
+footer,
+#MainMenu {
+  visibility: hidden !important;
   height: 0 !important;
 }
-
 section[data-testid="stSidebar"],
 div[data-testid="collapsedControl"] {
   display: none !important;
 }
 
-.main .block-container,
-div.block-container,
-.stMainBlockContainer,
-[data-testid="stMainBlockContainer"] {
-  max-width: 100% !important;
-  width: 100% !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  overflow: hidden !important;
-}
-
-/* um único bloco vertical = a row split */
-[data-testid="stAppViewContainer"] [data-testid="stVerticalBlock"] {
-  gap: 0 !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
-  overflow: hidden !important;
-}
-
-.element-container,
-div[data-testid="element-container"] {
-  margin: 0 !important;
-}
-
-[data-testid="stHorizontalBlock"] {
-  gap: 0 !important;
-  margin: 0 !important;
-  width: 100% !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
-  align-items: stretch !important;
-  display: flex !important;
-}
-
-[data-testid="stHorizontalBlock"] > [data-testid="column"] {
-  margin: 0 !important;
-  height: 100vh !important;
-  max-height: 100vh !important;
-  overflow: hidden !important;
-}
-
-/* ——— ESQUERDA: logo topo + form em container central ——— */
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child {
+.stApp, [data-testid="stAppViewContainer"], .main {
   background: #FFFFFF !important;
-  padding: 0 !important;
-  position: relative !important;
-  box-sizing: border-box !important;
 }
 
-/* área da coluna: centraliza o container do form */
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div {
-  height: 100vh !important;
-  max-height: 100vh !important;
-  max-width: none !important;
-  width: 100% !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  box-sizing: border-box !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  overflow-y: auto !important;
-  overflow-x: hidden !important;
+/* form centralizado na viewport (container, não full-bleed) */
+.main .block-container {
+  max-width: 440px !important;
+  padding-top: min(12vh, 6rem) !important;
+  padding-bottom: 3rem !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
-/* container do form (não é o body inteiro) */
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child
-  > div > [data-testid="stVerticalBlock"] {
-  width: min(400px, calc(100% - 4rem)) !important;
-  max-width: 400px !important;
-  margin: 0 auto !important;
-  padding: 2rem 1.5rem !important;
-  box-sizing: border-box !important;
+[data-testid="stVerticalBlock"] {
   gap: 0.35rem !important;
 }
 
-.of-logo {
-  position: absolute !important;
-  top: 1.5rem !important;
-  left: 1.5rem !important;
-  z-index: 5 !important;
-  margin: 0 !important;
-}
-
-.of-form-block {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
-}
-
-.of-title {
-  text-align: left !important;
-}
-
-.of-switch-line {
+.of-auth-logo {
   display: flex !important;
-  flex-direction: row !important;
   align-items: center !important;
-  gap: 0.5rem !important;
-  flex-wrap: nowrap !important;
-  margin-top: 0.75rem !important;
+  justify-content: center !important;
+  gap: 0.65rem !important;
+  margin: 0 0 2rem !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: #010103 !important;
+}
+
+.of-auth-logo .of-logo-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #010103;
+  color: #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.of-auth-title {
+  text-align: center !important;
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+  color: #010103 !important;
+  letter-spacing: -0.03em !important;
+  margin: 0 0 0.4rem !important;
+  line-height: 1.2 !important;
+}
+
+.of-auth-lead {
+  text-align: center !important;
   font-size: 14px !important;
   color: rgba(25, 25, 25, 0.55) !important;
-  white-space: nowrap !important;
+  margin: 0 0 1.75rem !important;
+  line-height: 1.5 !important;
 }
 
-.of-switch-line span {
-  white-space: nowrap !important;
+.of-auth-switch {
+  text-align: center !important;
+  font-size: 14px !important;
+  color: rgba(25, 25, 25, 0.55) !important;
+  margin: 1.25rem 0 0.25rem !important;
 }
 
-/* ——— DIREITA: hero full ——— */
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) {
-  background: #010103 !important;
-  padding: 0 !important;
+div[data-testid="stTextInput"] label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #191919 !important;
 }
 
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) > div {
-  height: 100vh !important;
-  max-height: 100vh !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  max-width: none !important;
+div[data-testid="stTextInput"] input {
+  border-radius: 10px !important;
+  border: 1px solid rgba(25, 25, 25, 0.14) !important;
+  background: #FFFFFF !important;
+  min-height: 48px !important;
+  font-size: 14px !important;
 }
 
-.of-hero {
-  height: 100vh !important;
-  min-height: 100vh !important;
-  max-height: 100vh !important;
-  width: 100% !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-  display: flex !important;
-  align-items: center !important;
-  box-sizing: border-box !important;
+div[data-testid="stTextInput"] input:focus {
+  border-color: #010103 !important;
+  box-shadow: 0 0 0 1px #010103 !important;
 }
 
-/* botão submit */
+/* botão primário do form — SEM overlay, SEM pointer-events bloqueado */
 .stFormSubmitButton > button,
 .stFormSubmitButton button,
 button[kind="primaryFormSubmit"],
 button[data-testid="stBaseButton-primaryFormSubmit"] {
   width: 100% !important;
-  border-radius: 12px !important;
+  border-radius: 10px !important;
   background: #010103 !important;
   color: #FFFFFF !important;
   border: none !important;
   font-weight: 600 !important;
   font-size: 15px !important;
-  min-height: 52px !important;
-  margin-top: 0.75rem !important;
+  min-height: 48px !important;
+  margin-top: 0.5rem !important;
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 2 !important;
 }
 
-/* botão "Criar conta" vira link inline */
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child .stButton > button {
+.stFormSubmitButton > button:hover {
+  background: #191919 !important;
+  color: #FFFFFF !important;
+  border: none !important;
+}
+
+/* link "Criar conta" */
+.main .block-container .stButton > button {
   background: transparent !important;
   color: #010103 !important;
   border: none !important;
@@ -210,46 +146,25 @@ button[data-testid="stBaseButton-primaryFormSubmit"] {
   text-decoration: underline !important;
   text-underline-offset: 3px !important;
   min-height: auto !important;
-  height: auto !important;
-  padding: 0 !important;
-  width: auto !important;
-  border-radius: 0 !important;
-  margin: 0 !important;
+  width: 100% !important;
+  padding: 0.25rem !important;
+  pointer-events: auto !important;
 }
 
-@media (max-width: 900px) {
-  html, body, .stApp, .main, .block-container,
-  [data-testid="stVerticalBlock"],
-  [data-testid="stHorizontalBlock"],
-  [data-testid="stHorizontalBlock"] > [data-testid="column"],
-  [data-testid="stHorizontalBlock"] > [data-testid="column"] > div {
-    height: auto !important;
-    max-height: none !important;
-    overflow: visible !important;
+.of-legal {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(25, 25, 25, 0.45);
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .main .block-container {
+    padding: 2rem 1.25rem 3rem !important;
   }
-  body, .stApp, .main { overflow-y: auto !important; }
-  [data-testid="stHorizontalBlock"] {
-    flex-direction: column !important;
+  div[data-testid="stTextInput"] input {
+    font-size: 16px !important;
   }
-  [data-testid="stHorizontalBlock"] > [data-testid="column"] {
-    width: 100% !important;
-    min-width: 100% !important;
-  }
-  [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child { order: 2 !important; }
-  [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) { order: 1 !important; }
-  [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div {
-    padding: 4.5rem 1.5rem 2rem !important;
-    justify-content: flex-start !important;
-  }
-  .of-logo { top: 1.25rem !important; left: 1.25rem !important; }
-  .of-hero {
-    height: 30vh !important;
-    min-height: 30vh !important;
-    max-height: 30vh !important;
-    padding: 1.5rem !important;
-  }
-  .of-switch-line { white-space: normal !important; flex-wrap: wrap !important; }
-  div[data-testid="stTextInput"] input { font-size: 16px !important; }
 }
 """
 
@@ -262,11 +177,12 @@ def apply_theme(*, hide_sidebar: bool = False, auth: bool = False) -> None:
         div[data-testid="collapsedControl"] { display: none !important; }
         """
     if auth:
-        css += _AUTH_FULLBLEED
+        css += _AUTH_CSS
     st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
 
 
 def page_config() -> None:
+    # wide no app; auth limita largura via CSS (.block-container max-width)
     st.set_page_config(
         page_title="OrbitFin",
         page_icon="◆",
