@@ -7,14 +7,16 @@ Redesenhar **Relatórios** no shell OrbitFin: filtros ano/mês, KPIs, donuts, ev
 Mesmo de `004`–`008`. Charts: receita `#3B82F6`, despesa `#F97316`, saldo `#010103`.
 
 ## Escopo
-- [x] View `views/reports.py`
-- [x] KPIs mensais + anuais (cards HTML)
-- [x] Donuts despesas/receitas (Plotly, tema limpo)
-- [x] Barras + linha evolução anual
+- [x] View `views/reports.py` chart-first (ref. APPROX)
+- [x] KPIs + sparklines (série anual)
+- [x] Overview linhas (toggle Mensal diário / Anual) + gauge gasto vs receita
+- [x] Donuts por categoria
+- [x] Barras comparativo mensal (12 meses sempre, zeros se vazio)
 - [x] Lista do período via `get_transactions` (não sqlite)
 - Storage/API **inalterados**
 
 ## Critérios de Aceite
-- [ ] Visual alinhado ao resto do app
-- [ ] Funciona com backend Xano (sem path sqlite)
+- [ ] Gráficos sempre renderizam (não some a área quando zerado)
+- [ ] Toggle Mensal/Anual no overview
+- [ ] Funciona com backend Xano
 - [ ] Header shell via `main_app`
