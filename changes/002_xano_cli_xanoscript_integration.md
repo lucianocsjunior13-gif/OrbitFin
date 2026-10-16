@@ -166,17 +166,17 @@ Ajustar `.gitignore` para ignorar:
 ---
 
 ## Critérios de Aceite
-- [ ] Workspace Xano existe e CLI autentica (`xano profile me` ok)
-- [ ] Pasta `xano/` no repo com `.xs` de tables + API Group após pull
-- [ ] Push dry-run + push real funcionam sem duplicar objetos
-- [ ] `POST register` e `POST login` retornam sucesso; login devolve `access_token`
-- [ ] Rotas de `transacoes` exigem Bearer e isolam dados por usuário
-- [ ] `GET saldo`, `GET budgets`, `GET insights` batem o shape esperado pelo Streamlit
-- [ ] Streamlit autentica via Xano e faz CRUD de transações sem SQLite
-- [ ] Secrets só em `st.secrets`; nada de URL/token commitado
-- [ ] `.gitignore` corrigido (secrets + data)
-- [ ] `ROADMAP.md` / `ARCHITECTURE.md` atualizados
-- [ ] OpenSpec respeitado: este delta existia **antes** da implementação Python final
+- [x] Workspace Xano existe e CLI autentica (`xano profile me` ok)
+- [x] Pasta `xano/` no repo com `.xs` de tables + API Group após pull
+- [x] Push dry-run + push real funcionam sem duplicar objetos
+- [x] `POST register` e `POST login` retornam sucesso; login devolve `access_token` (testado no Xano Run)
+- [x] Rotas de `transacoes` exigem Bearer e isolam dados por usuário (GET testado no Run)
+- [x] `GET saldo`, `GET budgets`, `GET insights` existem no group `orbitfin` (shape alinhado ao client)
+- [ ] Streamlit autentica via Xano e faz CRUD de transações sem SQLite (**pendente QA** — código na Fase 7; E2E não rodado nesta máquina)
+- [x] Secrets só em `st.secrets`; nada de URL/token commitado (`secrets.toml` gitignored; example versionado)
+- [x] `.gitignore` corrigido (secrets + data)
+- [x] `ROADMAP.md` / `ARCHITECTURE.md` atualizados
+- [x] OpenSpec respeitado: este delta existia **antes** da implementação Python final
 
 ---
 
@@ -189,11 +189,21 @@ Ajustar `.gitignore` para ignorar:
 - Agentes de IA: permitir `push --dry-run`; exigir confirmação humana para `push` real / `--delete` / `--force`.
 
 ## Ordem de execução sugerida (checklist curto)
-1. [ ] Fase 0 — ler docs OpenSpec
-2. [ ] Fase 1 — instalar CLI + auth
-3. [ ] Fase 2 — pull scaffold `./xano`
-4. [ ] Fase 3–4 — tabelas + endpoints (UI ou `.xs`)
-5. [ ] Fase 5 — dry-run / push
-6. [ ] Fase 6 — secrets
-7. [ ] Fase 7 — Python
-8. [ ] Fase 8 — aceite + docs
+1. [x] Fase 0 — ler docs OpenSpec
+2. [x] Fase 1 — instalar CLI + auth
+3. [x] Fase 2 — pull scaffold `./xano`
+4. [x] Fase 3–4 — tabelas + endpoints (UI ou `.xs`)
+5. [x] Fase 5 — dry-run / push
+6. [x] Fase 6 — secrets
+7. [x] Fase 7 — Python
+8. [x] Fase 8 — aceite + docs (E2E Streamlit ainda aberto — ver critério acima)
+
+## Nota QA (para quem for testar o Streamlit)
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+# copiar .streamlit/secrets.toml.example → secrets.toml (enabled=true)
+streamlit run app.py
+```
+Senha no Xano: mín. 8 caracteres, 1 letra e 1 número.
