@@ -6,130 +6,155 @@
   --of-white: #FFFFFF;
   --of-graphite: #191919;
   --of-muted: rgba(25, 25, 25, 0.55);
-  --of-border: rgba(25, 25, 25, 0.08);
-  --of-radius: 16px;
-  --of-shadow: 0 12px 40px rgba(1, 1, 3, 0.06);
+  --of-border: rgba(25, 25, 25, 0.12);
+  --of-radius: 12px;
 }
 
-html, body, [class*="css"] {
+html, body, [class*="css"], .stMarkdown, .stTextInput, .stButton, button, input, label {
   font-family: 'Manrope', sans-serif !important;
 }
 
-/* Chrome Streamlit */
-#MainMenu { visibility: hidden; }
-footer { visibility: hidden; }
-header[data-testid="stHeader"] {
-  background: transparent;
-}
+#MainMenu, footer { visibility: hidden; }
+header[data-testid="stHeader"] { background: transparent; }
+
 .stApp {
-  background: var(--of-background) !important;
-}
-.block-container {
-  padding-top: 2rem !important;
-  padding-bottom: 2rem !important;
-  max-width: 1100px !important;
+  background: var(--of-background);
 }
 
-/* Auth shell */
-.of-auth-wrap {
-  min-height: calc(100vh - 4rem);
-  display: flex;
-  align-items: stretch;
-  gap: 0;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: var(--of-shadow);
-  background: var(--of-white);
-  border: 1px solid var(--of-border);
+/* ——— Tokens de tipografia auth ——— */
+.of-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--of-black);
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
 }
 
-.of-brand {
+.of-logo-mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
   background: var(--of-black);
   color: var(--of-white);
-  padding: 3rem 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.of-title {
+  font-size: clamp(1.75rem, 3.2vw, 2.5rem) !important;
+  font-weight: 700 !important;
+  color: var(--of-black) !important;
+  letter-spacing: -0.03em;
+  margin: 0 0 0.5rem !important;
+  line-height: 1.15 !important;
+}
+
+.of-lead {
+  font-size: 14px !important;
+  color: var(--of-muted) !important;
+  margin: 0 0 1.75rem !important;
+  line-height: 1.55 !important;
+  max-width: 36ch;
+}
+
+.of-legal, .of-footer-mini {
+  font-size: 12px;
+  color: var(--of-muted);
+  line-height: 1.5;
+  margin-top: 1rem;
+}
+
+.of-switch-inline {
+  font-size: 14px;
+  color: var(--of-muted);
+  padding-top: 0.35rem;
+}
+
+.of-hero {
+  min-height: 100vh;
+  height: 100%;
+  background:
+    radial-gradient(120% 80% at 20% 10%, rgba(243, 245, 247, 0.08) 0%, transparent 55%),
+    linear-gradient(160deg, #010103 0%, #191919 55%, #010103 100%);
+  color: var(--of-white);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  min-height: 520px;
+  justify-content: center;
+  padding: clamp(2.5rem, 6vw, 5rem);
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
 }
 
-.of-brand-mark {
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  opacity: 0.7;
+.of-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, transparent 40%, rgba(243, 245, 247, 0.05) 50%, transparent 60%);
+  pointer-events: none;
 }
 
-.of-brand h1 {
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 300;
-  line-height: 1.1;
-  margin: 1.5rem 0 0.75rem;
-  letter-spacing: -0.03em;
-}
+.of-hero-inner { position: relative; z-index: 1; max-width: 28rem; }
 
-.of-brand p {
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.72);
-  max-width: 28ch;
-}
-
-.of-brand-foot {
+.of-hero-kicker {
   font-size: 12px;
-  opacity: 0.45;
-}
-
-.of-form-panel {
-  padding: 2.5rem 2.25rem 2rem;
-  background: var(--of-white);
-}
-
-.of-form-panel h2 {
-  font-size: 32px;
-  font-weight: 300;
-  color: var(--of-black);
-  margin: 0 0 0.35rem;
-  letter-spacing: -0.02em;
-}
-
-.of-form-panel .of-sub {
-  font-size: 14px;
-  color: var(--of-muted);
-  margin-bottom: 1.75rem;
-}
-
-.of-switch {
-  margin-top: 1.25rem;
-  font-size: 14px;
-  color: var(--of-muted);
-}
-
-.of-switch a, .of-switch span.linkish {
-  color: var(--of-black);
   font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  cursor: pointer;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.55;
+  margin-bottom: 1.25rem;
 }
 
-/* Inputs / buttons */
-div[data-testid="stTextInput"] label,
-div[data-testid="stSelectbox"] label {
-  font-size: 14px !important;
-  font-weight: 500 !important;
+.of-hero h2 {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 300;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+
+.of-hero p {
+  font-size: 14px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+}
+
+.of-hero-badge {
+  margin-top: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 22px;
+  background: rgba(243, 245, 247, 0.08);
+  border: 1px solid rgba(243, 245, 247, 0.12);
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: -0.04em;
+}
+
+div[data-testid="stTextInput"] label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
   color: var(--of-graphite) !important;
 }
 
 div[data-testid="stTextInput"] input {
-  border-radius: 12px !important;
+  border-radius: var(--of-radius) !important;
   border: 1px solid var(--of-border) !important;
-  background: var(--of-background) !important;
+  background: var(--of-white) !important;
   color: var(--of-black) !important;
-  font-family: 'Manrope', sans-serif !important;
-  min-height: 48px !important;
+  min-height: 52px !important;
+  font-size: 14px !important;
 }
 
 div[data-testid="stTextInput"] input:focus {
@@ -137,35 +162,16 @@ div[data-testid="stTextInput"] input:focus {
   box-shadow: 0 0 0 1px var(--of-black) !important;
 }
 
-.stButton > button {
-  width: 100%;
-  border-radius: 999px !important;
-  background: var(--of-black) !important;
-  color: var(--of-white) !important;
-  border: none !important;
-  font-family: 'Manrope', sans-serif !important;
-  font-weight: 600 !important;
-  font-size: 14px !important;
-  letter-spacing: 0.02em;
-  min-height: 48px !important;
-  margin-top: 0.5rem;
-  transition: opacity 0.15s ease, transform 0.15s ease;
-}
-
-.stButton > button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-  border: none !important;
-  color: var(--of-white) !important;
-}
-
-.stButton > button[kind="secondary"] {
-  background: transparent !important;
-  color: var(--of-black) !important;
-  border: 1px solid var(--of-border) !important;
-}
-
 div[data-testid="stAlert"] {
-  border-radius: 12px !important;
+  border-radius: var(--of-radius) !important;
   font-size: 14px !important;
+}
+
+@media (max-width: 900px) {
+  .of-hero {
+    min-height: 32vh;
+    padding: 1.75rem 1.25rem;
+  }
+  .of-hero h2 { font-size: 1.5rem; }
+  .of-lead { max-width: 100%; }
 }

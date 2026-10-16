@@ -686,7 +686,7 @@ def show_configuracoes():
 
 if __name__ == "__main__":
     if not st.session_state.logged_in:
-        apply_theme(hide_sidebar=True)
+        apply_theme(hide_sidebar=True, auth=True)
         if st.session_state.auth_page == "register":
             render_register()
         else:
