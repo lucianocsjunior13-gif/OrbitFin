@@ -1,9 +1,8 @@
-"""Sidebar — botões ghost + ícones (nav confiável no Streamlit)."""
+"""Sidebar — logo topo, nav left, user+sair no bottom."""
 from __future__ import annotations
 
 import streamlit as st
 
-# Material Symbols (nativo Streamlit ≥1.39) — sem iframe / query params
 _NAV = [
     ("dashboard", "Dashboard", ":material/dashboard:"),
     ("transacoes", "Transações", ":material/swap_horiz:"),
@@ -34,7 +33,6 @@ def render_sidebar() -> None:
 
         for key, label, icon in _NAV:
             active = current == key
-            # type primary no ativo só pra contraste tipográfico via CSS ghost
             clicked = st.button(
                 f"{icon}  {label}",
                 key=f"nav_{key}",
@@ -45,15 +43,18 @@ def render_sidebar() -> None:
                 st.session_state.page = key
                 st.rerun()
 
-        st.markdown('<div class="of-side-spacer"></div>', unsafe_allow_html=True)
+        # empurra user/sair pro fundo da sidebar
+        st.markdown('<div class="of-side-grow"></div>', unsafe_allow_html=True)
 
         st.markdown(
             f"""
-            <div class="of-side-user">
-              <div class="of-side-avatar">{initial}</div>
-              <div>
-                <div class="of-side-user-name">{name}</div>
-                <div class="of-side-user-email">{email}</div>
+            <div class="of-side-footer">
+              <div class="of-side-user">
+                <div class="of-side-avatar">{initial}</div>
+                <div>
+                  <div class="of-side-user-name">{name}</div>
+                  <div class="of-side-user-email">{email}</div>
+                </div>
               </div>
             </div>
             """,

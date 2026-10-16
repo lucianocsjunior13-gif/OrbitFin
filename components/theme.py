@@ -29,7 +29,19 @@ div[data-testid="collapsedControl"] {
   max-width: 100% !important;
   padding: 0 !important;
   margin: 0 !important;
+  min-height: 100vh !important;
 }
+
+/* mata gap / footer fantasma do Streamlit na auth */
+.stApp, [data-testid="stAppViewContainer"], .main,
+[data-testid="stAppViewBlockContainer"] {
+  min-height: 100vh !important;
+  height: 100% !important;
+  overflow-x: hidden !important;
+}
+[data-testid="stBottomBlockContainer"],
+[data-testid="stDecoration"],
+footer { display: none !important; height: 0 !important; }
 
 [data-testid="stVerticalBlock"] { gap: 0 !important; }
 .element-container { margin-bottom: 0 !important; }
@@ -37,7 +49,9 @@ div[data-testid="collapsedControl"] {
 [data-testid="stHorizontalBlock"] {
   gap: 0 !important;
   min-height: 100vh !important;
+  height: 100vh !important;
   align-items: stretch !important;
+  margin: 0 !important;
 }
 
 [data-testid="stHorizontalBlock"] > [data-testid="column"] {
@@ -51,22 +65,24 @@ div[data-testid="collapsedControl"] {
 
 [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div {
   min-height: 100vh !important;
+  height: 100% !important;
   display: flex !important;
   flex-direction: column !important;
-  justify-content: center !important;
-  align-items: center !important;
-  padding: 2.5rem 1.5rem !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  padding: clamp(2rem, 5vh, 3.5rem) clamp(1.5rem, 4vw, 3.5rem) !important;
   box-sizing: border-box !important;
   max-width: none !important;
 }
 
-/* container do form (não full-bleed) */
+/* form alinhado no topo, sem “ilha” no meio da coluna */
 [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child
   > div > [data-testid="stVerticalBlock"] {
   width: 100% !important;
-  max-width: 380px !important;
-  margin: 0 auto !important;
+  max-width: 400px !important;
+  margin: 0 !important;
   gap: 0.25rem !important;
+  flex: 1 1 auto !important;
 }
 
 .of-auth-logo {
@@ -257,9 +273,14 @@ button[data-testid="stBaseButton-primaryFormSubmit"] {
   }
   [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child { order: 2 !important; }
   [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) { order: 1 !important; }
+  [data-testid="stHorizontalBlock"] {
+    height: auto !important;
+    min-height: auto !important;
+  }
   [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div {
     min-height: auto !important;
-    padding: 2rem 1.25rem 3rem !important;
+    height: auto !important;
+    padding: 2rem 1.25rem 2.5rem !important;
   }
   .of-hero {
     min-height: 28vh !important;
@@ -275,21 +296,58 @@ _APP_SHELL = """
   background: #F3F5F7 !important;
 }
 .main .block-container {
-  padding-top: 1.75rem !important;
-  padding-bottom: 2.5rem !important;
-  padding-left: 1.5rem !important;
-  padding-right: 1.5rem !important;
-  max-width: 1200px !important;
+  padding-top: 0.85rem !important;
+  padding-bottom: 1.25rem !important;
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+  max-width: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
-[data-testid="stHeader"] { background: transparent !important; }
+/* toolbar Streamlit (Share/GitHub) come espaço no topo */
+[data-testid="stHeader"],
+header[data-testid="stHeader"] {
+  background: transparent !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  visibility: hidden !important;
+}
+[data-testid="stToolbar"] { display: none !important; }
 
-/* Sidebar */
+/* Sidebar — coluna flex: brand topo, footer bottom */
 section[data-testid="stSidebar"] {
   background: #FFFFFF !important;
   border-right: 1px solid rgba(25,25,25,0.08) !important;
 }
 section[data-testid="stSidebar"] > div {
-  padding-top: 1.25rem !important;
+  padding-top: 0.65rem !important;
+  padding-bottom: 0.65rem !important;
+  height: 100% !important;
+}
+section[data-testid="stSidebar"] [data-testid="stSidebarUserContent"],
+section[data-testid="stSidebar"] [data-testid="stSidebarContent"] {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+}
+section[data-testid="stSidebar"] [data-testid="stSidebarUserContent"] > [data-testid="stVerticalBlock"],
+section[data-testid="stSidebar"] [data-testid="stSidebarContent"] > div > [data-testid="stVerticalBlock"] {
+  height: 100% !important;
+  min-height: calc(100vh - 2rem) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.15rem !important;
+}
+.of-side-grow {
+  flex: 1 1 auto !important;
+  /* fallback se o flex do Streamlit falhar */
+  min-height: clamp(2rem, calc(100vh - 420px), 50vh) !important;
+  margin: 0 !important;
+}
+.of-side-footer {
+  margin-top: auto !important;
+  width: 100%;
+  padding-top: 0.5rem;
 }
 .of-side-brand {
   display: flex;
@@ -300,7 +358,7 @@ section[data-testid="stSidebar"] > div {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #010103;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1rem;
 }
 .of-side-mark {
   width: 32px;
@@ -321,13 +379,12 @@ section[data-testid="stSidebar"] > div {
   color: rgba(25,25,25,0.45);
   margin: 0 0 0.75rem;
 }
-.of-side-spacer { height: 1.25rem; }
 .of-side-user {
   display: flex;
   align-items: center;
   gap: 0.7rem;
   padding: 0.85rem 0.6rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
   border-radius: 12px;
   background: #F3F5F7;
 }
@@ -347,18 +404,25 @@ section[data-testid="stSidebar"] > div {
 .of-side-user-name { font-size: 13px; font-weight: 600; color: #010103; }
 .of-side-user-email { font-size: 11px; color: rgba(25,25,25,0.5); word-break: break-all; }
 
-/* Nav ghost — texto + ícone, sem pill */
+/* Nav ghost — left align */
 section[data-testid="stSidebar"] .stButton > button {
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 8px !important;
   justify-content: flex-start !important;
-  padding: 0.55rem 0.45rem !important;
+  text-align: left !important;
+  padding: 0.55rem 0.35rem !important;
   font-size: 14px !important;
   font-weight: 500 !important;
   color: #9CA3AF !important;
   gap: 0.55rem !important;
+}
+section[data-testid="stSidebar"] .stButton > button p,
+section[data-testid="stSidebar"] .stButton > button div {
+  text-align: left !important;
+  justify-content: flex-start !important;
+  width: 100% !important;
 }
 section[data-testid="stSidebar"] .stButton > button:hover {
   color: #010103 !important;
@@ -401,41 +465,6 @@ section[data-testid="stSidebar"] button[kind="secondary"][data-testid="stBaseBut
   }
 }
 
-/* Top header */
-.of-topbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-.of-search {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  background: #FFFFFF;
-  border: 1px solid rgba(25,25,25,0.08);
-  border-radius: 999px;
-  padding: 0.65rem 1rem;
-  flex: 1;
-  max-width: 420px;
-  color: rgba(25,25,25,0.45);
-  font-size: 13px;
-}
-.of-search-ico { display: inline-flex; color: #191919; }
-.of-top-actions { display: flex; gap: 0.5rem; }
-.of-icon-btn {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: #FFFFFF;
-  border: 1px solid rgba(25,25,25,0.08);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: #191919;
-}
-
 /* Dashboard cards */
 .of-page-kicker {
   font-size: 12px;
@@ -446,11 +475,23 @@ section[data-testid="stSidebar"] button[kind="secondary"][data-testid="stBaseBut
   margin: 0 0 0.25rem;
 }
 .of-page-title {
-  font-size: 1.75rem;
+  font-size: 1.55rem;
   font-weight: 700;
   letter-spacing: -0.03em;
   color: #010103;
-  margin: 0 0 1.25rem;
+  margin: 0 0 0.85rem;
+}
+.of-page-head { margin-bottom: 0.15rem; }
+
+/* CTA preto (mata vermelho default Streamlit Cloud) */
+.main .stButton > button[kind="primary"],
+.main .stFormSubmitButton > button,
+.main button[kind="primaryFormSubmit"],
+.main button[data-testid="stBaseButton-primaryFormSubmit"],
+.main button[data-testid="stBaseButton-primary"] {
+  background: #010103 !important;
+  color: #fff !important;
+  border: none !important;
 }
 .of-card {
   background: #FFFFFF;

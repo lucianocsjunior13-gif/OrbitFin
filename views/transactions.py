@@ -45,8 +45,63 @@ def _parse_date(raw):
         return datetime.now().date()
 
 
+def _add_dialog(user_id: int) -> None:
+    def _form() -> None:
+        with st.form("nova_transacao", clear_on_submit=True):
+            c1, c2 = st.columns(2)
+            with c1:
+                tipo = st.selectbox("Tipo", ["receita", "despesa"])
+                valor = st.number_input("Valor (R$)", min_value=0.01, step=0.01, format="%.2f")
+                data = st.date_input("Data", value=datetime.now())
+            with c2:
+                categoria = st.text_input("Categoria", placeholder="Ex: Alimentação, Salário")
+                descricao = st.text_input("Descrição", placeholder="Opcional")
+                status = st.selectbox("Status", ["pago", "pendente"])
+
+            s1, s2 = st.columns(2)
+            with s1:
+                submitted = st.form_submit_button("Adicionar", use_container_width=True, type="primary")
+            with s2:
+                cancel = st.form_submit_button("Cancelar", use_container_width=True)
+
+            if cancel:
+                st.rerun()
+            if submitted:
+                if not categoria.strip():
+                    st.error("Informe a categoria.")
+                elif valor <= 0:
+                    st.error("Valor deve ser maior que zero.")
+                else:
+                    try:
+                        add_transaction(
+                            user_id,
+                            {
+                                "tipo": tipo,
+                                "valor": float(valor),
+                                "data": data.strftime("%Y-%m-%d"),
+                                "categoria": categoria.strip(),
+                                "descricao": descricao.strip(),
+                                "status": status,
+                            },
+                        )
+                        st.rerun()
+                    except Exception as e:
+                        st.error(f"Erro ao adicionar: {e}")
+
+    if hasattr(st, "dialog"):
+
+        @st.dialog("Nova transação")
+        def _dlg() -> None:
+            _form()
+
+        _dlg()
+    else:
+        with st.container(border=True):
+            st.markdown("**Nova transação**")
+            _form()
+
+
 def _edit_dialog(user_id: int, selected: dict) -> None:
-    """Modal de edição (st.dialog) com fallback inline."""
     tid = selected["id"]
     title = f"Editar · {selected.get('categoria') or 'lançamento'}"
 
@@ -163,47 +218,20 @@ def render_transactions() -> None:
     user_id = st.session_state.user["id"]
     transactions = get_transactions(user_id) or []
 
-    with st.expander("Nova transação", expanded=not bool(transactions)):
-        with st.form("nova_transacao", clear_on_submit=True):
-            c1, c2 = st.columns(2)
-            with c1:
-                tipo = st.selectbox("Tipo", ["receita", "despesa"])
-                valor = st.number_input("Valor (R$)", min_value=0.01, step=0.01, format="%.2f")
-                data = st.date_input("Data", value=datetime.now())
-            with c2:
-                categoria = st.text_input("Categoria", placeholder="Ex: Alimentação, Salário")
-                descricao = st.text_input("Descrição", placeholder="Opcional")
-                status = st.selectbox("Status", ["pago", "pendente"])
-
-            submitted = st.form_submit_button("Adicionar", use_container_width=True, type="primary")
-            if submitted:
-                if not categoria.strip():
-                    st.error("Informe a categoria.")
-                elif valor <= 0:
-                    st.error("Valor deve ser maior que zero.")
-                else:
-                    try:
-                        add_transaction(
-                            user_id,
-                            {
-                                "tipo": tipo,
-                                "valor": float(valor),
-                                "data": data.strftime("%Y-%m-%d"),
-                                "categoria": categoria.strip(),
-                                "descricao": descricao.strip(),
-                                "status": status,
-                            },
-                        )
-                        st.success("Transação adicionada.")
-                        st.rerun()
-                    except Exception as e:
-                        st.error(f"Erro ao adicionar: {e}")
+    top_l, top_r = st.columns([3, 1])
+    with top_l:
+        st.markdown('<div class="of-card-title" style="margin:0">Lançamentos</div>', unsafe_allow_html=True)
+    with top_r:
+        if st.button("Adicionar transação", key="tx_btn_add", use_container_width=True, type="primary"):
+            _add_dialog(user_id)
 
     if not transactions:
-        _html('<div class="of-empty">Nenhuma transação ainda. Use o formulário acima.</div>')
+        _html(
+            '<div class="of-empty">Nenhuma transação ainda. Clique em '
+            "<strong>Adicionar transação</strong> para começar.</div>"
+        )
         return
 
-    st.markdown('<div class="of-gap"></div>', unsafe_allow_html=True)
     f1, f2, f3 = st.columns(3)
     with f1:
         tipo_filter = st.selectbox("Tipo", ["Todos", "receita", "despesa"], key="tx_f_tipo")
@@ -241,7 +269,6 @@ def render_transactions() -> None:
         )
 
     st.markdown('<div class="of-gap"></div>', unsafe_allow_html=True)
-    st.markdown('<div class="of-card-title">Lançamentos</div>', unsafe_allow_html=True)
 
     if not filtered:
         _html('<div class="of-empty">Nenhuma transação com esses filtros.</div>')
@@ -250,7 +277,6 @@ def render_transactions() -> None:
     filtered = sorted(filtered, key=lambda t: str(t.get("data", "")), reverse=True)
     _render_list(filtered)
 
-    # Ações: um select + editar/excluir (evita N iframes/botões)
     st.markdown('<div class="of-gap"></div>', unsafe_allow_html=True)
     st.markdown('<div class="of-card-title">Gerenciar</div>', unsafe_allow_html=True)
 
