@@ -1,91 +1,123 @@
 import requests
 import streamlit as st
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List, Union
 
-# Configuration
-# In production, use st.secrets for these
-# BASE_URL = st.secrets["xano"]["base_url"]
-BASE_URL = "http://localhost:5000"  # Change to Xano API endpoint when deploying to Xano
+
+def _base_url() -> str:
+    """BASE_URL do Xano via st.secrets (OpenSpec RNF02)."""
+    try:
+        return st.secrets["xano"]["base_url"].rstrip("/")
+    except Exception as e:
+        raise RuntimeError(
+            "Configure [xano].base_url em .streamlit/secrets.toml"
+        ) from e
+
 
 def _get_headers() -> Dict[str, str]:
-    """Get headers for API requests, including auth token if available."""
-    headers = {}
-    if "token" in st.session_state and st.session_state.token:
+    """Headers com Bearer token da sessão."""
+    headers = {"Content-Type": "application/json"}
+    if st.session_state.get("token"):
         headers["Authorization"] = f"Bearer {st.session_state.token}"
     return headers
 
+
 def login(email: str, password: str) -> Dict[str, Any]:
-    """Login to the backend and return token data."""
-    try:
-        response = requests.post(f"{BASE_URL}/api/login", json={"email": email, "password": password})
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        if hasattr(e, 'response') and e.response is not None:
-            return e.response.json()
-        raise Exception(f"Connection error: {e}")
+    """POST /login → {access_token, user_id, name, email}."""
+    response = requests.post(
+        f"{_base_url()}/login",
+        json={"email": email, "password": password},
+        timeout=30,
+    )
+    data = response.json() if response.content else {}
+    if not response.ok:
+        raise Exception(data.get("message") or data.get("error") or f"Login failed ({response.status_code})")
+    return data
+
 
 def register(email: str, password: str, name: str) -> Dict[str, Any]:
-    """Register a new user."""
-    try:
-        response = requests.post(f"{BASE_URL}/api/register", json={"email": email, "password": password, "name": name})
-        response.raise_for_status()
-        return response.json()
-    except requests.exceptions.RequestException as e:
-        if hasattr(e, 'response') and e.response is not None:
-            return e.response.json()
-        raise Exception(f"Connection error: {e}")
+    """POST /register."""
+    response = requests.post(
+        f"{_base_url()}/register",
+        json={"email": email, "password": password, "name": name},
+        timeout=30,
+    )
+    data = response.json() if response.content else {}
+    if not response.ok:
+        raise Exception(data.get("message") or data.get("error") or f"Register failed ({response.status_code})")
+    return data
 
-def api_get(endpoint: str) -> Optional[Dict[str, Any]]:
-    """Make a GET request to the backend."""
+
+def api_get(endpoint: str) -> Optional[Union[Dict[str, Any], List[Any]]]:
+    """GET autenticado."""
     try:
-        response = requests.get(f"{BASE_URL}{endpoint}", headers=_get_headers())
-        response.raise_for_status()
-        return response.json()
+        with st.spinner("Carregando..."):
+            response = requests.get(
+                f"{_base_url()}{endpoint}",
+                headers=_get_headers(),
+                timeout=30,
+            )
+        if not response.ok:
+            st.error(f"API error: {response.status_code} - {response.text}")
+            return None
+        return response.json() if response.content else {}
     except requests.exceptions.RequestException as e:
-        if hasattr(e, 'response') and e.response is not None:
-            st.error(f"API error: {e.response.status_code} - {e.response.text}")
-        else:
-            st.error(f"Connection error: {e}")
+        st.error(f"Connection error: {e}")
         return None
+
 
 def api_post(endpoint: str, data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """Make a POST request to the backend."""
+    """POST autenticado."""
     try:
-        response = requests.post(f"{BASE_URL}{endpoint}", json=data, headers=_get_headers())
-        response.raise_for_status()
-        return response.json()
+        with st.spinner("Salvando..."):
+            response = requests.post(
+                f"{_base_url()}{endpoint}",
+                json=data,
+                headers=_get_headers(),
+                timeout=30,
+            )
+        if not response.ok:
+            st.error(f"API error: {response.status_code} - {response.text}")
+            return None
+        return response.json() if response.content else {}
     except requests.exceptions.RequestException as e:
-        if hasattr(e, 'response') and e.response is not None:
-            st.error(f"API error: {e.response.status_code} - {e.response.text}")
-        else:
-            st.error(f"Connection error: {e}")
+        st.error(f"Connection error: {e}")
         return None
+
 
 def api_put(endpoint: str, data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-    """Make a PUT request to the backend."""
+    """PUT autenticado."""
     try:
-        response = requests.put(f"{BASE_URL}{endpoint}", json=data, headers=_get_headers())
-        response.raise_for_status()
+        with st.spinner("Atualizando..."):
+            response = requests.put(
+                f"{_base_url()}{endpoint}",
+                json=data,
+                headers=_get_headers(),
+                timeout=30,
+            )
         if response.status_code == 204:
             return {}
-        return response.json()
+        if not response.ok:
+            st.error(f"API error: {response.status_code} - {response.text}")
+            return None
+        return response.json() if response.content else {}
     except requests.exceptions.RequestException as e:
-        if hasattr(e, 'response') and e.response is not None:
-            st.error(f"API error: {e.response.status_code} - {e.response.text}")
-        else:
-            st.error(f"Connection error: {e}")
+        st.error(f"Connection error: {e}")
         return None
 
+
 def api_delete(endpoint: str) -> bool:
-    """Make a DELETE request to the backend."""
+    """DELETE autenticado."""
     try:
-        response = requests.delete(f"{BASE_URL}{endpoint}", headers=_get_headers())
-        response.raise_for_status()
-        return response.status_code in [200, 204]
+        with st.spinner("Excluindo..."):
+            response = requests.delete(
+                f"{_base_url()}{endpoint}",
+                headers=_get_headers(),
+                timeout=30,
+            )
+        if response.status_code in (200, 204):
+            return True
+        st.error(f"API error: {response.status_code} - {response.text}")
+        return False
     except requests.exceptions.RequestException as e:
-        if hasattr(e, 'response') and e.response is not None:
-            st.error(f"API error: {e.response.status_code} - {e.response.text}")
-        else:
-            st.error(f"Connection error: {e}")
+        st.error(f"Connection error: {e}")
         return False
