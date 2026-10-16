@@ -11,10 +11,16 @@ def render_register() -> None:
 
     with form_col:
         st.markdown(
+            '<div class="of-logo"><span class="of-logo-mark">O</span> OrbitFin</div>',
+            unsafe_allow_html=True,
+        )
+
+        st.markdown(
             """
-            <div class="of-logo"><span class="of-logo-mark">O</span> OrbitFin</div>
-            <p class="of-title">Crie sua conta</p>
-            <p class="of-lead">Preencha os dados para começar a organizar suas finanças.</p>
+            <div class="of-form-block">
+              <p class="of-title">Crie sua conta</p>
+              <p class="of-lead">Preencha os dados para começar a organizar suas finanças.</p>
+            </div>
             """,
             unsafe_allow_html=True,
         )
@@ -58,13 +64,13 @@ def render_register() -> None:
             unsafe_allow_html=True,
         )
 
-        c1, c2 = st.columns([1, 1.2])
-        with c1:
+        switch_l, switch_r = st.columns([0.45, 0.55])
+        with switch_l:
             st.markdown(
-                '<p class="of-switch-inline">Já tem conta?</p>',
+                '<div class="of-switch-line"><span>Já tem conta?</span></div>',
                 unsafe_allow_html=True,
             )
-        with c2:
+        with switch_r:
             if st.button("Fazer login", key="go_login"):
                 st.session_state.auth_page = "login"
                 st.rerun()

@@ -7,7 +7,6 @@ import streamlit as st
 
 _THEME_PATH = Path(__file__).resolve().parent.parent / "css" / "orbitfin_theme.css"
 
-# CSS nuclear: Streamlit Cloud injeta padding enorme no .block-container
 _AUTH_FULLBLEED = """
 html, body {
   margin: 0 !important;
@@ -26,7 +25,6 @@ section.main,
   padding: 0 !important;
   height: 100vh !important;
   max-height: 100vh !important;
-  min-height: 100vh !important;
   background: #FFFFFF !important;
   overflow: hidden !important;
 }
@@ -35,10 +33,10 @@ section.main,
 header[data-testid="stHeader"],
 div[data-testid="stToolbar"],
 div[data-testid="stDecoration"],
-div[data-testid="stStatusWidget"] {
+div[data-testid="stStatusWidget"],
+footer {
   display: none !important;
   height: 0 !important;
-  visibility: hidden !important;
 }
 
 section[data-testid="stSidebar"],
@@ -46,48 +44,37 @@ div[data-testid="collapsedControl"] {
   display: none !important;
 }
 
-/* mata o padding absurdo do Streamlit */
 .main .block-container,
 div.block-container,
 .stMainBlockContainer,
-[data-testid="stMainBlockContainer"],
-.block-container {
+[data-testid="stMainBlockContainer"] {
   max-width: 100% !important;
   width: 100% !important;
-  padding: 0 !important;
-  padding-top: 0 !important;
-  padding-bottom: 0 !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-  margin: 0 !important;
-  min-height: 100vh !important;
   height: 100vh !important;
+  max-height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
 }
 
-/* remove gaps verticais do Streamlit entre elementos */
-[data-testid="stVerticalBlock"] {
+/* um único bloco vertical = a row split */
+[data-testid="stAppViewContainer"] [data-testid="stVerticalBlock"] {
   gap: 0 !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  overflow: hidden !important;
 }
-[data-testid="stVerticalBlock"] > div {
-  gap: 0 !important;
-}
-div[data-testid="stVerticalBlockBorderWrapper"] {
-  border: none !important;
-}
+
 .element-container,
 div[data-testid="element-container"] {
   margin: 0 !important;
-  padding: 0 !important;
 }
 
-/* row 50/50 grudada nas bordas */
 [data-testid="stHorizontalBlock"] {
   gap: 0 !important;
   margin: 0 !important;
-  padding: 0 !important;
   width: 100% !important;
   height: 100vh !important;
-  min-height: 100vh !important;
   max-height: 100vh !important;
   align-items: stretch !important;
   display: flex !important;
@@ -95,58 +82,90 @@ div[data-testid="element-container"] {
 
 [data-testid="stHorizontalBlock"] > [data-testid="column"] {
   margin: 0 !important;
-  padding: 0 !important;
   height: 100vh !important;
-  min-height: 100vh !important;
   max-height: 100vh !important;
+  overflow: hidden !important;
 }
 
-/* coluna form — padding INTERNO (não grudar na borda) */
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child,
-[data-testid="stHorizontalBlock"] > div:first-child {
+/* ——— ESQUERDA: logo topo + form centro ——— */
+[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child {
   background: #FFFFFF !important;
-  padding: 3rem clamp(2rem, 6vw, 5rem) !important;
-  overflow-y: auto !important;
+  padding: 0 !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div {
+  height: 100vh !important;
+  max-height: 100vh !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 5.5rem 3.5rem 2.5rem 3.5rem !important;
   box-sizing: border-box !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
 }
 
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div,
-[data-testid="stHorizontalBlock"] > div:first-child > div {
-  width: 100% !important;
-  max-width: 420px !important;
-  margin-left: auto !important;
-  margin-right: auto !important;
+.of-logo {
+  position: absolute !important;
+  top: 1.75rem !important;
+  left: 2rem !important;
+  z-index: 5 !important;
+  margin: 0 !important;
 }
 
-/* coluna hero — preto até a borda */
+.of-form-block {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.of-switch-line {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  flex-wrap: nowrap !important;
+  margin-top: 1rem !important;
+  font-size: 14px !important;
+  color: rgba(25, 25, 25, 0.55) !important;
+  white-space: nowrap !important;
+}
+
+.of-switch-line span {
+  white-space: nowrap !important;
+}
+
+/* ——— DIREITA: hero full ——— */
 [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) {
   background: #010103 !important;
   padding: 0 !important;
-  overflow: hidden !important;
 }
 
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2)
-  [data-testid="stMarkdownContainer"],
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2)
-  [data-testid="stMarkdown"],
 [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) > div {
-  height: 100% !important;
-  min-height: 100vh !important;
+  height: 100vh !important;
+  max-height: 100vh !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  max-width: none !important;
 }
 
 .of-hero {
-  min-height: 100vh !important;
   height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
   width: 100% !important;
   margin: 0 !important;
   border-radius: 0 !important;
+  display: flex !important;
+  align-items: center !important;
   box-sizing: border-box !important;
 }
 
-/* botão primário do form */
+/* botão submit */
 .stFormSubmitButton > button,
 .stFormSubmitButton button,
 button[kind="primaryFormSubmit"],
@@ -161,15 +180,9 @@ button[data-testid="stBaseButton-primaryFormSubmit"] {
   min-height: 52px !important;
   margin-top: 0.75rem !important;
 }
-.stFormSubmitButton > button:hover {
-  background: #191919 !important;
-  color: #FFFFFF !important;
-  border: none !important;
-}
 
-/* link "Criar conta" — nunca pill branca */
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child
-  .stButton > button {
+/* botão "Criar conta" vira link inline */
+[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child .stButton > button {
   background: transparent !important;
   color: #010103 !important;
   border: none !important;
@@ -183,53 +196,42 @@ button[data-testid="stBaseButton-primaryFormSubmit"] {
   padding: 0 !important;
   width: auto !important;
   border-radius: 0 !important;
-}
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child
-  .stButton > button:hover {
-  background: transparent !important;
-  color: #191919 !important;
-  border: none !important;
+  margin: 0 !important;
 }
 
 @media (max-width: 900px) {
-  html, body, .stApp, .main, .block-container {
+  html, body, .stApp, .main, .block-container,
+  [data-testid="stVerticalBlock"],
+  [data-testid="stHorizontalBlock"],
+  [data-testid="stHorizontalBlock"] > [data-testid="column"],
+  [data-testid="stHorizontalBlock"] > [data-testid="column"] > div {
     height: auto !important;
     max-height: none !important;
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+    overflow: visible !important;
   }
+  body, .stApp, .main { overflow-y: auto !important; }
   [data-testid="stHorizontalBlock"] {
     flex-direction: column !important;
-    flex-wrap: wrap !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
   }
   [data-testid="stHorizontalBlock"] > [data-testid="column"] {
     width: 100% !important;
-    flex: 1 1 100% !important;
     min-width: 100% !important;
-    height: auto !important;
-    min-height: auto !important;
-    max-height: none !important;
   }
-  [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child {
-    order: 2 !important;
-    padding: 1.5rem 1.25rem 2rem !important;
+  [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child { order: 2 !important; }
+  [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) { order: 1 !important; }
+  [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div {
+    padding: 4.5rem 1.5rem 2rem !important;
     justify-content: flex-start !important;
   }
-  [data-testid="stHorizontalBlock"] > [data-testid="column"]:nth-child(2) {
-    order: 1 !important;
-    min-height: 28vh !important;
-  }
+  .of-logo { top: 1.25rem !important; left: 1.25rem !important; }
   .of-hero {
-    min-height: 28vh !important;
-    height: 28vh !important;
-    padding: 1.5rem 1.25rem !important;
+    height: 30vh !important;
+    min-height: 30vh !important;
+    max-height: 30vh !important;
+    padding: 1.5rem !important;
   }
-  div[data-testid="stTextInput"] input {
-    font-size: 16px !important;
-  }
+  .of-switch-line { white-space: normal !important; flex-wrap: wrap !important; }
+  div[data-testid="stTextInput"] input { font-size: 16px !important; }
 }
 """
 

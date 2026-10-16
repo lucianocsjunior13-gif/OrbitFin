@@ -10,11 +10,18 @@ def render_login() -> None:
     form_col, hero_col = st.columns(2, gap="small")
 
     with form_col:
+        # Logo fora do fluxo — CSS posiciona no topo esquerdo
+        st.markdown(
+            '<div class="of-logo"><span class="of-logo-mark">O</span> OrbitFin</div>',
+            unsafe_allow_html=True,
+        )
+
         st.markdown(
             """
-            <div class="of-logo"><span class="of-logo-mark">O</span> OrbitFin</div>
-            <p class="of-title">Bem-vindo de volta</p>
-            <p class="of-lead">Entre para gerenciar saldo, transações e metas com clareza.</p>
+            <div class="of-form-block">
+              <p class="of-title">Bem-vindo de volta</p>
+              <p class="of-lead">Entre para gerenciar saldo, transações e metas com clareza.</p>
+            </div>
             """,
             unsafe_allow_html=True,
         )
@@ -39,13 +46,14 @@ def render_login() -> None:
                 else:
                     st.error("E-mail ou senha incorretos.")
 
-        c1, c2 = st.columns([1.2, 1])
-        with c1:
+        # Uma linha só — sem columns aninhadas (elas esmagavam o texto)
+        switch_l, switch_r = st.columns([0.62, 0.38])
+        with switch_l:
             st.markdown(
-                '<p class="of-switch-inline">Ainda não tem conta?</p>',
+                '<div class="of-switch-line"><span>Ainda não tem conta?</span></div>',
                 unsafe_allow_html=True,
             )
-        with c2:
+        with switch_r:
             if st.button("Criar conta", key="go_register"):
                 st.session_state.auth_page = "register"
                 st.rerun()

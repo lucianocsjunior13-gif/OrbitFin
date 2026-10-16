@@ -31,7 +31,7 @@ header[data-testid="stHeader"] { background: transparent; }
   letter-spacing: 0.04em;
   color: var(--of-black);
   text-transform: uppercase;
-  margin-bottom: 2.5rem;
+  margin: 0;
 }
 
 .of-logo-mark {
@@ -71,10 +71,17 @@ header[data-testid="stHeader"] { background: transparent; }
   margin-top: 1rem;
 }
 
-.of-switch-inline {
+.of-switch-inline,
+.of-switch-line {
   font-size: 14px;
   color: var(--of-muted);
-  padding-top: 0.35rem;
+  white-space: nowrap;
+}
+
+.of-form-block {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
 }
 
 .of-hero {
@@ -90,6 +97,7 @@ header[data-testid="stHeader"] { background: transparent; }
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: flex-start;
   padding: clamp(2.5rem, 6vw, 5rem);
   box-sizing: border-box;
   position: relative;
