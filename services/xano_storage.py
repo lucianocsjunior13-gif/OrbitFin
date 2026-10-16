@@ -90,9 +90,7 @@ def get_budgets() -> List[Dict[str, Any]]:
 
 
 def update_budget(budget_id: int, limite: float) -> Optional[Dict[str, Any]]:
-    # Endpoint PUT /budgets/{id} ainda não existe no Xano (Fase 4 mínima)
-    st.warning("Atualizar budget no Xano ainda não está disponível. Crie o endpoint depois.")
-    return None
+    return api_put(f"/budgets/{budget_id}", {"limite": float(limite)})
 
 
 def get_insights() -> Dict[str, Any]:
@@ -103,7 +101,9 @@ def get_insights() -> Dict[str, Any]:
 
 
 def update_insights(texto: str) -> Dict[str, Any]:
-    st.warning("Atualizar insight no Xano ainda não está disponível.")
+    data = api_put("/insights", {"texto": texto})
+    if isinstance(data, dict) and "texto" in data:
+        return data
     return get_insights()
 
 

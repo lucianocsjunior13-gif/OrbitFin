@@ -7,9 +7,8 @@
 - [x] **Fase 4–5:** API Group `orbitfin` + endpoints; push/pull OK
 - [x] **Fase 6:** `.gitignore` + `st.secrets` (exemplo versionado)
 - [x] **Fase 7:** Adapter `services/storage.py` (SQLite ↔ Xano)
-- [ ] **Fase 8:** Teste ponta a ponta Streamlit ↔ Xano (pendente — outro ambiente/pessoa)
-- [ ] Endpoints faltando no Xano: `PUT budgets`, update insight
-- [ ] Seed de budgets padrão por usuário no register
+- [x] **Fase 8:** Teste ponta a ponta Streamlit ↔ Xano (https://orbitfin.streamlit.app/)
+- [x] `PUT budgets` + `PUT insights` + seed de budgets (delta `003`)
 
 ## Roadmap produto original
 

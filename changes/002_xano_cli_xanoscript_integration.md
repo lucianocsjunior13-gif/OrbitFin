@@ -172,7 +172,7 @@ Ajustar `.gitignore` para ignorar:
 - [x] `POST register` e `POST login` retornam sucesso; login devolve `access_token` (testado no Xano Run)
 - [x] Rotas de `transacoes` exigem Bearer e isolam dados por usuário (GET testado no Run)
 - [x] `GET saldo`, `GET budgets`, `GET insights` existem no group `orbitfin` (shape alinhado ao client)
-- [ ] Streamlit autentica via Xano e faz CRUD de transações sem SQLite (**pendente QA** — código na Fase 7; E2E não rodado nesta máquina)
+- [x] Streamlit autentica via Xano e faz CRUD de transações sem SQLite (validado em https://orbitfin.streamlit.app/)
 - [x] Secrets só em `st.secrets`; nada de URL/token commitado (`secrets.toml` gitignored; example versionado)
 - [x] `.gitignore` corrigido (secrets + data)
 - [x] `ROADMAP.md` / `ARCHITECTURE.md` atualizados
