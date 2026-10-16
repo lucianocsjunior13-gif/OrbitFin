@@ -19,7 +19,7 @@ Redesenhar o **Dashboard** e a **sidebar** no estilo das referências APPROX (ca
 - Manter storage/Xano intacto
 
 ## Critérios de Aceite
-- [x] Sidebar texto + ícones Lucide (SVG via iframe), sem bg/borda nos links
+- [x] Sidebar texto + ícones Material (botões ghost — nav sem iframe/`?nav=`)
 - [x] Collapse da sidebar só no mobile; desktop sempre expanded
 - [x] Header shell (busca + actions + título) em todas as páginas logadas
 - [x] Dashboard com cards de saldo / receitas / despesas / resultado

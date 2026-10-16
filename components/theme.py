@@ -347,47 +347,35 @@ section[data-testid="stSidebar"] > div {
 .of-side-user-name { font-size: 13px; font-weight: 600; color: #010103; }
 .of-side-user-email { font-size: 11px; color: rgba(25,25,25,0.5); word-break: break-all; }
 
-/* Nav texto + ícone Lucide — sem bg/borda */
-.of-nav { display: flex; flex-direction: column; gap: 0.15rem; }
-.of-nav-link {
-  display: flex !important;
-  align-items: center;
-  gap: 0.7rem;
-  padding: 0.55rem 0.45rem;
-  border-radius: 8px;
-  text-decoration: none !important;
-  color: #9CA3AF !important;
-  font-size: 14px;
-  font-weight: 500;
-  transition: color 0.15s ease;
-}
-.of-nav-link:hover { color: #010103 !important; }
-.of-nav-link.is-active {
-  color: #010103 !important;
-  font-weight: 700;
-}
-.of-nav-ico {
-  width: 18px;
-  height: 18px;
-  display: inline-flex;
-  flex-shrink: 0;
-}
-.of-nav-ico svg { width: 18px; height: 18px; display: block; }
-
-/* Sair — ghost */
+/* Nav ghost — texto + ícone, sem pill */
 section[data-testid="stSidebar"] .stButton > button {
   background: transparent !important;
-  color: #191919 !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 8px !important;
-  font-weight: 600 !important;
   justify-content: flex-start !important;
-  padding-left: 0.45rem !important;
+  padding: 0.55rem 0.45rem !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #9CA3AF !important;
+  gap: 0.55rem !important;
 }
 section[data-testid="stSidebar"] .stButton > button:hover {
   color: #010103 !important;
   background: rgba(1,1,3,0.04) !important;
+}
+section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+  background: transparent !important;
+  color: #010103 !important;
+  font-weight: 700 !important;
+}
+section[data-testid="stSidebar"] .stButton > button[kind="primary"]:hover {
+  background: rgba(1,1,3,0.04) !important;
+}
+/* Sair um pouco mais forte */
+section[data-testid="stSidebar"] button[kind="secondary"][data-testid="stBaseButton-secondary"] {
+  font-weight: 600 !important;
+  color: #191919 !important;
 }
 
 /* Desktop: sidebar sempre aberta, sem seta de collapse */
@@ -549,6 +537,28 @@ section[data-testid="stSidebar"] .stButton > button:hover {
 .of-tx-val { font-size: 14px; font-weight: 700; white-space: nowrap; }
 .of-badge-in { color: #16A34A; }
 .of-badge-out { color: #EA580C; }
+
+/* Forms / CTAs na área main */
+.main .stButton > button[kind="primary"],
+.main .stFormSubmitButton > button {
+  background: #010103 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+.main .stButton > button[kind="secondary"] {
+  background: transparent !important;
+  color: #191919 !important;
+  border: 1px solid rgba(25,25,25,0.12) !important;
+  border-radius: 10px !important;
+  font-weight: 500 !important;
+}
+.main [data-testid="stExpander"] {
+  background: #FFFFFF !important;
+  border: 1px solid rgba(25,25,25,0.07) !important;
+  border-radius: 16px !important;
+}
 """
 
 

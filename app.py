@@ -1,8 +1,6 @@
 import streamlit as st
 from services.storage import (
-    get_transactions, add_transaction, update_transaction, delete_transaction,
     get_budgets, update_budget,
-    get_insights, update_insights,
     get_expenses_by_category, get_income_by_category
 )
 import pandas as pd
@@ -15,6 +13,7 @@ from components.header import render_header
 from views.login import render_login
 from views.register import render_register
 from views.dashboard import render_dashboard
+from views.transactions import render_transactions
 
 page_config()
 
@@ -39,7 +38,7 @@ def main_app():
         render_dashboard()
     elif st.session_state.page == "transacoes":
         render_header("transacoes")
-        show_transactions()
+        render_transactions()
     elif st.session_state.page == "orcamento":
         render_header("orcamento")
         show_budget()
@@ -49,168 +48,6 @@ def main_app():
     elif st.session_state.page == "relatorios":
         render_header("relatorios")
         show_relatorios()
-
-def show_transactions():
-    """Display the transactions page."""
-    # título vai no header shell
-    
-    user_id = st.session_state.user['id']
-    
-    # Form to add new transaction
-    with st.expander("➕ Adicionar Nova Transação", expanded=False):
-        with st.form("nova_transacao"):
-            col1, col2 = st.columns(2)
-            
-            with col1:
-                tipo = st.selectbox("Tipo", ["receita", "despesa"])
-                valor = st.number_input("Valor (R$)", min_value=0.01, step=0.01, format="%.2f")
-                data = st.date_input("Data", value=datetime.now())
-            
-            with col2:
-                categoria = st.text_input("Categoria", placeholder="Ex: Alimentação, Salário, etc.")
-                descricao = st.text_input("Descrição")
-                status = st.selectbox("Status", ["pago", "pendente"])
-            
-            submitted = st.form_submit_button("Adicionar Transação", use_container_width=True)
-            
-            if submitted:
-                if not categoria:
-                    st.error("Por favor, informe a categoria.")
-                elif valor <= 0:
-                    st.error("O valor deve ser maior que zero.")
-                else:
-                    transaction_data = {
-                        "tipo": tipo,
-                        "valor": valor,
-                        "data": data.strftime("%Y-%m-%d"),
-                        "categoria": categoria,
-                        "descricao": descricao,
-                        "status": status
-                    }
-                    
-                    try:
-                        added_transaction = add_transaction(user_id, transaction_data)
-                        st.success("Transação adicionada com sucesso!")
-                        st.rerun()
-                    except Exception as e:
-                        st.error(f"Erro ao adicionar transação: {str(e)}")
-    
-    st.divider()
-    
-    # Display transactions
-    st.subheader("📋 Lista de Transações")
-    
-    transactions = get_transactions(user_id)
-    
-    if not transactions:
-        st.info("Nenhuma transação encontrada. Use o formulário acima para adicionar sua primeira transação.")
-        return
-    
-    # Filters
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        tipo_filter = st.selectbox("Filtrar por Tipo", ["Todos", "receita", "despesa"])
-    
-    with col2:
-        status_filter = st.selectbox("Filtrar por Status", ["Todos", "pago", "pendente"])
-    
-    with col3:
-        # Get unique categories
-        categorias = ["Todas"] + sorted(list(set(t.get('categoria', '') for t in transactions if t.get('categoria'))))
-        categoria_filter = st.selectbox("Filtrar por Categoria", categorias)
-    
-    # Apply filters
-    filtered_transactions = transactions.copy()
-    
-    if tipo_filter != "Todos":
-        filtered_transactions = [t for t in filtered_transactions if t.get('tipo') == tipo_filter]
-    
-    if status_filter != "Todos":
-        filtered_transactions = [t for t in filtered_transactions if t.get('status') == status_filter]
-    
-    if categoria_filter != "Todas":
-        filtered_transactions = [t for t in filtered_transactions if t.get('categoria') == categoria_filter]
-    
-    if not filtered_transactions:
-        st.info("Nenhuma transação encontrada com os filtros selecionados.")
-        return
-    
-    # Display transactions
-    for idx, transaction in enumerate(filtered_transactions):
-        with st.container():
-            col1, col2, col3, col4 = st.columns([3, 1, 1, 1])
-            
-            with col1:
-                tipo_display = "💰 Receita" if transaction['tipo'] == 'receita' else "💸 Despesa"
-                st.write(f"{tipo_display} **{transaction.get('descricao', 'Sem descrição')}**")
-                st.caption(f"{transaction.get('categoria', 'Sem categoria')} • {transaction.get('data', 'Data não informada')}")
-            
-            with col2:
-                valor = transaction['valor']
-                if transaction['tipo'] == 'receita':
-                    st.success(f"+ R$ {valor:,.2f}")
-                else:
-                    st.error(f"- R$ {valor:,.2f}")
-            
-            with col3:
-                status = transaction['status']
-                if status == 'pago':
-                    st.success("✅ Pago")
-                else:
-                    st.warning("⏳ Pendente")
-            
-            with col4:
-                if st.button("✏️ Editar", key=f"edit_{transaction['id']}"):
-                    st.session_state[f'editing_{transaction["id"]}'] = True
-                    st.rerun()
-                
-                if st.button("🗑️ Excluir", key=f"delete_{transaction['id']}"):
-                    if delete_transaction(user_id, transaction['id']):
-                        st.success("Transação excluída!")
-                        st.rerun()
-                    else:
-                        st.error("Erro ao excluir transação.")
-            
-            # Edit form
-            if st.session_state.get(f'editing_{transaction["id"]}', False):
-                with st.form(f"edit_form_{transaction['id']}"):
-                    edit_tipo = st.selectbox("Tipo", ["receita", "despesa"], 
-                                           index=0 if transaction['tipo'] == 'receita' else 1)
-                    edit_valor = st.number_input("Valor (R$)", min_value=0.01, step=0.01, 
-                                               value=float(transaction['valor']), format="%.2f")
-                    edit_data = st.date_input("Data", 
-                                            value=datetime.fromisoformat(transaction['data']))
-                    edit_categoria = st.text_input("Categoria", value=transaction.get('categoria', ''))
-                    edit_descricao = st.text_input("Descrição", value=transaction.get('descricao', ''))
-                    edit_status = st.selectbox("Status", ["pago", "pendente"], 
-                                             index=0 if transaction['status'] == 'pago' else 1)
-                    
-                    col1, col2 = st.columns(2)
-                    with col1:
-                        if st.form_submit_button("Salvar Alterações", use_container_width=True):
-                            update_data = {
-                                "tipo": edit_tipo,
-                                "valor": edit_valor,
-                                "data": edit_data.strftime("%Y-%m-%d"),
-                                "categoria": edit_categoria,
-                                "descricao": edit_descrio,
-                                "status": edit_status
-                            }
-                            
-                            if update_transaction(user_id, transaction['id'], update_data):
-                                st.success("Transação atualizada!")
-                                st.session_state[f'editing_{transaction["id"]}'] = False
-                                st.rerun()
-                            else:
-                                st.error("Erro ao atualizar transação.")
-                    
-                    with col2:
-                        if st.form_submit_button("Cancelar"):
-                            st.session_state[f'editing_{transaction["id"]}'] = False
-                            st.rerun()
-            
-            st.divider()
 
 def show_budget():
     """Display the budget page."""
