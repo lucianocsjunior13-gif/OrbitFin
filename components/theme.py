@@ -101,15 +101,24 @@ div[data-testid="element-container"] {
   max-height: 100vh !important;
 }
 
-/* coluna form — padding INTERNO só (conteúdo, não a página) */
-[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child {
+/* coluna form — padding INTERNO (não grudar na borda) */
+[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child,
+[data-testid="stHorizontalBlock"] > div:first-child {
   background: #FFFFFF !important;
-  padding: 2.5rem 3.5rem !important;
+  padding: 3rem clamp(2rem, 6vw, 5rem) !important;
   overflow-y: auto !important;
   box-sizing: border-box !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
+}
+
+[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div,
+[data-testid="stHorizontalBlock"] > div:first-child > div {
+  width: 100% !important;
+  max-width: 420px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 /* coluna hero — preto até a borda */

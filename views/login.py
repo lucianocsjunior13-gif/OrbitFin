@@ -46,15 +46,9 @@ def render_login() -> None:
                 unsafe_allow_html=True,
             )
         with c2:
-            st.markdown('<div class="of-linkish"></div>', unsafe_allow_html=True)
             if st.button("Criar conta", key="go_register"):
                 st.session_state.auth_page = "register"
                 st.rerun()
-
-        st.markdown(
-            '<p class="of-footer-mini">© OrbitFin · Finanças pessoais</p>',
-            unsafe_allow_html=True,
-        )
 
     with hero_col:
         st.markdown(

@@ -1,5 +1,7 @@
-# Streamlit secrets (nunca commitar)
+# Streamlit: secrets locais nunca; config.toml e *.example PODEM ir pro Git
 .streamlit/secrets.toml
+!.streamlit/config.toml
+!.streamlit/secrets.toml.example
 
 # Dados locais
 data/
