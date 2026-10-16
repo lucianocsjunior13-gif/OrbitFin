@@ -270,6 +270,203 @@ button[data-testid="stBaseButton-primaryFormSubmit"] {
 """
 
 
+_APP_SHELL = """
+.stApp, [data-testid="stAppViewContainer"] {
+  background: #F3F5F7 !important;
+}
+.main .block-container {
+  padding-top: 1.75rem !important;
+  padding-bottom: 2.5rem !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+  max-width: 1200px !important;
+}
+[data-testid="stHeader"] { background: transparent !important; }
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+  background: #FFFFFF !important;
+  border-right: 1px solid rgba(25,25,25,0.08) !important;
+}
+section[data-testid="stSidebar"] > div {
+  padding-top: 1.25rem !important;
+}
+.of-side-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #010103;
+  margin-bottom: 1.5rem;
+}
+.of-side-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: #010103;
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+.of-side-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(25,25,25,0.45);
+  margin: 0 0 0.5rem;
+}
+.of-side-spacer { height: 1.5rem; }
+.of-side-user {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.75rem 0;
+  margin-bottom: 0.5rem;
+  border-top: 1px solid rgba(25,25,25,0.08);
+}
+.of-side-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #F3F5F7;
+  color: #010103;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+.of-side-user-name { font-size: 13px; font-weight: 600; color: #010103; }
+.of-side-user-email { font-size: 11px; color: rgba(25,25,25,0.5); word-break: break-all; }
+
+section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
+  background: #010103 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-weight: 600 !important;
+}
+section[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
+  background: transparent !important;
+  color: #191919 !important;
+  border: 1px solid rgba(25,25,25,0.1) !important;
+  border-radius: 10px !important;
+  font-weight: 500 !important;
+}
+section[data-testid="stSidebar"] .stButton > button:hover {
+  border-color: #010103 !important;
+}
+
+/* Dashboard cards */
+.of-page-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(25,25,25,0.45);
+  margin: 0 0 0.25rem;
+}
+.of-page-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #010103;
+  margin: 0 0 1.25rem;
+}
+.of-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(25,25,25,0.07);
+  border-radius: 16px;
+  padding: 1.1rem 1.15rem;
+  box-shadow: 0 8px 24px rgba(1,1,3,0.03);
+}
+.of-kpi { min-height: 110px; }
+.of-kpi-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(25,25,25,0.5);
+  margin-bottom: 0.45rem;
+}
+.of-kpi-value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #010103;
+  letter-spacing: -0.02em;
+}
+.of-kpi-hint {
+  margin-top: 0.45rem;
+  font-size: 12px;
+  color: rgba(25,25,25,0.45);
+}
+.of-kpi-up { color: #16A34A !important; }
+.of-kpi-down { color: #EA580C !important; }
+.of-card-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #010103;
+  margin: 0 0 0.65rem;
+}
+.of-gap { height: 1rem; }
+.of-empty {
+  background: #FFFFFF;
+  border: 1px dashed rgba(25,25,25,0.12);
+  border-radius: 16px;
+  padding: 1.25rem;
+  font-size: 14px;
+  color: rgba(25,25,25,0.55);
+}
+.of-insight {
+  font-size: 14px;
+  line-height: 1.55;
+  color: #191919;
+  min-height: 88px;
+}
+.of-budget-row { margin-bottom: 0.85rem; }
+.of-budget-row:last-child { margin-bottom: 0; }
+.of-budget-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #191919;
+  margin-bottom: 0.35rem;
+  gap: 0.5rem;
+}
+.of-budget-bar {
+  height: 6px;
+  background: #F3F5F7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.of-budget-bar > span {
+  display: block;
+  height: 100%;
+  background: #010103;
+  border-radius: 999px;
+}
+.of-tx-list { padding: 0.35rem 1.15rem; }
+.of-tx-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  border-bottom: 1px solid rgba(25,25,25,0.06);
+}
+.of-tx-row:last-child { border-bottom: none; }
+.of-tx-cat { font-size: 14px; font-weight: 600; color: #010103; }
+.of-tx-meta { font-size: 12px; color: rgba(25,25,25,0.45); margin-top: 0.15rem; }
+.of-tx-val { font-size: 14px; font-weight: 700; white-space: nowrap; }
+.of-badge-in { color: #16A34A; }
+.of-badge-out { color: #EA580C; }
+"""
+
+
 def apply_theme(*, hide_sidebar: bool = False, auth: bool = False) -> None:
     css = _THEME_PATH.read_text(encoding="utf-8")
     if hide_sidebar and not auth:
@@ -279,6 +476,8 @@ def apply_theme(*, hide_sidebar: bool = False, auth: bool = False) -> None:
         """
     if auth:
         css += _AUTH_CSS
+    else:
+        css += _APP_SHELL
     st.markdown(f"<style>{css}</style>", unsafe_allow_html=True)
 
 

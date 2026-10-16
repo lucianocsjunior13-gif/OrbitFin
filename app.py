@@ -10,8 +10,10 @@ from datetime import datetime
 import plotly.express as px
 
 from components.theme import page_config, apply_theme
+from components.sidebar import render_sidebar
 from views.login import render_login
 from views.register import render_register
+from views.dashboard import render_dashboard
 
 page_config()
 
@@ -29,45 +31,11 @@ if 'auth_page' not in st.session_state:
 
 def main_app():
     """Main application after login."""
-    apply_theme(hide_sidebar=False)
-    # Sidebar
-    with st.sidebar:
-        st.write(f"Olá, {st.session_state.user['name']}! 👋")
-        
-        if st.button("Sair"):
-            st.session_state.logged_in = False
-            st.session_state.user = None
-            st.session_state.token = None
-            st.session_state.auth_page = "login"
-            st.rerun()
-        
-        st.divider()
-        
-        # Navigation
-        st.subheader("Navegação")
-        if st.button("📊 Dashboard", use_container_width=True):
-            st.session_state.page = "dashboard"
-            st.rerun()
-        
-        if st.button("💰 Transações", use_container_width=True):
-            st.session_state.page = "transacoes"
-            st.rerun()
-        
-        if st.button("📈 Orçamento", use_container_width=True):
-            st.session_state.page = "orcamento"
-            st.rerun()
-        
-        if st.button("🎯 Metas", use_container_width=True):
-            st.session_state.page = "metas"
-            st.rerun()
-            
-        if st.button("📊 Relatórios", use_container_width=True):
-            st.session_state.page = "relatorios"
-            st.rerun()
-    
-    # Main content based on selected page
+    apply_theme(hide_sidebar=False, auth=False)
+    render_sidebar()
+
     if st.session_state.page == "dashboard":
-        show_dashboard()
+        render_dashboard()
     elif st.session_state.page == "transacoes":
         show_transactions()
     elif st.session_state.page == "orcamento":
@@ -76,96 +44,6 @@ def main_app():
         show_goals()
     elif st.session_state.page == "relatorios":
         show_relatorios()
-
-def show_dashboard():
-    """Display the dashboard page."""
-    st.title("📊 Dashboard Financeiro")
-    
-    user_id = st.session_state.user['id']
-    
-    # Get data
-    transactions = get_transactions(user_id)
-    budgets = get_budgets()
-    insights = get_insights()
-    
-    # Calculate KPIs
-    total_balance = sum(
-        t['valor'] if t['tipo'] == 'receita' else -t['valor']
-        for t in transactions
-    )
-    
-    monthly_expenses = sum(
-        t['valor'] for t in transactions 
-        if t['tipo'] == 'despesa' and 
-        datetime.fromisoformat(t['data']).month == datetime.now().month and
-        datetime.fromisoformat(t['data']).year == datetime.now().year
-    )
-    
-    monthly_income = sum(
-        t['valor'] for t in transactions 
-        if t['tipo'] == 'receita' and 
-        datetime.fromisoformat(t['data']).month == datetime.now().month and
-        datetime.fromisoformat(t['data']).year == datetime.now().year
-    )
-    
-    # Display KPIs
-    col1, col2, col3 = st.columns(3)
-    
-    with col1:
-        st.metric(
-            label="Saldo Total",
-            value=f"R$ {total_balance:,.2f}",
-            delta=f"R$ {total_balance:,.2f}" if total_balance >= 0 else f"-R$ {abs(total_balance):,.2f}"
-        )
-    
-    with col2:
-        st.metric(
-            label="Despesas do Mês",
-            value=f"R$ {monthly_expenses:,.2f}",
-            delta=f"-R$ {monthly_expenses:,.2f}"
-        )
-    
-    with col3:
-        st.metric(
-            label="Receitas do Mês",
-            value=f"R$ {monthly_income:,.2f}",
-            delta=f"R$ {monthly_income:,.2f}"
-        )
-    
-    st.divider()
-    
-    # Chart: Income vs Expenses over time
-    st.subheader("Receitas vs Despesas Mensais")
-    
-    if transactions:
-        df = pd.DataFrame(transactions)
-        df['data'] = pd.to_datetime(df['data'])
-        df['mês'] = df['data'].dt.to_period('M')
-        
-        chart_data = df.groupby(['mês', 'tipo'])['valor'].sum().reset_index()
-        chart_data['mês_str'] = chart_data['mês'].astype(str)
-        
-        fig = px.bar(
-            chart_data, 
-            x='mês_str', 
-            y='valor', 
-            color='tipo',
-            title="Receitas vs Despesas por Mês",
-            labels={'mês_str': 'Mês', 'valor': 'Valor (R$)', 'tipo': 'Tipo'},
-            color_discrete_map={'receita': '#2E8B57', 'despesa': '#DC143C'}
-        )
-        st.plotly_chart(fig, use_container_width=True)
-    else:
-        st.info("Nenhuma transação encontrada. Comece adicionando algumas transações!")
-    
-    st.divider()
-    
-    # Insights
-    st.subheader("💡 Insight do Dia")
-    if insights and 'texto' in insights:
-        st.info(insights['texto'])
-    else:
-        st.info("Mantenha um registro regular de suas transações para melhor controle financeiro.")
 
 def show_transactions():
     """Display the transactions page."""
@@ -692,4 +570,4 @@ if __name__ == "__main__":
         else:
             render_login()
     else:
-        main_app()
+        main_app()redesign auth screens
