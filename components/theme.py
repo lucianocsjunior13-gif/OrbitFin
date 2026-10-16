@@ -87,7 +87,7 @@ div[data-testid="element-container"] {
   overflow: hidden !important;
 }
 
-/* ——— ESQUERDA: logo topo + form centro ——— */
+/* ——— ESQUERDA: logo topo + form em container central ——— */
 [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child {
   background: #FFFFFF !important;
   padding: 0 !important;
@@ -95,32 +95,50 @@ div[data-testid="element-container"] {
   box-sizing: border-box !important;
 }
 
+/* área da coluna: centraliza o container do form */
 [data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child > div {
   height: 100vh !important;
   max-height: 100vh !important;
   max-width: none !important;
+  width: 100% !important;
   margin: 0 !important;
-  padding: 5.5rem 3.5rem 2.5rem 3.5rem !important;
+  padding: 0 !important;
   box-sizing: border-box !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: center !important;
+  align-items: center !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
 }
 
+/* container do form (não é o body inteiro) */
+[data-testid="stHorizontalBlock"] > [data-testid="column"]:first-child
+  > div > [data-testid="stVerticalBlock"] {
+  width: min(400px, calc(100% - 4rem)) !important;
+  max-width: 400px !important;
+  margin: 0 auto !important;
+  padding: 2rem 1.5rem !important;
+  box-sizing: border-box !important;
+  gap: 0.35rem !important;
+}
+
 .of-logo {
   position: absolute !important;
-  top: 1.75rem !important;
-  left: 2rem !important;
+  top: 1.5rem !important;
+  left: 1.5rem !important;
   z-index: 5 !important;
   margin: 0 !important;
 }
 
 .of-form-block {
-  width: 100%;
-  max-width: 400px;
-  margin: 0 auto;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+
+.of-title {
+  text-align: left !important;
 }
 
 .of-switch-line {
@@ -129,7 +147,7 @@ div[data-testid="element-container"] {
   align-items: center !important;
   gap: 0.5rem !important;
   flex-wrap: nowrap !important;
-  margin-top: 1rem !important;
+  margin-top: 0.75rem !important;
   font-size: 14px !important;
   color: rgba(25, 25, 25, 0.55) !important;
   white-space: nowrap !important;

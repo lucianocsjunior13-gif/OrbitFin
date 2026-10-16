@@ -46,17 +46,13 @@ def render_login() -> None:
                 else:
                     st.error("E-mail ou senha incorretos.")
 
-        # Uma linha só — sem columns aninhadas (elas esmagavam o texto)
-        switch_l, switch_r = st.columns([0.62, 0.38])
-        with switch_l:
-            st.markdown(
-                '<div class="of-switch-line"><span>Ainda não tem conta?</span></div>',
-                unsafe_allow_html=True,
-            )
-        with switch_r:
-            if st.button("Criar conta", key="go_register"):
-                st.session_state.auth_page = "register"
-                st.rerun()
+        st.markdown(
+            '<div class="of-switch-line"><span>Ainda não tem conta?</span></div>',
+            unsafe_allow_html=True,
+        )
+        if st.button("Criar conta", key="go_register"):
+            st.session_state.auth_page = "register"
+            st.rerun()
 
     with hero_col:
         st.markdown(

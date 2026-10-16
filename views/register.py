@@ -64,16 +64,13 @@ def render_register() -> None:
             unsafe_allow_html=True,
         )
 
-        switch_l, switch_r = st.columns([0.45, 0.55])
-        with switch_l:
-            st.markdown(
-                '<div class="of-switch-line"><span>Já tem conta?</span></div>',
-                unsafe_allow_html=True,
-            )
-        with switch_r:
-            if st.button("Fazer login", key="go_login"):
-                st.session_state.auth_page = "login"
-                st.rerun()
+        st.markdown(
+            '<div class="of-switch-line"><span>Já tem conta?</span></div>',
+            unsafe_allow_html=True,
+        )
+        if st.button("Fazer login", key="go_login"):
+            st.session_state.auth_page = "login"
+            st.rerun()
 
     with hero_col:
         st.markdown(
