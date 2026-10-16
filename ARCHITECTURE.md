@@ -21,23 +21,51 @@
 │  - Regras de Negócio / PostgreSQL│
 └─────────────────────────────────┘
 
-## Estrutura de Pastas Sugerida
+## Estrutura de Pastas (estado atual)
 
+```
 orbitfin/
 ├── OPENSPEC.md
 ├── PRODUCT.md
 ├── ARCHITECTURE.md
-├── SPECIFICATION.md
 ├── ROADMAP.md
-├── app.py                  # Arquivo principal do Streamlit
-├── requirements.txt        # Dependências Python (streamlit, requests, pandas, etc.)
-├── pages/                  # Múltiplas páginas do Streamlit (se aplicável)
-│   ├── 1_Dashboard.py
-│   ├── 2_Transacoes.py
-│   └── 3_Metas.py
+├── changes/
+│   ├── 001_local_storage_implementation.md
+│   └── 002_xano_cli_xanoscript_integration.md
+├── app.py                      # Entrypoint Streamlit
+├── requirements.txt
+├── .streamlit/
+│   └── secrets.toml.example    # Copiar para secrets.toml (não versionar)
+├── xano/                       # Backend versionado (XanoScript + CLI)
+│   ├── table/                  # user, transacao, budget, insight, …
+│   └── api/orbitfin/           # API Group canonical = orbitfin
 └── services/
-    └── api_client.py       # Funções de integração com os endpoints do Xano
-    ---
+    ├── storage.py              # Adapter: SQLite local ↔ Xano (flag secrets)
+    ├── api_client.py           # HTTP + Bearer para Xano
+    ├── xano_storage.py         # Implementação remota
+    ├── sqlite_storage.py       # Fallback offline
+    └── local_storage.py        # Legado JSON
+```
+
+### Dual mode (local vs Xano)
+
+Em `.streamlit/secrets.toml`:
+
+```toml
+[xano]
+enabled = true   # false = SQLite local
+base_url = "https://<instance>.n7.xano.io/api:orbitfin"
+```
+
+`app.py` importa apenas `services.storage`, que escolhe o backend.
+
+### URL da API
+
+Base: `https://x8ki-letl-twmt.n7.xano.io/api:orbitfin`  
+Paths: `/login`, `/register`, `/transacoes`, `/saldo`, `/budgets`, `/insights`
+
+---
+
 
 ### 3. `SPECIFICATION.md` (Especificação Técnica e Comportamental)
 
