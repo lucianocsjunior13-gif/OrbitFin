@@ -319,48 +319,133 @@ section[data-testid="stSidebar"] > div {
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(25,25,25,0.45);
-  margin: 0 0 0.5rem;
+  margin: 0 0 0.75rem;
 }
-.of-side-spacer { height: 1.5rem; }
+.of-side-spacer { height: 1.25rem; }
 .of-side-user {
   display: flex;
   align-items: center;
   gap: 0.7rem;
-  padding: 0.75rem 0;
+  padding: 0.85rem 0.6rem;
   margin-bottom: 0.5rem;
-  border-top: 1px solid rgba(25,25,25,0.08);
+  border-radius: 12px;
+  background: #F3F5F7;
 }
 .of-side-avatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: #F3F5F7;
+  background: #FFFFFF;
   color: #010103;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 14px;
+  flex-shrink: 0;
 }
 .of-side-user-name { font-size: 13px; font-weight: 600; color: #010103; }
 .of-side-user-email { font-size: 11px; color: rgba(25,25,25,0.5); word-break: break-all; }
 
-section[data-testid="stSidebar"] .stButton > button[kind="primary"] {
-  background: #010103 !important;
-  color: #fff !important;
-  border: none !important;
-  border-radius: 10px !important;
-  font-weight: 600 !important;
+/* Nav texto + ícone Lucide — sem bg/borda */
+.of-nav { display: flex; flex-direction: column; gap: 0.15rem; }
+.of-nav-link {
+  display: flex !important;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.55rem 0.45rem;
+  border-radius: 8px;
+  text-decoration: none !important;
+  color: #9CA3AF !important;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.15s ease;
 }
-section[data-testid="stSidebar"] .stButton > button[kind="secondary"] {
+.of-nav-link:hover { color: #010103 !important; }
+.of-nav-link.is-active {
+  color: #010103 !important;
+  font-weight: 700;
+}
+.of-nav-ico {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+.of-nav-ico svg { width: 18px; height: 18px; display: block; }
+
+/* Sair — ghost */
+section[data-testid="stSidebar"] .stButton > button {
   background: transparent !important;
   color: #191919 !important;
-  border: 1px solid rgba(25,25,25,0.1) !important;
-  border-radius: 10px !important;
-  font-weight: 500 !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  justify-content: flex-start !important;
+  padding-left: 0.45rem !important;
 }
 section[data-testid="stSidebar"] .stButton > button:hover {
-  border-color: #010103 !important;
+  color: #010103 !important;
+  background: rgba(1,1,3,0.04) !important;
+}
+
+/* Desktop: sidebar sempre aberta, sem seta de collapse */
+@media (min-width: 769px) {
+  section[data-testid="stSidebar"] {
+    transform: none !important;
+    visibility: visible !important;
+    margin-left: 0 !important;
+  }
+  [data-testid="collapsedControl"],
+  [data-testid="stSidebarCollapsedControl"],
+  [data-testid="stSidebarCollapseButton"],
+  [data-testid="stExpandSidebarButton"],
+  section[data-testid="stSidebar"] [data-testid="stBaseButton-header"],
+  section[data-testid="stSidebar"] button[kind="headerNoPadding"],
+  section[data-testid="stSidebar"] button[kind="header"] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+}
+
+/* Top header */
+.of-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.of-search {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: #FFFFFF;
+  border: 1px solid rgba(25,25,25,0.08);
+  border-radius: 999px;
+  padding: 0.65rem 1rem;
+  flex: 1;
+  max-width: 420px;
+  color: rgba(25,25,25,0.45);
+  font-size: 13px;
+}
+.of-search-ico { display: inline-flex; color: #191919; }
+.of-top-actions { display: flex; gap: 0.5rem; }
+.of-icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 1px solid rgba(25,25,25,0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #191919;
 }
 
 /* Dashboard cards */
@@ -486,5 +571,5 @@ def page_config() -> None:
         page_title="OrbitFin",
         page_icon="◆",
         layout="wide",
-        initial_sidebar_state="collapsed",
+        initial_sidebar_state="expanded",
     )

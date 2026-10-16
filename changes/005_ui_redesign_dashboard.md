@@ -19,8 +19,10 @@ Redesenhar o **Dashboard** e a **sidebar** no estilo das referências APPROX (ca
 - Manter storage/Xano intacto
 
 ## Critérios de Aceite
-- [x] Sidebar sem botões “emoji pill” antigos (`components/sidebar.py`)
+- [x] Sidebar texto + ícones Lucide (SVG via iframe), sem bg/borda nos links
+- [x] Collapse da sidebar só no mobile; desktop sempre expanded
+- [x] Header shell (busca + actions + título) em todas as páginas logadas
 - [x] Dashboard com cards de saldo / receitas / despesas / resultado
 - [x] Gráfico linha receitas vs despesas (Plotly)
-- [x] Insight + preview orçamentos + últimas transações
+- [x] Insight + orçamentos (components.html) + últimas transações — sem HTML cru
 - [ ] Validar no Streamlit Cloud (QA)

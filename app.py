@@ -11,6 +11,7 @@ import plotly.express as px
 
 from components.theme import page_config, apply_theme
 from components.sidebar import render_sidebar
+from components.header import render_header
 from views.login import render_login
 from views.register import render_register
 from views.dashboard import render_dashboard
@@ -37,17 +38,21 @@ def main_app():
     if st.session_state.page == "dashboard":
         render_dashboard()
     elif st.session_state.page == "transacoes":
+        render_header("transacoes")
         show_transactions()
     elif st.session_state.page == "orcamento":
+        render_header("orcamento")
         show_budget()
     elif st.session_state.page == "metas":
+        render_header("metas")
         show_goals()
     elif st.session_state.page == "relatorios":
+        render_header("relatorios")
         show_relatorios()
 
 def show_transactions():
     """Display the transactions page."""
-    st.title("💰 Gestão de Transações")
+    # título vai no header shell
     
     user_id = st.session_state.user['id']
     
@@ -209,8 +214,6 @@ def show_transactions():
 
 def show_budget():
     """Display the budget page."""
-    st.title("📈 Orçamento e Categorias")
-    
     user_id = st.session_state.user['id']
     
     # Get data
@@ -277,8 +280,6 @@ def show_budget():
 
 def show_goals():
     """Display the goals/savings page."""
-    st.title("🎯 Metas de Economia")
-    
     user_id = st.session_state.user['id']
     
     # Get data
@@ -340,8 +341,6 @@ def show_relatorios():
         st.warning("Please log in to access the application.")
         return
 
-    st.title("📊 Relatórios Financeiros")
-    
     user_id = st.session_state.user['id']
     
     # Date selectors
