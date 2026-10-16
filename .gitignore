@@ -1,1 +1,22 @@
-nul
+# Streamlit secrets (nunca commitar)
+.streamlit/secrets.toml
+
+# Dados locais
+data/
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
