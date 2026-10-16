@@ -1,6 +1,5 @@
 import streamlit as st
-from services.sqlite_storage import (
-    authenticate_user, create_user, 
+from services.storage import (
     get_transactions, add_transaction, update_transaction, delete_transaction,
     get_budgets, update_budget,
     get_insights, update_insights,
@@ -10,61 +9,27 @@ import pandas as pd
 from datetime import datetime
 import plotly.express as px
 
+from components.theme import page_config, apply_theme
+from views.login import render_login
+from views.register import render_register
+
+page_config()
+
 # Initialize session state
 if 'logged_in' not in st.session_state:
     st.session_state.logged_in = False
 if 'user' not in st.session_state:
     st.session_state.user = None
+if 'token' not in st.session_state:
+    st.session_state.token = None
 if 'page' not in st.session_state:
     st.session_state.page = "dashboard"
-
-def login_page():
-    """Display login/registration page."""
-    st.title("💰 OrbitFin - Controle Financeiro")
-
-    tab1, tab2 = st.tabs(["Criar Conta", "Entrar"])
-
-    with tab1:
-        st.subheader("Criar Nova Conta")
-        name = st.text_input("Nome completo", key="reg_name")
-        email = st.text_input("E-mail", key="reg_email")
-        password = st.text_input("Senha", type="password", key="reg_password")
-        confirm_password = st.text_input("Confirmar senha", type="password", key="reg_confirm_password")
-
-        if st.button("Criar Conta"):
-            if password != confirm_password:
-                st.error("As senhas não coincidem.")
-            elif not name or not email or not password:
-                st.error("Por favor, preencha todos os campos.")
-            else:
-                try:
-                    user = create_user(email, password, name)
-                    st.session_state.logged_in = True
-                    st.session_state.user = user
-                    st.success("Conta criada com sucesso! Bem-vindo(a), {}!".format(user['name']))
-                    st.rerun()
-                except ValueError as e:
-                    st.error(str(e))
-                except Exception as e:
-                    st.error("Erro ao criar conta: {}".format(str(e)))
-
-    with tab2:
-        st.subheader("Login")
-        email = st.text_input("E-mail", key="login_email")
-        password = st.text_input("Senha", type="password", key="login_password")
-
-        if st.button("Entrar"):
-            user = authenticate_user(email, password)
-            if user:
-                st.session_state.logged_in = True
-                st.session_state.user = user
-                st.success("Login realizado com sucesso!")
-                st.rerun()
-            else:
-                st.error("E-mail ou senha incorretos.")
+if 'auth_page' not in st.session_state:
+    st.session_state.auth_page = "login"
 
 def main_app():
     """Main application after login."""
+    apply_theme(hide_sidebar=False)
     # Sidebar
     with st.sidebar:
         st.write(f"Olá, {st.session_state.user['name']}! 👋")
@@ -72,6 +37,8 @@ def main_app():
         if st.button("Sair"):
             st.session_state.logged_in = False
             st.session_state.user = None
+            st.session_state.token = None
+            st.session_state.auth_page = "login"
             st.rerun()
         
         st.divider()
@@ -482,7 +449,7 @@ def show_relatorios():
     from datetime import datetime
     import plotly.express as px
     import plotly.graph_objects as go
-    from services.sqlite_storage import (
+    from services.storage import (
         get_transactions,
         get_expenses_by_category,
         get_income_by_category,
@@ -719,6 +686,10 @@ def show_configuracoes():
 
 if __name__ == "__main__":
     if not st.session_state.logged_in:
-        login_page()
+        apply_theme(hide_sidebar=True)
+        if st.session_state.auth_page == "register":
+            render_register()
+        else:
+            render_login()
     else:
         main_app()
