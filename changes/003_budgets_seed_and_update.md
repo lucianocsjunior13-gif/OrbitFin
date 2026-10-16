@@ -12,9 +12,9 @@ Completar o que faltou do delta 002: orçamentos padrão no cadastro, `PUT` de b
 
 ## Critérios de Aceite
 - [x] Endpoints pushed no Xano (`PUT budgets/{id}`, `PUT insights`, seed no `register` + lazy seed no `GET budgets`)
-- [ ] Conta nova nasce com budgets padrão + insight inicial (validar no app)
-- [ ] Conta antiga sem budget recebe seed no primeiro `GET /budgets` (abrir Orçamento)
-- [ ] Atualizar limite na UI persiste no Xano
+- [x] Conta nova nasce com budgets padrão + insight inicial (validado no app)
+- [x] Conta antiga sem budget recebe seed no primeiro `GET /budgets` (validado)
+- [x] Atualizar limite na UI persiste no Xano (validado)
 - [x] Docs 002/ROADMAP com E2E Streamlit marcado
 
 ## Nota
