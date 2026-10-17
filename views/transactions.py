@@ -1,4 +1,4 @@
-"""Página Transações — CRUD no shell OrbitFin."""
+"""Página Transações — CRUDD no shell OrbitFin."""
 from __future__ import annotations
 
 from datetime import datetime
